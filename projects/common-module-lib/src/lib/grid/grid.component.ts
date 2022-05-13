@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'common-lib-grid',
@@ -18,7 +18,10 @@ export class GridComponent implements OnInit {
     { make: 'Porsche', model: 'Boxster', price: 72000 },
   ];
 
-  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;
+  // Input Element
+  @Input() fitToWindow: boolean = true;
+
+  //   @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;
 
   constructor() {}
 
