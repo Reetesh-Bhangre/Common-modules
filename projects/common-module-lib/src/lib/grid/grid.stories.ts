@@ -12,7 +12,7 @@ export default {
 const Template = () => ({
   props: '',
   template: `
-    <common-lib-grid></common-lib-grid>
+    <common-lib-grid [fitToWindow]="true"></common-lib-grid>
   `,
 });
 

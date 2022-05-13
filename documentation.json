@@ -223,7 +223,7 @@
         },
         {
             "name": "GridComponent",
-            "id": "component-GridComponent-1663c92fb8282e6dd17c57ce30660f78d034f854741b5c8e4ad9f1e7bbd882dcad3b7353b219a5d64855d9574bba8e84dba603aba9cb0fd3c4d7a3775c120da0",
+            "id": "component-GridComponent-4cd74ca4e1016538ee53e02642b6341da41e530eeb3ba40fb6d5550f0b56ae49a09221f8703ee256a5269378026433c25d693759dec81fd3cc7ccc97153407b9",
             "file": "projects/common-module-lib/src/lib/grid/grid.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -239,7 +239,30 @@
                 "./grid.component.html"
             ],
             "viewProviders": [],
-            "inputsClass": [],
+            "inputsClass": [
+                {
+                    "name": "fitToWindow",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nfitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.\n",
+                    "description": "<p>fitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.</p>\n",
+                    "line": 36,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "gridHeight",
+                    "defaultValue": "'500px'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\ngridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.\n",
+                    "description": "<p>gridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.</p>\n",
+                    "line": 41,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
             "outputsClass": [],
             "propertiesClass": [
                 {
@@ -250,9 +273,24 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 10,
+                    "line": 19,
                     "modifierKind": [
                         123
+                    ]
+                },
+                {
+                    "name": "gridContainerRefEl",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 17,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'gridContainerRef'"
+                        }
                     ]
                 },
                 {
@@ -263,7 +301,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 16,
+                    "line": 25,
                     "modifierKind": [
                         123
                     ]
@@ -271,12 +309,22 @@
             ],
             "methodsClass": [
                 {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 47,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
                     "name": "ngOnInit",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 24,
+                    "line": 45,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -288,7 +336,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { ColDef } from 'ag-grid-community';\n\n@Component({\n  selector: 'common-lib-grid',\n  templateUrl: './grid.component.html',\n  styleUrls: ['./grid.component.css'],\n})\nexport class GridComponent implements OnInit {\n  public columnDefs = [\n    { field: 'make' },\n    { field: 'model' },\n    { field: 'price' },\n  ];\n\n  public rowData = [\n    { make: 'Toyota', model: 'Celica', price: 35000 },\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\n  ];\n\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
+            "sourceCode": "import {\n  AfterViewInit,\n  Component,\n  ElementRef,\n  Input,\n  OnInit,\n  ViewChild,\n  ViewChildren,\n} from '@angular/core';\n\n@Component({\n  selector: 'common-lib-grid',\n  templateUrl: './grid.component.html',\n  styleUrls: ['./grid.component.css'],\n})\nexport class GridComponent implements OnInit, AfterViewInit {\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\n\n  public columnDefs = [\n    { field: 'make' },\n    { field: 'model' },\n    { field: 'price' },\n  ];\n\n  public rowData = [\n    { make: 'Toyota', model: 'Celica', price: 35000 },\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\n  ];\n\n  /** List of Input Element */\n  /**\n   * fitToWindow default is true.\n   * fitToWindow is used to set grid height as 100% of container height.\n   */\n  @Input() fitToWindow: boolean = true;\n  /**\n   * gridHeight default 500px.\n   * gridHeight allowed us to set grid height in px as required.\n   */\n  @Input() gridHeight: string = '500px';\n\n  constructor() {}\n\n  ngOnInit() {}\n\n  ngAfterViewInit() {\n    debugger;\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\n      ? `calc(100vh - ${\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\n        }px)`\n      : this.gridHeight;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -303,12 +351,13 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 20
+                "line": 41
             },
             "implements": [
-                "OnInit"
+                "OnInit",
+                "AfterViewInit"
             ],
-            "templateData": "<ag-grid-angular\n  style=\"width: 100%; height: 500px\"\n  class=\"ag-theme-alpine\"\n  [rowData]=\"rowData\"\n  [columnDefs]=\"columnDefs\"\n>\n</ag-grid-angular>\n"
+            "templateData": "<div class=\"grid-container\" #gridContainerRef>\n  <ag-grid-angular\n    #customGrid\n    style=\"width: 100%; height: 100%\"\n    class=\"ag-theme-alpine\"\n    [rowData]=\"rowData\"\n    [columnDefs]=\"columnDefs\"\n  >\n  </ag-grid-angular>\n</div>\n"
         },
         {
             "name": "HeaderComponent",
@@ -816,7 +865,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid></common-lib-grid>\r\n  `,\r\n})"
+                "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"false\"></common-lib-grid>\r\n  `,\r\n})"
             },
             {
                 "name": "Text",
@@ -1024,7 +1073,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid></common-lib-grid>\r\n  `,\r\n})"
+                    "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"false\"></common-lib-grid>\r\n  `,\r\n})"
                 },
                 {
                     "name": "Text",
@@ -1057,7 +1106,7 @@
         ]
     },
     "coverage": {
-        "count": 3,
+        "count": 4,
         "status": "low",
         "files": [
             {
@@ -1065,8 +1114,8 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "GridComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
+                "coveragePercent": 22,
+                "coverageCount": "2/9",
                 "status": "low"
             },
             {
