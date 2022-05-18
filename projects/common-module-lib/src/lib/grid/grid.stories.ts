@@ -6,14 +6,25 @@ import { GridModule } from './grid.module';
 export default {
   title: 'Component/Grid',
   component: GridComponent,
-  imports: [GridModule],
-} as Meta;
+  decorators: [
+    moduleMetadata({
+      imports: [GridModule],
+      schemas: [],
+      declarations: [],
+      entryComponents: [],
+    }),
+  ],
+} as unknown as Meta;
 
-const Template = () => ({
-  props: '',
+const TemplateDefault: Story = (args) => ({
+  props: args,
   template: `
-    <common-lib-grid [fitToWindow]="true"></common-lib-grid>
-  `,
+      <common-lib-grid [fitToWindow]="fitToWindow" [gridHeight]="gridHeight"></common-lib-grid>
+      `,
 });
 
-export const Text = Template.bind({});
+export const defaultUses = TemplateDefault.bind({});
+defaultUses.args = {
+  fitToWindow: true,
+  gridHeight: '200px',
+};
