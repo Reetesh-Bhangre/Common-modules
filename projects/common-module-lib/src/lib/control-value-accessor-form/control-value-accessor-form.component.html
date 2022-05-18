@@ -1,0 +1,38 @@
+<h2>Control Value Accessor Form</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-control">
+    <common-lib-custom-input
+      [title]="firstName"
+      [isMaterial]="true"
+      formControlName="fName"
+    ></common-lib-custom-input>
+  </div>
+  <div class="form-control">
+    <common-lib-custom-input
+      [title]="lastName"
+      [isMaterial]="true"
+      formControlName="lName"
+    ></common-lib-custom-input>
+  </div>
+  <div class="form-control">
+    <common-lib-custom-input
+      [title]="emailId"
+      [isMaterial]="true"
+      formControlName="emailId"
+    ></common-lib-custom-input>
+  </div>
+  <div class="form-control">
+    <common-lib-custom-input
+      [title]="mobileNumber"
+      [isMaterial]="true"
+      formControlName="mobileNumber"
+    ></common-lib-custom-input>
+  </div>
+  <div class="form-control">
+    <button type="submit">submit</button>
+  </div>
+
+  <pre>
+      {{ form.value | json }}
+  </pre>
+</form>

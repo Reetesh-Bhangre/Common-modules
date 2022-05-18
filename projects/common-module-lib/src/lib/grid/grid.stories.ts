@@ -16,4 +16,4 @@ const Template = () => ({
   `,
 });
 
-export const Text = Template.bind({});
+export const defaultUses = Template.bind({});

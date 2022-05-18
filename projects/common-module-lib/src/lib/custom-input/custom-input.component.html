@@ -1,0 +1,10 @@
+<ng-container *ngIf="isMaterial">
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>{{ title }}</mat-label>
+    <input matInput [placeholder]="title" [(ngModel)]="value" />
+  </mat-form-field>
+</ng-container>
+<ng-container *ngIf="!isMaterial">
+  <label class="label">{{ title }}</label>
+  <input class="text-input" [placeholder]="title" [(ngModel)]="value" />
+</ng-container>

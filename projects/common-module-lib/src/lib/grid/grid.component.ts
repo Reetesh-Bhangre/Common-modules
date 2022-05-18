@@ -45,7 +45,6 @@ export class GridComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    debugger;
     this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow
       ? `calc(100vh - ${
           this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17

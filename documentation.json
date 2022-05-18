@@ -95,7 +95,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<ag-grid-angular\n  style=\"width: 500px; height: 500px\"\n  class=\"ag-theme-alpine\"\n  [rowData]=\"rowData\"\n  [columnDefs]=\"columnDefs\"\n>\n</ag-grid-angular>\n"
+            "templateData": "<common-lib-grid [fitToWindow]=\"true\"></common-lib-grid>\n<common-lib-custom-input title=\"Placeholder\"></common-lib-custom-input>\n"
         },
         {
             "name": "ButtonComponent",
@@ -222,8 +222,420 @@
             }
         },
         {
+            "name": "ControlValueAccessorFormComponent",
+            "id": "component-ControlValueAccessorFormComponent-090491199ad747c1bc317ebbdbd188386b1e15ac8b3db9cc90a0e0f8709c7357647b7157b34fa098dd05a731a190fc91df599b99376aad537fef7a6a639a843c",
+            "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "common-lib-control-value-accessor-form",
+            "styleUrls": [
+                "./control-value-accessor-form.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./control-value-accessor-form.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "emailId",
+                    "defaultValue": "'Email Id'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "firstName",
+                    "defaultValue": "'First Name'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "form",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "lastName",
+                    "defaultValue": "'Lirst Name'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "mobileNumber",
+                    "defaultValue": "'Mobile Number'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "createForm",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 27,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onSubmit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 23,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormControl } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-control-value-accessor-form',\n  templateUrl: './control-value-accessor-form.component.html',\n  styleUrls: ['./control-value-accessor-form.component.css'],\n})\nexport class ControlValueAccessorFormComponent implements OnInit {\n  public firstName: string = 'First Name';\n  public lastName: string = 'Lirst Name';\n  public emailId: string = 'Email Id';\n  public mobileNumber: string = 'Mobile Number';\n\n  form: FormGroup;\n\n  constructor() {}\n\n  ngOnInit(): void {\n    this.form = this.createForm();\n  }\n\n  onSubmit() {\n    console.log('form here', this.form.value);\n  }\n\n  createForm() {\n    return new FormGroup({\n      fName: new FormControl('first'),\n      lName: new FormControl('Last'),\n      emailId: new FormControl('fl@email.com'),\n      mobileNumber: new FormControl('9876543210'),\n    });\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".label {\r\n  display: block;\r\n}\r\n.text-input {\r\n  display: block;\r\n  margin: 5px 0;\r\n}\r\n",
+                    "styleUrl": "./control-value-accessor-form.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 15
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<h2>Control Value Accessor Form</h2>\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"firstName\"\n      [isMaterial]=\"true\"\n      formControlName=\"fName\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"lastName\"\n      [isMaterial]=\"true\"\n      formControlName=\"lName\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"emailId\"\n      [isMaterial]=\"true\"\n      formControlName=\"emailId\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"mobileNumber\"\n      [isMaterial]=\"true\"\n      formControlName=\"mobileNumber\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <button type=\"submit\">submit</button>\n  </div>\n\n  <pre>\n      {{ form.value | json }}\n  </pre>\n</form>\n"
+        },
+        {
+            "name": "CustomInputComponent",
+            "id": "component-CustomInputComponent-1b80d49accc1b6b41155eb76d62a82b67ac0e3f52c9a7ee67c42181003bd2047880fc212d3acc6f4f77e2c94af2b85eca6437502f3817434e8c81f1285ce6b4a",
+            "file": "projects/common-module-lib/src/lib/custom-input/custom-input.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "{\n    provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CustomInputComponent), multi: true,\n}",
+                    "type": "component"
+                }
+            ],
+            "selector": "common-lib-custom-input",
+            "styleUrls": [
+                "./custom-input.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./custom-input.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "isMaterial",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 25,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "title",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 45
+                },
+                {
+                    "name": "onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 46
+                },
+                {
+                    "name": "val",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 27
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 43,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 48,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 52,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": true,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 60,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 56,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {\n  animate,\n  state,\n  style,\n  transition,\n  trigger,\n} from '@angular/animations';\nimport { Component, forwardRef, Input, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-input',\n  templateUrl: './custom-input.component.html',\n  styleUrls: ['./custom-input.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomInputComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomInputComponent implements OnInit, ControlValueAccessor {\n  @Input() title: string = '';\n  @Input() isMaterial: boolean = false;\n\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  registerOnChange(fn: any): void {\n    this.onChange = fn; //;(this.value);\n  }\n\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n\n  writeValue(value: string): void {\n    this.value = value;\n  }\n\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./custom-input.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 39
+            },
+            "implements": [
+                "OnInit",
+                "ControlValueAccessor"
+            ],
+            "accessors": {
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 32,
+                        "jsdoctags": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    },
+                    "getSignature": {
+                        "name": "value",
+                        "type": "any",
+                        "returnType": "any",
+                        "line": 29
+                    }
+                }
+            },
+            "templateData": "<ng-container *ngIf=\"isMaterial\">\n  <mat-form-field class=\"example-full-width\" appearance=\"outline\">\n    <mat-label>{{ title }}</mat-label>\n    <input matInput [placeholder]=\"title\" [(ngModel)]=\"value\" />\n  </mat-form-field>\n</ng-container>\n<ng-container *ngIf=\"!isMaterial\">\n  <label class=\"label\">{{ title }}</label>\n  <input class=\"text-input\" [placeholder]=\"title\" [(ngModel)]=\"value\" />\n</ng-container>\n"
+        },
+        {
             "name": "GridComponent",
-            "id": "component-GridComponent-4cd74ca4e1016538ee53e02642b6341da41e530eeb3ba40fb6d5550f0b56ae49a09221f8703ee256a5269378026433c25d693759dec81fd3cc7ccc97153407b9",
+            "id": "component-GridComponent-f9fbbad6287fd076bd69264db4b2133d6ad05116d0f0dfd74bb9a13f586b68e6d0a6b82c69a17ff4da4c51fa11776b883a9489af1207c1aa871db5f6c77bd869",
             "file": "projects/common-module-lib/src/lib/grid/grid.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -336,7 +748,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  AfterViewInit,\n  Component,\n  ElementRef,\n  Input,\n  OnInit,\n  ViewChild,\n  ViewChildren,\n} from '@angular/core';\n\n@Component({\n  selector: 'common-lib-grid',\n  templateUrl: './grid.component.html',\n  styleUrls: ['./grid.component.css'],\n})\nexport class GridComponent implements OnInit, AfterViewInit {\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\n\n  public columnDefs = [\n    { field: 'make' },\n    { field: 'model' },\n    { field: 'price' },\n  ];\n\n  public rowData = [\n    { make: 'Toyota', model: 'Celica', price: 35000 },\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\n  ];\n\n  /** List of Input Element */\n  /**\n   * fitToWindow default is true.\n   * fitToWindow is used to set grid height as 100% of container height.\n   */\n  @Input() fitToWindow: boolean = true;\n  /**\n   * gridHeight default 500px.\n   * gridHeight allowed us to set grid height in px as required.\n   */\n  @Input() gridHeight: string = '500px';\n\n  constructor() {}\n\n  ngOnInit() {}\n\n  ngAfterViewInit() {\n    debugger;\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\n      ? `calc(100vh - ${\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\n        }px)`\n      : this.gridHeight;\n  }\n}\n",
+            "sourceCode": "import {\n  AfterViewInit,\n  Component,\n  ElementRef,\n  Input,\n  OnInit,\n  ViewChild,\n  ViewChildren,\n} from '@angular/core';\n\n@Component({\n  selector: 'common-lib-grid',\n  templateUrl: './grid.component.html',\n  styleUrls: ['./grid.component.css'],\n})\nexport class GridComponent implements OnInit, AfterViewInit {\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\n\n  public columnDefs = [\n    { field: 'make' },\n    { field: 'model' },\n    { field: 'price' },\n  ];\n\n  public rowData = [\n    { make: 'Toyota', model: 'Celica', price: 35000 },\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\n  ];\n\n  /** List of Input Element */\n  /**\n   * fitToWindow default is true.\n   * fitToWindow is used to set grid height as 100% of container height.\n   */\n  @Input() fitToWindow: boolean = true;\n  /**\n   * gridHeight default 500px.\n   * gridHeight allowed us to set grid height in px as required.\n   */\n  @Input() gridHeight: string = '500px';\n\n  constructor() {}\n\n  ngOnInit() {}\n\n  ngAfterViewInit() {\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\n      ? `calc(100vh - ${\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\n        }px)`\n      : this.gridHeight;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -516,13 +928,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-f9f35bd7655b3ae60ff71dc604d9804b004ce9ea51b232d3b9082baf6559b92a6403c7cff7e419075a2dc0742b5cd29a75ea54a07cfe49f545b08e886fc52ef6",
+            "id": "module-AppModule-91751ebd12dd2d437f60db4121eb8e313348e97f38d1cdad5d81119445c3b77cea66564ce5145e0df17d5263b13ef237c899402ae53f4dd541505f318d3d91d2",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\n\nimport { AgGridModule } from 'ag-grid-angular';\n@NgModule({\n  declarations: [AppComponent],\n  imports: [BrowserModule, AppRoutingModule, AgGridModule.withComponents([])],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\n\nimport { CustomInputModule } from 'projects/common-module-lib/src/lib/custom-input/custom-input.module';\nimport { GridModule } from 'projects/common-module-lib/src/lib/grid/grid.module';\n\n@NgModule({\n  declarations: [AppComponent],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    CustomInputModule,\n    GridModule,\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -541,6 +953,12 @@
                     "elements": [
                         {
                             "name": "AppRoutingModule"
+                        },
+                        {
+                            "name": "CustomInputModule"
+                        },
+                        {
+                            "name": "GridModule"
                         }
                     ]
                 },
@@ -600,13 +1018,13 @@
         },
         {
             "name": "CommonModuleLibModule",
-            "id": "module-CommonModuleLibModule-7b1570a25aa6ba52a81527a8315023bee378bbb6f79e7fbe8a2651a6273fe5e01cf521105f3b4051062d25e9affb14145ac8f24edde552d7ae6d6e9adbd8daae",
+            "id": "module-CommonModuleLibModule-1f2c9d7651684664558fb16c0481458364169bf79d902b443510c9eacc99ae74333e9a2895f782b2c74b219f64ef2485c8fb5052ef01ed010e73b6d4a786fd81",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/common-module-lib.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\n\nimport { GridModule } from './grid/grid.module';\n\n@NgModule({\n  declarations: [],\n  imports: [GridModule],\n  exports: [GridModule],\n})\nexport class CommonModuleLibModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\n\nimport { GridModule } from './grid/grid.module';\nimport { CustomInputModule } from './custom-input/custom-input.module';\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form/control-value-accessor-form.component';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\n@NgModule({\n  declarations: [ControlValueAccessorFormComponent],\n  imports: [GridModule, BrowserAnimationsModule, CustomInputModule],\n  exports: [GridModule, BrowserAnimationsModule, CustomInputModule],\n})\nexport class CommonModuleLibModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -614,11 +1032,18 @@
                 },
                 {
                     "type": "declarations",
-                    "elements": []
+                    "elements": [
+                        {
+                            "name": "ControlValueAccessorFormComponent"
+                        }
+                    ]
                 },
                 {
                     "type": "imports",
                     "elements": [
+                        {
+                            "name": "CustomInputModule"
+                        },
                         {
                             "name": "GridModule"
                         }
@@ -627,6 +1052,9 @@
                 {
                     "type": "exports",
                     "elements": [
+                        {
+                            "name": "CustomInputModule"
+                        },
                         {
                             "name": "GridModule"
                         }
@@ -643,14 +1071,106 @@
             ]
         },
         {
+            "name": "ControlValueAccessorFormModule",
+            "id": "module-ControlValueAccessorFormModule-5adc4196713c5d5e348d107db328ef6d8678b962e9a345512d1cf85a48db02ac952c3c70a408dc7ce5a8425e9e775bd410b6727797cbde2fee6f73b3749c0ec7",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\n\nimport { CustomInputModule } from './../custom-input/custom-input.module';\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form.component';\n\n@NgModule({\n  declarations: [ControlValueAccessorFormComponent],\n  imports: [CommonModule, CustomInputModule, FormsModule, ReactiveFormsModule],\n  exports: [ControlValueAccessorFormComponent],\n})\nexport class ControlValueAccessorFormModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "ControlValueAccessorFormComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "CustomInputModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ControlValueAccessorFormComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "CustomInputModule",
+            "id": "module-CustomInputModule-e58b0207940c4025881d195aaa03266d199b10e436a4f198075834b862ac5becc1447e95a1de186822c5dde2e69d3cc9305bc35c27ec6e3f4345da1c75214832",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/common-module-lib/src/lib/custom-input/custom-input.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\n\nimport { MatInputModule } from '@angular/material/input';\nimport { MatFormFieldModule } from '@angular/material/form-field';\n\nimport { CustomInputComponent } from './custom-input.component';\n\n@NgModule({\n  declarations: [CustomInputComponent],\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatInputModule,\n    MatFormFieldModule,\n  ],\n  exports: [CustomInputComponent],\n  schemas: [],\n})\nexport class CustomInputModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "CustomInputComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "CustomInputComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "GridModule",
-            "id": "module-GridModule-726f0cdfe2728a65ec7946e4713dc4ce485e5474c82922989897f4375da85040c7258be2fd3d8e5451cc5481218f26f535b3cf200b0dd3c476c74904da2c11bd",
+            "id": "module-GridModule-0a1302d11a9c601395574c13c58ca1004afc3afcc0516d7c3a57535828075762510ea0a36a5f02fc8717bdea25b2442362029fc1fbbeb5a2fbfb8d8d0059dda6",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/grid/grid.module.ts",
             "methods": [],
-            "sourceCode": "import { CommonModule } from '@angular/common';\nimport { HttpClientModule } from '@angular/common/http';\nimport { NgModule } from '@angular/core';\n\nimport { AgGridModule } from 'ag-grid-angular';\nimport { FormsModule } from '@angular/forms';\n\nimport { GridComponent } from './grid.component';\n\n@NgModule({\n  declarations: [GridComponent],\n  imports: [\n    CommonModule,\n    HttpClientModule,\n    AgGridModule.withComponents([]),\n    FormsModule,\n  ],\n  exports: [GridComponent],\n  providers: [],\n})\nexport class GridModule {}\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\nimport { HttpClientModule } from '@angular/common/http';\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\n\nimport { AgGridModule } from 'ag-grid-angular';\nimport { FormsModule } from '@angular/forms';\n\nimport { GridComponent } from './grid.component';\n\n@NgModule({\n  declarations: [GridComponent],\n  imports: [\n    CommonModule,\n    HttpClientModule,\n    AgGridModule.withComponents([]),\n    FormsModule,\n  ],\n  exports: [GridComponent],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n  providers: [],\n})\nexport class GridModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -708,6 +1228,36 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "environment",
@@ -865,17 +1415,27 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"false\"></common-lib-grid>\r\n  `,\r\n})"
+                "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"true\"></common-lib-grid>\r\n  `,\r\n})"
             },
             {
-                "name": "Text",
+                "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: {},\r\n  template: `\r\n    <common-lib-control-value-accessor-form></common-lib-control-value-accessor-form>`,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-input [title]=\"Placeholder\" [isMaterial]=\"isMaterial\"></common-lib-custom-input>\r\n  `,\r\n})"
             }
         ],
         "functions": [],
@@ -922,6 +1482,72 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "literal type"
+                }
+            ],
+            "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: {},\r\n  template: `\r\n    <common-lib-control-value-accessor-form></common-lib-control-value-accessor-form>`,\r\n})"
+                }
+            ],
+            "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-input [title]=\"Placeholder\" [isMaterial]=\"isMaterial\"></common-lib-custom-input>\r\n  `,\r\n})"
+                }
+            ],
+            "projects/common-module-lib/src/lib/grid/grid.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"true\"></common-lib-grid>\r\n  `,\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -1063,28 +1689,6 @@
                     "type": "Story<Page>",
                     "defaultValue": "(args: Page) => ({\n  props: args,\n})"
                 }
-            ],
-            "projects/common-module-lib/src/lib/grid/grid.stories.ts": [
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"false\"></common-lib-grid>\r\n  `,\r\n})"
-                },
-                {
-                    "name": "Text",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                }
             ]
         },
         "groupedFunctions": {},
@@ -1106,9 +1710,67 @@
         ]
     },
     "coverage": {
-        "count": 4,
+        "count": 3,
         "status": "low",
         "files": [
+            {
+                "filePath": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ControlValueAccessorFormComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultUses",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TemplateDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-input/custom-input.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CustomInputComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultUses",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TemplateDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
             {
                 "filePath": "projects/common-module-lib/src/lib/grid/grid.component.ts",
                 "type": "component",
@@ -1123,7 +1785,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Template",
+                "name": "defaultUses",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1133,7 +1795,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Text",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
