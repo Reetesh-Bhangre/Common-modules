@@ -30,7 +30,11 @@ export class ControlValueAccessorFormComponent implements OnInit {
       lName: new FormControl('Last'),
       emailId: new FormControl('fl@email.com'),
       mobileNumber: new FormControl('9876543210'),
-      sDate: new FormControl('2020-05-17'),
+      cDate: new FormControl('2020-05-17'),
+      cSelect: new FormControl([
+        { id: 2, name: 'Node Js' },
+        { id: 8, name: 'ReactJs' },
+      ]),
     });
   }
 }

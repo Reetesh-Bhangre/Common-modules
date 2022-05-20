@@ -624,7 +624,7 @@
                     }
                 }
             },
-            "templateData": "<mat-form-field appearance=\"outline\">\n  <mat-label>Choose a date</mat-label>\n  <input\n    matInput\n    [matDatepicker]=\"releasedAtPicker\"\n    (click)=\"releasedAtPicker.open()\"\n    [(ngModel)]=\"value\"\n  />\n  <mat-datepicker-toggle\n    matSuffix\n    [for]=\"releasedAtPicker\"\n  ></mat-datepicker-toggle>\n  <mat-datepicker #releasedAtPicker> </mat-datepicker>\n</mat-form-field>\n"
+            "templateData": "<mat-form-field appearance=\"outline\">\n  <mat-label>Choose a date</mat-label>\n  <input\n    matInput\n    [matDatepicker]=\"releasedAtPicker\"\n    (click)=\"releasedAtPicker.open()\"\n    [(ngModel)]=\"value\"\n  />\n  <mat-datepicker-toggle\n    matSuffix\n    [for]=\"releasedAtPicker\"\n  ></mat-datepicker-toggle>\n  <mat-datepicker #releasedAtPicker></mat-datepicker>\n</mat-form-field>\n"
         },
         {
             "name": "CustomInputComponent",
@@ -893,6 +893,89 @@
                 }
             },
             "templateData": "<ng-container *ngIf=\"isMaterial\">\r\n  <mat-form-field class=\"example-full-width\" appearance=\"outline\">\r\n    <mat-label>{{ title }}</mat-label>\r\n    <input matInput [placeholder]=\"title\" [(ngModel)]=\"value\" />\r\n  </mat-form-field>\r\n</ng-container>\r\n<ng-container *ngIf=\"!isMaterial\">\r\n  <label class=\"label\">{{ title }}</label>\r\n  <input class=\"text-input\" [placeholder]=\"title\" [(ngModel)]=\"value\" />\r\n</ng-container>\r\n"
+        },
+        {
+            "name": "CustomSelectComponent",
+            "id": "component-CustomSelectComponent-96cf8698a517851299c87abdbee4a47d0e583ff66ae99397c9f31d874e32ec993c3f56de69d51e8a405969680f03bc6d105bd4cdeb0892b4e46bfe9d527066d4",
+            "file": "projects/common-module-lib/src/lib/custom-select/custom-select.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "common-lib-custom-select",
+            "styleUrls": [
+                "./custom-select.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./custom-select.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "items",
+                    "defaultValue": "[\n    { id: 1, name: 'Python' },\n    { id: 2, name: 'Node Js' },\n    { id: 3, name: 'Java' },\n    { id: 4, name: 'PHP', disabled: true },\n    { id: 5, name: 'Django' },\n    { id: 6, name: 'Angular' },\n    { id: 7, name: 'Vue' },\n    { id: 8, name: 'ReactJs' },\n  ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "selected",
+                    "defaultValue": "[\n    { id: 2, name: 'Node Js' },\n    { id: 8, name: 'ReactJs' },\n  ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 26,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'common-lib-custom-select',\n  templateUrl: './custom-select.component.html',\n  styleUrls: ['./custom-select.component.css'],\n})\nexport class CustomSelectComponent implements OnInit {\n  items = [\n    { id: 1, name: 'Python' },\n    { id: 2, name: 'Node Js' },\n    { id: 3, name: 'Java' },\n    { id: 4, name: 'PHP', disabled: true },\n    { id: 5, name: 'Django' },\n    { id: 6, name: 'Angular' },\n    { id: 7, name: 'Vue' },\n    { id: 8, name: 'ReactJs' },\n  ];\n  selected = [\n    { id: 2, name: 'Node Js' },\n    { id: 8, name: 'ReactJs' },\n  ];\n\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./custom-select.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 22
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<p>custom-select works!</p>\n<ng-select\n  [items]=\"items\"\n  bindLabel=\"name\"\n  placeholder=\"Select item\"\n  appendTo=\"body\"\n  multiple=\"true\"\n  [(ngModel)]=\"selected\"\n>\n</ng-select>\n"
         },
         {
             "name": "GridComponent",
@@ -1279,13 +1362,13 @@
         },
         {
             "name": "CommonModuleLibModule",
-            "id": "module-CommonModuleLibModule-8cdb317ab4e0462e6636647ce3c66ed8c7a795c6fc92085f1a008e18b6ead9953cfd6e61f78cfda11c8162ef2007f9e2c163af7210dd0906dec6f0786649cd92",
+            "id": "module-CommonModuleLibModule-a08e814d0e8ecfa39ec841adfd1f088f42183bd656beb5c2e98267ede4ca45e3e271e27979d9491f095570b38c671c474ca2faa4d3f174b38d859eaa2e68b3e5",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/common-module-lib.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\r\n\r\nimport { GridModule } from './grid/grid.module';\r\nimport { CustomInputModule } from './custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';\r\nimport { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n  exports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n})\r\nexport class CommonModuleLibModule {}\r\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\n\r\nimport { GridModule } from './grid/grid.module';\r\nimport { CustomInputModule } from './custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './custom-select/custom-select.module';\r\n\r\nimport { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n  exports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n})\r\nexport class CommonModuleLibModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1308,6 +1391,9 @@
                             "name": "CustomInputModule"
                         },
                         {
+                            "name": "CustomSelectModule"
+                        },
+                        {
                             "name": "GridModule"
                         }
                     ]
@@ -1323,6 +1409,9 @@
                         },
                         {
                             "name": "CustomInputModule"
+                        },
+                        {
+                            "name": "CustomSelectModule"
                         },
                         {
                             "name": "GridModule"
@@ -1479,6 +1568,50 @@
             ]
         },
         {
+            "name": "CustomSelectModule",
+            "id": "module-CustomSelectModule-2869b47876b8a8d37dc6f88d0e0b5c14908851cfeb21d94950279c95cc5d359dd6182f72029482ba15bfb94d9c48b0c37c323223e0e202c4ba0f82c9353737b6",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/common-module-lib/src/lib/custom-select/custom-select.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CustomSelectComponent } from './custom-select.component';\n\n@NgModule({\n  declarations: [CustomSelectComponent],\n  imports: [CommonModule],\n  exports: [CustomSelectComponent],\n})\nexport class CustomSelectModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "CustomSelectComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "CustomSelectComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "GridModule",
             "id": "module-GridModule-25e251733954c664794efe62ecf73f42432158a21f2f74deba0cfd6a568728ff6fe4ab49d425c35aa0607bbd7bbf5925cb9597ed52d4d585d0f2fea0df363eae",
             "description": "",
@@ -1549,16 +1682,6 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "TemplateDefault.bind({})"
-            },
-            {
-                "name": "defaultUses",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1569,7 +1692,27 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-select/custom-select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -1737,16 +1880,6 @@
                 "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
-            },
-            {
-                "name": "TemplateDefault",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1757,11 +1890,31 @@
                 "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-input [title]=\"Placeholder\" [isMaterial]=\"isMaterial\"></common-lib-custom-input>\r\n  `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-select/custom-select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-select></common-lib-custom-select>\r\n  `,\r\n})"
             },
             {
                 "name": "TemplateDefault",
@@ -1820,28 +1973,6 @@
                     "type": "literal type"
                 }
             ],
-            "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts": [
-                {
-                    "name": "defaultUses",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "TemplateDefault.bind({})"
-                },
-                {
-                    "name": "TemplateDefault",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
-                }
-            ],
             "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts": [
                 {
                     "name": "defaultUses",
@@ -1864,6 +1995,28 @@
                     "defaultValue": "(args) => ({\r\n  props: {},\r\n  template: `\r\n    <common-lib-control-value-accessor-form></common-lib-control-value-accessor-form>`,\r\n})"
                 }
             ],
+            "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
+                }
+            ],
             "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts": [
                 {
                     "name": "defaultUses",
@@ -1884,6 +2037,28 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-input [title]=\"Placeholder\" [isMaterial]=\"isMaterial\"></common-lib-custom-input>\r\n  `,\r\n})"
+                }
+            ],
+            "projects/common-module-lib/src/lib/custom-select/custom-select.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-select/custom-select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-select/custom-select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-select></common-lib-custom-select>\r\n  `,\r\n})"
                 }
             ],
             "projects/common-module-lib/src/lib/grid/grid.stories.ts": [
@@ -2068,7 +2243,7 @@
         ]
     },
     "coverage": {
-        "count": 3,
+        "count": 2,
         "status": "low",
         "files": [
             {
@@ -2150,6 +2325,35 @@
             },
             {
                 "filePath": "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TemplateDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-select/custom-select.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CustomSelectComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-select/custom-select.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultUses",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-select/custom-select.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
