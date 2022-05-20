@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline">
+  <mat-label>Choose a date</mat-label>
+  <input
+    matInput
+    [matDatepicker]="releasedAtPicker"
+    (click)="releasedAtPicker.open()"
+    [(ngModel)]="value"
+  />
+  <mat-datepicker-toggle
+    matSuffix
+    [for]="releasedAtPicker"
+  ></mat-datepicker-toggle>
+  <mat-datepicker #releasedAtPicker> </mat-datepicker>
+</mat-form-field>

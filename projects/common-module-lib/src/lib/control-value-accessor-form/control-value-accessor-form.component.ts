@@ -30,6 +30,7 @@ export class ControlValueAccessorFormComponent implements OnInit {
       lName: new FormControl('Last'),
       emailId: new FormControl('fl@email.com'),
       mobileNumber: new FormControl('9876543210'),
+      sDate: new FormControl('2020-05-17'),
     });
   }
 }

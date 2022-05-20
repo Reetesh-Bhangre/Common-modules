@@ -95,7 +95,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<common-lib-grid [fitToWindow]=\"true\"></common-lib-grid>\n<common-lib-custom-input title=\"Placeholder\"></common-lib-custom-input>\n"
+            "templateData": "<common-lib-grid [fitToWindow]=\"true\"></common-lib-grid>\r\n<common-lib-custom-input title=\"Placeholder\"></common-lib-custom-input>\r\n"
         },
         {
             "name": "ButtonComponent",
@@ -223,7 +223,7 @@
         },
         {
             "name": "ControlValueAccessorFormComponent",
-            "id": "component-ControlValueAccessorFormComponent-090491199ad747c1bc317ebbdbd188386b1e15ac8b3db9cc90a0e0f8709c7357647b7157b34fa098dd05a731a190fc91df599b99376aad537fef7a6a639a843c",
+            "id": "component-ControlValueAccessorFormComponent-d104b207909a0de42bfe03b04d6bcf4c1a85ad814536cc9b04b0720791d3dc25f5dfb9e4bac2a979a44f601a33b6749ee9dba3673e34fbde1c8a80464e7aee3c",
             "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -343,7 +343,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormControl } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-control-value-accessor-form',\n  templateUrl: './control-value-accessor-form.component.html',\n  styleUrls: ['./control-value-accessor-form.component.css'],\n})\nexport class ControlValueAccessorFormComponent implements OnInit {\n  public firstName: string = 'First Name';\n  public lastName: string = 'Lirst Name';\n  public emailId: string = 'Email Id';\n  public mobileNumber: string = 'Mobile Number';\n\n  form: FormGroup;\n\n  constructor() {}\n\n  ngOnInit(): void {\n    this.form = this.createForm();\n  }\n\n  onSubmit() {\n    console.log('form here', this.form.value);\n  }\n\n  createForm() {\n    return new FormGroup({\n      fName: new FormControl('first'),\n      lName: new FormControl('Last'),\n      emailId: new FormControl('fl@email.com'),\n      mobileNumber: new FormControl('9876543210'),\n    });\n  }\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormGroup, FormControl } from '@angular/forms';\r\n\r\n@Component({\r\n  selector: 'common-lib-control-value-accessor-form',\r\n  templateUrl: './control-value-accessor-form.component.html',\r\n  styleUrls: ['./control-value-accessor-form.component.css'],\r\n})\r\nexport class ControlValueAccessorFormComponent implements OnInit {\r\n  public firstName: string = 'First Name';\r\n  public lastName: string = 'Lirst Name';\r\n  public emailId: string = 'Email Id';\r\n  public mobileNumber: string = 'Mobile Number';\r\n\r\n  form: FormGroup;\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit(): void {\r\n    this.form = this.createForm();\r\n  }\r\n\r\n  onSubmit() {\r\n    console.log('form here', this.form.value);\r\n  }\r\n\r\n  createForm() {\r\n    return new FormGroup({\r\n      fName: new FormControl('first'),\r\n      lName: new FormControl('Last'),\r\n      emailId: new FormControl('fl@email.com'),\r\n      mobileNumber: new FormControl('9876543210'),\r\n      sDate: new FormControl('2020-05-17'),\r\n    });\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -363,11 +363,272 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<h2>Control Value Accessor Form</h2>\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"firstName\"\n      [isMaterial]=\"true\"\n      formControlName=\"fName\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"lastName\"\n      [isMaterial]=\"true\"\n      formControlName=\"lName\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"emailId\"\n      [isMaterial]=\"true\"\n      formControlName=\"emailId\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <common-lib-custom-input\n      [title]=\"mobileNumber\"\n      [isMaterial]=\"true\"\n      formControlName=\"mobileNumber\"\n    ></common-lib-custom-input>\n  </div>\n  <div class=\"form-control\">\n    <button type=\"submit\">submit</button>\n  </div>\n\n  <pre>\n      {{ form.value | json }}\n  </pre>\n</form>\n"
+            "templateData": "<h2>Control Value Accessor Form</h2>\r\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"firstName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"fName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"lastName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"lName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"emailId\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"emailId\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"mobileNumber\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"mobileNumber\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-date-picker\r\n      formControlName=\"sDate\"\r\n    ></common-lib-custom-date-picker>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <button type=\"submit\">submit</button>\r\n  </div>\r\n\r\n  <pre>\r\n      {{ form.value | json }}\r\n  </pre>\r\n</form>\r\n"
+        },
+        {
+            "name": "CustomDatePickerComponent",
+            "id": "component-CustomDatePickerComponent-44d764f988ff085ae1bd90d96f99d01441ca7dcc5289a8b9a82396aaa7a63a5fd5ad17b0f0ef5c5c94b7e31637706f96bbbed2030e77c22d3b36412ca0f1ae59",
+            "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "{\n    provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CustomDatePickerComponent), multi: true,\n}",
+                    "type": "component"
+                }
+            ],
+            "selector": "common-lib-custom-date-picker",
+            "styleUrls": [
+                "./custom-date-picker.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./custom-date-picker.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "date1",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 17,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 35
+                },
+                {
+                    "name": "onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 36
+                },
+                {
+                    "name": "val",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 55,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 42,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 46,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": true,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 38,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-date-picker',\n  templateUrl: './custom-date-picker.component.html',\n  styleUrls: ['./custom-date-picker.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomDatePickerComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomDatePickerComponent implements OnInit, ControlValueAccessor {\n  public date1: any;\n\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n    // throw new Error('Method not implemented.');\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n    // throw new Error('Method not implemented.');\n  }\n\n  ngOnInit(): void {\n    this.date1 = new Date();\n    debugger;\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./custom-date-picker.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 31
+            },
+            "implements": [
+                "OnInit",
+                "ControlValueAccessor"
+            ],
+            "accessors": {
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 24,
+                        "jsdoctags": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    },
+                    "getSignature": {
+                        "name": "value",
+                        "type": "any",
+                        "returnType": "any",
+                        "line": 21
+                    }
+                }
+            },
+            "templateData": "<mat-form-field appearance=\"outline\">\n  <mat-label>Choose a date</mat-label>\n  <input\n    matInput\n    [matDatepicker]=\"releasedAtPicker\"\n    (click)=\"releasedAtPicker.open()\"\n    [(ngModel)]=\"value\"\n  />\n  <mat-datepicker-toggle\n    matSuffix\n    [for]=\"releasedAtPicker\"\n  ></mat-datepicker-toggle>\n  <mat-datepicker #releasedAtPicker> </mat-datepicker>\n</mat-form-field>\n"
         },
         {
             "name": "CustomInputComponent",
-            "id": "component-CustomInputComponent-1b80d49accc1b6b41155eb76d62a82b67ac0e3f52c9a7ee67c42181003bd2047880fc212d3acc6f4f77e2c94af2b85eca6437502f3817434e8c81f1285ce6b4a",
+            "id": "component-CustomInputComponent-e09e5c5a912d624e9508eab6c0fffdd01664fe4cfe673ad5e56444b236a6ec00e822b2b84b0a68c1686f754d47476143806182e5187130a5bfc8790cdda1a646",
             "file": "projects/common-module-lib/src/lib/custom-input/custom-input.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -572,7 +833,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  animate,\n  state,\n  style,\n  transition,\n  trigger,\n} from '@angular/animations';\nimport { Component, forwardRef, Input, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-input',\n  templateUrl: './custom-input.component.html',\n  styleUrls: ['./custom-input.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomInputComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomInputComponent implements OnInit, ControlValueAccessor {\n  @Input() title: string = '';\n  @Input() isMaterial: boolean = false;\n\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  registerOnChange(fn: any): void {\n    this.onChange = fn; //;(this.value);\n  }\n\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n\n  writeValue(value: string): void {\n    this.value = value;\n  }\n\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n  }\n}\n",
+            "sourceCode": "import {\r\n  animate,\r\n  state,\r\n  style,\r\n  transition,\r\n  trigger,\r\n} from '@angular/animations';\r\nimport { Component, forwardRef, Input, OnInit } from '@angular/core';\r\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\r\n\r\n@Component({\r\n  selector: 'common-lib-custom-input',\r\n  templateUrl: './custom-input.component.html',\r\n  styleUrls: ['./custom-input.component.css'],\r\n  providers: [\r\n    {\r\n      provide: NG_VALUE_ACCESSOR,\r\n      useExisting: forwardRef(() => CustomInputComponent),\r\n      multi: true,\r\n    },\r\n  ],\r\n})\r\nexport class CustomInputComponent implements OnInit, ControlValueAccessor {\r\n  @Input() title: string = '';\r\n  @Input() isMaterial: boolean = false;\r\n\r\n  val = '';\r\n\r\n  get value(): any {\r\n    return this.val;\r\n  }\r\n  set value(val) {\r\n    // this value is updated by programmatic changes\r\n    if (val !== undefined && this.val !== val) {\r\n      this.val = val;\r\n      this.onChange(val);\r\n      this.onTouched(val);\r\n    }\r\n  }\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit(): void {}\r\n\r\n  onChange: any = () => {};\r\n  onTouched: any = () => {};\r\n\r\n  registerOnChange(fn: any): void {\r\n    this.onChange = fn; //;(this.value);\r\n  }\r\n\r\n  registerOnTouched(fn: any): void {\r\n    this.onTouched = fn;\r\n  }\r\n\r\n  writeValue(value: string): void {\r\n    this.value = value;\r\n  }\r\n\r\n  setDisabledState?(isDisabled: boolean): void {\r\n    console.log('setDisabledState isDisabled', isDisabled);\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -631,11 +892,11 @@
                     }
                 }
             },
-            "templateData": "<ng-container *ngIf=\"isMaterial\">\n  <mat-form-field class=\"example-full-width\" appearance=\"outline\">\n    <mat-label>{{ title }}</mat-label>\n    <input matInput [placeholder]=\"title\" [(ngModel)]=\"value\" />\n  </mat-form-field>\n</ng-container>\n<ng-container *ngIf=\"!isMaterial\">\n  <label class=\"label\">{{ title }}</label>\n  <input class=\"text-input\" [placeholder]=\"title\" [(ngModel)]=\"value\" />\n</ng-container>\n"
+            "templateData": "<ng-container *ngIf=\"isMaterial\">\r\n  <mat-form-field class=\"example-full-width\" appearance=\"outline\">\r\n    <mat-label>{{ title }}</mat-label>\r\n    <input matInput [placeholder]=\"title\" [(ngModel)]=\"value\" />\r\n  </mat-form-field>\r\n</ng-container>\r\n<ng-container *ngIf=\"!isMaterial\">\r\n  <label class=\"label\">{{ title }}</label>\r\n  <input class=\"text-input\" [placeholder]=\"title\" [(ngModel)]=\"value\" />\r\n</ng-container>\r\n"
         },
         {
             "name": "GridComponent",
-            "id": "component-GridComponent-f9fbbad6287fd076bd69264db4b2133d6ad05116d0f0dfd74bb9a13f586b68e6d0a6b82c69a17ff4da4c51fa11776b883a9489af1207c1aa871db5f6c77bd869",
+            "id": "component-GridComponent-dd7cce4737e024f09ab1b6b8ff4fdd8218843cadb5fa166646ac404d88b8d705c16219777e09e1d83774823fb6916ec24089443132cbdec8648d4d50bf180bc0",
             "file": "projects/common-module-lib/src/lib/grid/grid.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -679,7 +940,7 @@
             "propertiesClass": [
                 {
                     "name": "columnDefs",
-                    "defaultValue": "[\n    { field: 'make' },\n    { field: 'model' },\n    { field: 'price' },\n  ]",
+                    "defaultValue": "[\r\n    { field: 'make' },\r\n    { field: 'model' },\r\n    { field: 'price' },\r\n  ]",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
@@ -707,7 +968,7 @@
                 },
                 {
                     "name": "rowData",
-                    "defaultValue": "[\n    { make: 'Toyota', model: 'Celica', price: 35000 },\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\n  ]",
+                    "defaultValue": "[\r\n    { make: 'Toyota', model: 'Celica', price: 35000 },\r\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\r\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\r\n  ]",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
@@ -748,7 +1009,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  AfterViewInit,\n  Component,\n  ElementRef,\n  Input,\n  OnInit,\n  ViewChild,\n  ViewChildren,\n} from '@angular/core';\n\n@Component({\n  selector: 'common-lib-grid',\n  templateUrl: './grid.component.html',\n  styleUrls: ['./grid.component.css'],\n})\nexport class GridComponent implements OnInit, AfterViewInit {\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\n\n  public columnDefs = [\n    { field: 'make' },\n    { field: 'model' },\n    { field: 'price' },\n  ];\n\n  public rowData = [\n    { make: 'Toyota', model: 'Celica', price: 35000 },\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\n  ];\n\n  /** List of Input Element */\n  /**\n   * fitToWindow default is true.\n   * fitToWindow is used to set grid height as 100% of container height.\n   */\n  @Input() fitToWindow: boolean = true;\n  /**\n   * gridHeight default 500px.\n   * gridHeight allowed us to set grid height in px as required.\n   */\n  @Input() gridHeight: string = '500px';\n\n  constructor() {}\n\n  ngOnInit() {}\n\n  ngAfterViewInit() {\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\n      ? `calc(100vh - ${\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\n        }px)`\n      : this.gridHeight;\n  }\n}\n",
+            "sourceCode": "import {\r\n  AfterViewInit,\r\n  Component,\r\n  ElementRef,\r\n  Input,\r\n  OnInit,\r\n  ViewChild,\r\n  ViewChildren,\r\n} from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid',\r\n  templateUrl: './grid.component.html',\r\n  styleUrls: ['./grid.component.css'],\r\n})\r\nexport class GridComponent implements OnInit, AfterViewInit {\r\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\r\n\r\n  public columnDefs = [\r\n    { field: 'make' },\r\n    { field: 'model' },\r\n    { field: 'price' },\r\n  ];\r\n\r\n  public rowData = [\r\n    { make: 'Toyota', model: 'Celica', price: 35000 },\r\n    { make: 'Ford', model: 'Mondeo', price: 32000 },\r\n    { make: 'Porsche', model: 'Boxster', price: 72000 },\r\n  ];\r\n\r\n  /** List of Input Element */\r\n  /**\r\n   * fitToWindow default is true.\r\n   * fitToWindow is used to set grid height as 100% of container height.\r\n   */\r\n  @Input() fitToWindow: boolean = true;\r\n  /**\r\n   * gridHeight default 500px.\r\n   * gridHeight allowed us to set grid height in px as required.\r\n   */\r\n  @Input() gridHeight: string = '500px';\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit() {}\r\n\r\n  ngAfterViewInit() {\r\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\r\n      ? `calc(100vh - ${\r\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\r\n        }px)`\r\n      : this.gridHeight;\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -928,13 +1189,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-91751ebd12dd2d437f60db4121eb8e313348e97f38d1cdad5d81119445c3b77cea66564ce5145e0df17d5263b13ef237c899402ae53f4dd541505f318d3d91d2",
+            "id": "module-AppModule-85d2bb8f70d1f350207426d38729f6fbe0183d99de2715ff298fcf6fc1756f175eb0c0f26063ef02b488cbfc937523335e3250ac493e69c27447b91790b342a9",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\n\nimport { CustomInputModule } from 'projects/common-module-lib/src/lib/custom-input/custom-input.module';\nimport { GridModule } from 'projects/common-module-lib/src/lib/grid/grid.module';\n\n@NgModule({\n  declarations: [AppComponent],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    CustomInputModule,\n    GridModule,\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { BrowserModule } from '@angular/platform-browser';\r\n\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n\r\nimport { AppRoutingModule } from './app-routing.module';\r\nimport { AppComponent } from './app.component';\r\n\r\nimport { CustomInputModule } from 'projects/common-module-lib/src/lib/custom-input/custom-input.module';\r\nimport { GridModule } from 'projects/common-module-lib/src/lib/grid/grid.module';\r\n\r\n@NgModule({\r\n  declarations: [AppComponent],\r\n  imports: [\r\n    BrowserModule,\r\n    BrowserAnimationsModule,\r\n    AppRoutingModule,\r\n    CustomInputModule,\r\n    GridModule,\r\n  ],\r\n  providers: [],\r\n  bootstrap: [AppComponent],\r\n})\r\nexport class AppModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1018,13 +1279,13 @@
         },
         {
             "name": "CommonModuleLibModule",
-            "id": "module-CommonModuleLibModule-1f2c9d7651684664558fb16c0481458364169bf79d902b443510c9eacc99ae74333e9a2895f782b2c74b219f64ef2485c8fb5052ef01ed010e73b6d4a786fd81",
+            "id": "module-CommonModuleLibModule-8cdb317ab4e0462e6636647ce3c66ed8c7a795c6fc92085f1a008e18b6ead9953cfd6e61f78cfda11c8162ef2007f9e2c163af7210dd0906dec6f0786649cd92",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/common-module-lib.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\n\nimport { GridModule } from './grid/grid.module';\nimport { CustomInputModule } from './custom-input/custom-input.module';\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form/control-value-accessor-form.component';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\n@NgModule({\n  declarations: [ControlValueAccessorFormComponent],\n  imports: [GridModule, BrowserAnimationsModule, CustomInputModule],\n  exports: [GridModule, BrowserAnimationsModule, CustomInputModule],\n})\nexport class CommonModuleLibModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\n\r\nimport { GridModule } from './grid/grid.module';\r\nimport { CustomInputModule } from './custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';\r\nimport { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n  exports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n})\r\nexport class CommonModuleLibModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1032,15 +1293,17 @@
                 },
                 {
                     "type": "declarations",
-                    "elements": [
-                        {
-                            "name": "ControlValueAccessorFormComponent"
-                        }
-                    ]
+                    "elements": []
                 },
                 {
                     "type": "imports",
                     "elements": [
+                        {
+                            "name": "ControlValueAccessorFormModule"
+                        },
+                        {
+                            "name": "CustomDatePickerModule"
+                        },
                         {
                             "name": "CustomInputModule"
                         },
@@ -1052,6 +1315,12 @@
                 {
                     "type": "exports",
                     "elements": [
+                        {
+                            "name": "ControlValueAccessorFormModule"
+                        },
+                        {
+                            "name": "CustomDatePickerModule"
+                        },
                         {
                             "name": "CustomInputModule"
                         },
@@ -1072,13 +1341,13 @@
         },
         {
             "name": "ControlValueAccessorFormModule",
-            "id": "module-ControlValueAccessorFormModule-5adc4196713c5d5e348d107db328ef6d8678b962e9a345512d1cf85a48db02ac952c3c70a408dc7ce5a8425e9e775bd410b6727797cbde2fee6f73b3749c0ec7",
+            "id": "module-ControlValueAccessorFormModule-09bbb2db6957a9e65211a854215fb8e6262f07f1aa3a3f843ce64aaa145f41d21e02b48eca6f1288abbeb8c6346cec70a914bfc68b787910c53da6c1342005b7",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\n\nimport { CustomInputModule } from './../custom-input/custom-input.module';\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form.component';\n\n@NgModule({\n  declarations: [ControlValueAccessorFormComponent],\n  imports: [CommonModule, CustomInputModule, FormsModule, ReactiveFormsModule],\n  exports: [ControlValueAccessorFormComponent],\n})\nexport class ControlValueAccessorFormModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n\r\nimport { CustomInputModule } from './../custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './../custom-date-picker/custom-date-picker.module';\r\n\r\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form.component';\r\n\r\n@NgModule({\r\n  declarations: [ControlValueAccessorFormComponent],\r\n  imports: [\r\n    CommonModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n  ],\r\n  exports: [ControlValueAccessorFormComponent],\r\n})\r\nexport class ControlValueAccessorFormModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1095,6 +1364,9 @@
                 {
                     "type": "imports",
                     "elements": [
+                        {
+                            "name": "CustomDatePickerModule"
+                        },
                         {
                             "name": "CustomInputModule"
                         }
@@ -1119,14 +1391,58 @@
             ]
         },
         {
+            "name": "CustomDatePickerModule",
+            "id": "module-CustomDatePickerModule-d6af8873131534df35c5e9a3748eb1013832039511bb86e563a5c3f12238fe69ea4bc31ee913d0c0fd9dd745745b6206c93db16460c9344b56c228c5c6fa08cf",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\n\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatDatepickerModule } from '@angular/material/datepicker';\nimport { MatNativeDateModule } from '@angular/material/core';\nimport { MatIconModule } from '@angular/material/icon';\n\nimport { CustomDatePickerComponent } from './custom-date-picker.component';\n\n@NgModule({\n  declarations: [CustomDatePickerComponent],\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatFormFieldModule,\n    MatInputModule,\n    MatDatepickerModule,\n    MatNativeDateModule,\n    MatIconModule,\n  ],\n  exports: [CustomDatePickerComponent],\n})\nexport class CustomDatePickerModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "CustomDatePickerComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "CustomDatePickerComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "CustomInputModule",
-            "id": "module-CustomInputModule-e58b0207940c4025881d195aaa03266d199b10e436a4f198075834b862ac5becc1447e95a1de186822c5dde2e69d3cc9305bc35c27ec6e3f4345da1c75214832",
+            "id": "module-CustomInputModule-9fefb8ad49a769589792b8f354253be6ffd60c901b6fea9ef4141d32cb8a0048669d8652ad2edafe1612c2abf0b66401daa496c141f6196fdbee0a25c176887c",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/custom-input/custom-input.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\n\nimport { MatInputModule } from '@angular/material/input';\nimport { MatFormFieldModule } from '@angular/material/form-field';\n\nimport { CustomInputComponent } from './custom-input.component';\n\n@NgModule({\n  declarations: [CustomInputComponent],\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatInputModule,\n    MatFormFieldModule,\n  ],\n  exports: [CustomInputComponent],\n  schemas: [],\n})\nexport class CustomInputModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\n\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n\r\nimport { MatInputModule } from '@angular/material/input';\r\nimport { MatFormFieldModule } from '@angular/material/form-field';\r\n\r\nimport { CustomInputComponent } from './custom-input.component';\r\n\r\n@NgModule({\r\n  declarations: [CustomInputComponent],\r\n  imports: [\r\n    CommonModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n    MatInputModule,\r\n    MatFormFieldModule,\r\n  ],\r\n  exports: [CustomInputComponent],\r\n  schemas: [],\r\n})\r\nexport class CustomInputModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1164,13 +1480,13 @@
         },
         {
             "name": "GridModule",
-            "id": "module-GridModule-0a1302d11a9c601395574c13c58ca1004afc3afcc0516d7c3a57535828075762510ea0a36a5f02fc8717bdea25b2442362029fc1fbbeb5a2fbfb8d8d0059dda6",
+            "id": "module-GridModule-25e251733954c664794efe62ecf73f42432158a21f2f74deba0cfd6a568728ff6fe4ab49d425c35aa0607bbd7bbf5925cb9597ed52d4d585d0f2fea0df363eae",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/grid/grid.module.ts",
             "methods": [],
-            "sourceCode": "import { CommonModule } from '@angular/common';\nimport { HttpClientModule } from '@angular/common/http';\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\n\nimport { AgGridModule } from 'ag-grid-angular';\nimport { FormsModule } from '@angular/forms';\n\nimport { GridComponent } from './grid.component';\n\n@NgModule({\n  declarations: [GridComponent],\n  imports: [\n    CommonModule,\n    HttpClientModule,\n    AgGridModule.withComponents([]),\n    FormsModule,\n  ],\n  exports: [GridComponent],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n  providers: [],\n})\nexport class GridModule {}\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n\r\nimport { AgGridModule } from 'ag-grid-angular';\r\nimport { FormsModule } from '@angular/forms';\r\n\r\nimport { GridComponent } from './grid.component';\r\n\r\n@NgModule({\r\n  declarations: [GridComponent],\r\n  imports: [\r\n    CommonModule,\r\n    HttpClientModule,\r\n    AgGridModule.withComponents([]),\r\n    FormsModule,\r\n  ],\r\n  exports: [GridComponent],\r\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n  providers: [],\r\n})\r\nexport class GridModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1233,6 +1549,16 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1257,7 +1583,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "Template.bind({})"
+                "defaultValue": "TemplateDefault.bind({})"
             },
             {
                 "name": "environment",
@@ -1408,14 +1734,14 @@
                 "defaultValue": "(args: Page) => ({\n  props: args,\n})"
             },
             {
-                "name": "Template",
+                "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"true\"></common-lib-grid>\r\n  `,\r\n})"
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
             },
             {
                 "name": "TemplateDefault",
@@ -1436,6 +1762,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-input [title]=\"Placeholder\" [isMaterial]=\"isMaterial\"></common-lib-custom-input>\r\n  `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid [fitToWindow]=\"fitToWindow\" [gridHeight]=\"gridHeight\"></common-lib-grid>\r\n      `,\r\n})"
             }
         ],
         "functions": [],
@@ -1482,6 +1818,28 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "literal type"
+                }
+            ],
+            "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
                 }
             ],
             "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts": [
@@ -1537,17 +1895,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "Template.bind({})"
+                    "defaultValue": "TemplateDefault.bind({})"
                 },
                 {
-                    "name": "Template",
+                    "name": "TemplateDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "() => ({\r\n  props: '',\r\n  template: `\r\n    <common-lib-grid [fitToWindow]=\"true\"></common-lib-grid>\r\n  `,\r\n})"
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid [fitToWindow]=\"fitToWindow\" [gridHeight]=\"gridHeight\"></common-lib-grid>\r\n      `,\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -1743,6 +2101,35 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CustomDatePickerComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultUses",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TemplateDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/common-module-lib/src/lib/custom-input/custom-input.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -1795,7 +2182,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Template",
+                "name": "TemplateDefault",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

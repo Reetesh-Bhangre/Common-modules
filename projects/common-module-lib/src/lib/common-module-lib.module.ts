@@ -2,12 +2,22 @@ import { NgModule } from '@angular/core';
 
 import { GridModule } from './grid/grid.module';
 import { CustomInputModule } from './custom-input/custom-input.module';
-import { ControlValueAccessorFormComponent } from './control-value-accessor-form/control-value-accessor-form.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';
+import { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';
 
 @NgModule({
-  declarations: [ControlValueAccessorFormComponent],
-  imports: [GridModule, BrowserAnimationsModule, CustomInputModule],
-  exports: [GridModule, BrowserAnimationsModule, CustomInputModule],
+  declarations: [],
+  imports: [
+    GridModule,
+    CustomInputModule,
+    CustomDatePickerModule,
+    ControlValueAccessorFormModule,
+  ],
+  exports: [
+    GridModule,
+    CustomInputModule,
+    CustomDatePickerModule,
+    ControlValueAccessorFormModule,
+  ],
 })
 export class CommonModuleLibModule {}
