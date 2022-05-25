@@ -54,6 +54,5 @@ export class CustomDatePickerComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
     this.date1 = new Date();
-    debugger;
   }
 }

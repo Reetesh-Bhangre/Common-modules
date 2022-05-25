@@ -24,10 +24,6 @@ export class CustomSelectComponent implements OnInit, ControlValueAccessor {
     { id: 7, name: 'Vue' },
     { id: 8, name: 'ReactJs' },
   ];
-  //   value = [
-  //     { id: 2, name: 'Node Js' },
-  //     { id: 8, name: 'ReactJs' },
-  //   ];
 
   val = [];
 
@@ -45,15 +41,7 @@ export class CustomSelectComponent implements OnInit, ControlValueAccessor {
 
   constructor() {}
 
-  ngOnInit(): void {
-    // debugger;
-    // if (this.value === '') {
-    //   this.value = [
-    //     { id: 2, name: 'Node Js' },
-    //     { id: 8, name: 'ReactJs' },
-    //   ];
-    // }
-  }
+  ngOnInit(): void {}
 
   onChange: any = () => {};
   onTouched: any = () => {};

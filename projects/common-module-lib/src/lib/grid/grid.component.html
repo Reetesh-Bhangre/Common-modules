@@ -1,10 +1,15 @@
+<!-- Ag Grid Container Wrapper -->
 <div class="grid-container" #gridContainerRef>
+  <!-- ag-grid-angular is a selector to drow a grid in UI side -->
   <ag-grid-angular
     #customGrid
     style="width: 100%; height: 100%"
     class="ag-theme-alpine"
-    [rowData]="rowData"
-    [columnDefs]="columnDefs"
+    [rowData]="gridData"
+    [columnDefs]="gridColumn"
+    [headerHeight]="gridHeaderHeight"
+    [rowHeight]="gridRowHeight"
+    [defaultColDef]="gridDefaultColDef"
   >
   </ag-grid-angular>
 </div>
