@@ -4,6 +4,7 @@ import { GridModule } from './grid/grid.module';
 import { CustomInputModule } from './custom-input/custom-input.module';
 import { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';
 import { CustomSelectModule } from './custom-select/custom-select.module';
+import { CustomTimePickerModule } from './custom-time-picker/custom-time-picker.module';
 
 import { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';
 
@@ -14,6 +15,7 @@ import { ControlValueAccessorFormModule } from './control-value-accessor-form/co
     CustomInputModule,
     CustomDatePickerModule,
     CustomSelectModule,
+    CustomTimePickerModule,
     ControlValueAccessorFormModule,
   ],
   exports: [
@@ -21,6 +23,7 @@ import { ControlValueAccessorFormModule } from './control-value-accessor-form/co
     CustomInputModule,
     CustomDatePickerModule,
     CustomSelectModule,
+    CustomTimePickerModule,
     ControlValueAccessorFormModule,
   ],
 })

@@ -2,18 +2,18 @@ import { Component, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'common-lib-custom-date-picker',
-  templateUrl: './custom-date-picker.component.html',
-  styleUrls: ['./custom-date-picker.component.css'],
+  selector: 'common-lib-custom-time-picker',
+  templateUrl: './custom-time-picker.component.html',
+  styleUrls: ['./custom-time-picker.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomDatePickerComponent),
+      useExisting: forwardRef(() => CustomTimePickerComponent),
       multi: true,
     },
   ],
 })
-export class CustomDatePickerComponent implements OnInit, ControlValueAccessor {
+export class CustomTimePickerComponent implements OnInit, ControlValueAccessor {
   val = '';
 
   get value(): any {
@@ -28,10 +28,12 @@ export class CustomDatePickerComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  constructor() {}
-
   onChange: any = () => {};
   onTouched: any = () => {};
+
+  constructor() {}
+
+  ngOnInit(): void {}
 
   writeValue(value: any): void {
     this.value = value;
@@ -49,6 +51,4 @@ export class CustomDatePickerComponent implements OnInit, ControlValueAccessor {
     console.log('setDisabledState isDisabled', isDisabled);
     // throw new Error('Method not implemented.');
   }
-
-  ngOnInit(): void {}
 }

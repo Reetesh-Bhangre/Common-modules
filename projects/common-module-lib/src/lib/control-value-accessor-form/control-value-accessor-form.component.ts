@@ -35,6 +35,7 @@ export class ControlValueAccessorFormComponent implements OnInit {
         { id: 2, name: 'Node Js' },
         { id: 8, name: 'ReactJs' },
       ]),
+      cTime: new FormControl('20:00'),
     });
   }
 }
