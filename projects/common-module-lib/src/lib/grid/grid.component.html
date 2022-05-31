@@ -10,6 +10,10 @@
     [headerHeight]="gridHeaderHeight"
     [rowHeight]="gridRowHeight"
     [defaultColDef]="gridDefaultColDef"
+    [gridOptions]="gridOptions"
+    (gridReady)="onGridReady($event)"
+    (rowSelected)="onRowSelected($event)"
+    (rowClicked)="onRowClicked($event)"
   >
   </ag-grid-angular>
 </div>
