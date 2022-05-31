@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+@mixin cell-style {
+  border: none;
+  border-right: 1px solid #dde2eb;
+}
+
+::ng-deep {
+  ag-grid-angular.ag-theme-alpine {
+    font-family: "Roboto", sans-serif;
+    .ag-header {
+      .ag-header-cell {
+        .ag-header-cell-resize {
+          &:after {
+            height: 100%;
+            top: 0;
+          }
+        }
+      }
+    }
+    .ag-body-viewport {
+      .ag-row {
+        &.ag-row-hover,
+        &.ag-row-selected {
+          background-color: rgba(207, 207, 207, 0.3);
+        }
+        .ag-cell {
+          @include cell-style;
+          font-size: 13px;
+          &.ag-cell-focus {
+            @include cell-style;
+          }
+        }
+      }
+    }
+  }
+}

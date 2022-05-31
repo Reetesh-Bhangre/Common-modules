@@ -223,7 +223,7 @@
         },
         {
             "name": "ControlValueAccessorFormComponent",
-            "id": "component-ControlValueAccessorFormComponent-f6ba140c82dfad1f8d3dfeecfdfe39607cbd7f3a52aa0ab5d4f4b5c7859c4ef24bb5df87fc1b19728d27aad4686a7c5fc4b3465b757092273781f88775110e7c",
+            "id": "component-ControlValueAccessorFormComponent-366975350904c503d3bbcea6944b67b6ad737798a96fe8afafc365b6c7d96162b23f5ccae239b9e8f0c5507c2c1b5e485c9defe4dbe934cae154b175bfa9adc2",
             "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -343,7 +343,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormGroup, FormControl } from '@angular/forms';\r\n\r\n@Component({\r\n  selector: 'common-lib-control-value-accessor-form',\r\n  templateUrl: './control-value-accessor-form.component.html',\r\n  styleUrls: ['./control-value-accessor-form.component.css'],\r\n})\r\nexport class ControlValueAccessorFormComponent implements OnInit {\r\n  public firstName: string = 'First Name';\r\n  public lastName: string = 'Lirst Name';\r\n  public emailId: string = 'Email Id';\r\n  public mobileNumber: string = 'Mobile Number';\r\n\r\n  form: FormGroup;\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit(): void {\r\n    this.form = this.createForm();\r\n  }\r\n\r\n  onSubmit() {\r\n    console.log('form here', this.form.value);\r\n  }\r\n\r\n  createForm() {\r\n    return new FormGroup({\r\n      fName: new FormControl('first'),\r\n      lName: new FormControl('Last'),\r\n      emailId: new FormControl('fl@email.com'),\r\n      mobileNumber: new FormControl('9876543210'),\r\n      cDate: new FormControl('2020-05-17'),\r\n      cSelect: new FormControl([\r\n        { id: 2, name: 'Node Js' },\r\n        { id: 8, name: 'ReactJs' },\r\n      ]),\r\n    });\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormGroup, FormControl } from '@angular/forms';\r\n\r\n@Component({\r\n  selector: 'common-lib-control-value-accessor-form',\r\n  templateUrl: './control-value-accessor-form.component.html',\r\n  styleUrls: ['./control-value-accessor-form.component.css'],\r\n})\r\nexport class ControlValueAccessorFormComponent implements OnInit {\r\n  public firstName: string = 'First Name';\r\n  public lastName: string = 'Lirst Name';\r\n  public emailId: string = 'Email Id';\r\n  public mobileNumber: string = 'Mobile Number';\r\n\r\n  form: FormGroup;\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit(): void {\r\n    this.form = this.createForm();\r\n  }\r\n\r\n  onSubmit() {\r\n    console.log('form here', this.form.value);\r\n  }\r\n\r\n  createForm() {\r\n    return new FormGroup({\r\n      fName: new FormControl('first'),\r\n      lName: new FormControl('Last'),\r\n      emailId: new FormControl('fl@email.com'),\r\n      mobileNumber: new FormControl('9876543210'),\r\n      cDate: new FormControl('2020-05-17'),\r\n      cSelect: new FormControl([\r\n        { id: 2, name: 'Node Js' },\r\n        { id: 8, name: 'ReactJs' },\r\n      ]),\r\n      cTime: new FormControl('20:00'),\r\n    });\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -363,11 +363,11 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<h2>Control Value Accessor Form</h2>\r\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"firstName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"fName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"lastName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"lName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"emailId\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"emailId\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"mobileNumber\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"mobileNumber\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-date-picker\r\n      formControlName=\"cDate\"\r\n    ></common-lib-custom-date-picker>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-select\r\n      formControlName=\"cSelect\"\r\n    ></common-lib-custom-select>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <button type=\"submit\">submit</button>\r\n  </div>\r\n\r\n  <pre>\r\n      {{ form.value | json }}\r\n  </pre>\r\n</form>\r\n"
+            "templateData": "<h2>Control Value Accessor Form</h2>\r\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"firstName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"fName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"lastName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"lName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"emailId\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"emailId\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"mobileNumber\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"mobileNumber\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-date-picker\r\n      formControlName=\"cDate\"\r\n    ></common-lib-custom-date-picker>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-time-picker\r\n      formControlName=\"cTime\"\r\n    ></common-lib-custom-time-picker>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-select\r\n      formControlName=\"cSelect\"\r\n    ></common-lib-custom-select>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <button type=\"submit\">submit</button>\r\n  </div>\r\n\r\n  <pre>\r\n      {{ form.value | json }}\r\n  </pre>\r\n</form>\r\n"
         },
         {
             "name": "CustomDatePickerComponent",
-            "id": "component-CustomDatePickerComponent-44d764f988ff085ae1bd90d96f99d01441ca7dcc5289a8b9a82396aaa7a63a5fd5ad17b0f0ef5c5c94b7e31637706f96bbbed2030e77c22d3b36412ca0f1ae59",
+            "id": "component-CustomDatePickerComponent-d3290eb431548f0f07614e1e456cb1fca7d99acd4ecc38ce77a1ac189eceb1e62fc56a8c898f9d0052410afc7b65ebd02a7e94cd7aa3d79202b97acd8586a85a",
             "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -392,18 +392,6 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
-                    "name": "date1",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "any",
-                    "optional": false,
-                    "description": "",
-                    "line": 17,
-                    "modifierKind": [
-                        123
-                    ]
-                },
-                {
                     "name": "onChange",
                     "defaultValue": "() => {...}",
                     "deprecated": false,
@@ -411,7 +399,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 35
+                    "line": 33
                 },
                 {
                     "name": "onTouched",
@@ -421,7 +409,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 34
                 },
                 {
                     "name": "val",
@@ -431,7 +419,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 17
                 }
             ],
             "methodsClass": [
@@ -441,7 +429,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 55,
+                    "line": 53,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -458,7 +446,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 42,
+                    "line": 40,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -486,7 +474,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 46,
+                    "line": 44,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -514,7 +502,7 @@
                     "optional": true,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 50,
+                    "line": 48,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -542,7 +530,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 38,
+                    "line": 36,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -565,7 +553,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-date-picker',\n  templateUrl: './custom-date-picker.component.html',\n  styleUrls: ['./custom-date-picker.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomDatePickerComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomDatePickerComponent implements OnInit, ControlValueAccessor {\n  public date1: any;\n\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n    // throw new Error('Method not implemented.');\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n    // throw new Error('Method not implemented.');\n  }\n\n  ngOnInit(): void {\n    this.date1 = new Date();\n    debugger;\n  }\n}\n",
+            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-date-picker',\n  templateUrl: './custom-date-picker.component.html',\n  styleUrls: ['./custom-date-picker.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomDatePickerComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomDatePickerComponent implements OnInit, ControlValueAccessor {\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n    // throw new Error('Method not implemented.');\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n    // throw new Error('Method not implemented.');\n  }\n\n  ngOnInit(): void {}\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -580,7 +568,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 31
+                "line": 29
             },
             "implements": [
                 "OnInit",
@@ -603,7 +591,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 24,
+                        "line": 22,
                         "jsdoctags": [
                             {
                                 "name": "val",
@@ -620,7 +608,7 @@
                         "name": "value",
                         "type": "any",
                         "returnType": "any",
-                        "line": 21
+                        "line": 19
                     }
                 }
             },
@@ -896,7 +884,7 @@
         },
         {
             "name": "CustomSelectComponent",
-            "id": "component-CustomSelectComponent-ae5cac261f171f2e042098cca6da122893059b52c7849a735c6b58bb557210f5ed46dbd1b2fc8a6f8a575bb96bd17a0c0bed185320516611e7ac4dd5b0b3e816",
+            "id": "component-CustomSelectComponent-7d6778fce9386f211ddf83187214cd27267d7ba425d1281fa780207f7194573aa2a4b60f9e440c608e72d1f84f545661bd3e26307abd1750acc50e081c8de2f0",
             "file": "projects/common-module-lib/src/lib/custom-select/custom-select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -938,7 +926,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 58
+                    "line": 46
                 },
                 {
                     "name": "onTouched",
@@ -948,7 +936,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 59
+                    "line": 47
                 },
                 {
                     "name": "val",
@@ -958,7 +946,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 32
+                    "line": 28
                 }
             ],
             "methodsClass": [
@@ -968,7 +956,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 44,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -985,7 +973,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 64,
+                    "line": 52,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1013,7 +1001,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 67,
+                    "line": 55,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1041,7 +1029,7 @@
                     "optional": true,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 70,
+                    "line": 58,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1069,7 +1057,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 61,
+                    "line": 49,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1092,7 +1080,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-select',\n  templateUrl: './custom-select.component.html',\n  styleUrls: ['./custom-select.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      multi: true,\n      useExisting: forwardRef(() => CustomSelectComponent),\n    },\n  ],\n})\nexport class CustomSelectComponent implements OnInit, ControlValueAccessor {\n  listItems = [\n    { id: 1, name: 'Python' },\n    { id: 2, name: 'Node Js' },\n    { id: 3, name: 'Java' },\n    { id: 4, name: 'PHP', disabled: true },\n    { id: 5, name: 'Django' },\n    { id: 6, name: 'Angular' },\n    { id: 7, name: 'Vue' },\n    { id: 8, name: 'ReactJs' },\n  ];\n  //   value = [\n  //     { id: 2, name: 'Node Js' },\n  //     { id: 8, name: 'ReactJs' },\n  //   ];\n\n  val = [];\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  ngOnInit(): void {\n    // debugger;\n    // if (this.value === '') {\n    //   this.value = [\n    //     { id: 2, name: 'Node Js' },\n    //     { id: 8, name: 'ReactJs' },\n    //   ];\n    // }\n  }\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn; //;(this.value);\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n  }\n}\n",
+            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-select',\n  templateUrl: './custom-select.component.html',\n  styleUrls: ['./custom-select.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      multi: true,\n      useExisting: forwardRef(() => CustomSelectComponent),\n    },\n  ],\n})\nexport class CustomSelectComponent implements OnInit, ControlValueAccessor {\n  listItems = [\n    { id: 1, name: 'Python' },\n    { id: 2, name: 'Node Js' },\n    { id: 3, name: 'Java' },\n    { id: 4, name: 'PHP', disabled: true },\n    { id: 5, name: 'Django' },\n    { id: 6, name: 'Angular' },\n    { id: 7, name: 'Vue' },\n    { id: 8, name: 'ReactJs' },\n  ];\n\n  val = [];\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn; //;(this.value);\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1107,7 +1095,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 44
+                "line": 40
             },
             "implements": [
                 "OnInit",
@@ -1130,7 +1118,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 37,
+                        "line": 33,
                         "jsdoctags": [
                             {
                                 "name": "val",
@@ -1147,15 +1135,264 @@
                         "name": "value",
                         "type": "any",
                         "returnType": "any",
-                        "line": 34
+                        "line": 30
                     }
                 }
             },
             "templateData": "<ng-select\n  [items]=\"listItems\"\n  bindLabel=\"name\"\n  placeholder=\"Select item\"\n  appendTo=\"body\"\n  multiple=\"true\"\n  [(ngModel)]=\"value\"\n>\n</ng-select>\n"
         },
         {
+            "name": "CustomTimePickerComponent",
+            "id": "component-CustomTimePickerComponent-14182968857e1e6f4c4cde338b4dd7bc0144764241daf73aa0542835d1f7a1153c6c77400781b07820804d3bda45c0fa9c83ee7dab0b3109f21038623e0ba6a3",
+            "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "{\n    provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CustomTimePickerComponent), multi: true,\n}",
+                    "type": "component"
+                }
+            ],
+            "selector": "common-lib-custom-time-picker",
+            "styleUrls": [
+                "./custom-time-picker.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./custom-time-picker.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 31
+                },
+                {
+                    "name": "onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 32
+                },
+                {
+                    "name": "val",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 42,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 46,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": true,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 38,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-time-picker',\n  templateUrl: './custom-time-picker.component.html',\n  styleUrls: ['./custom-time-picker.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomTimePickerComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomTimePickerComponent implements OnInit, ControlValueAccessor {\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  writeValue(value: any): void {\n    this.value = value;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n    // throw new Error('Method not implemented.');\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n    // throw new Error('Method not implemented.');\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./custom-time-picker.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 32
+            },
+            "implements": [
+                "OnInit",
+                "ControlValueAccessor"
+            ],
+            "accessors": {
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 22,
+                        "jsdoctags": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    },
+                    "getSignature": {
+                        "name": "value",
+                        "type": "any",
+                        "returnType": "any",
+                        "line": 19
+                    }
+                }
+            },
+            "templateData": "<p>custom-time-picker works!</p>\r\n<mat-form-field appearance=\"outline\">\r\n  <mat-label>Input type time</mat-label>\r\n  <input\r\n    type=\"time\"\r\n    matInput\r\n    name=\"week\"\r\n    min=\"09:00\"\r\n    max=\"18:00\"\r\n    [(ngModel)]=\"value\"\r\n  />\r\n</mat-form-field>\r\n"
+        },
+        {
             "name": "GridComponent",
-            "id": "component-GridComponent-c6f7a78c70fd754a391d1701b7b0b9a394e98872f20ce47c471e7d0e1f88de8e8d5fa170592ef9d55ffb8c7028a0490a2afe1e476b2a388c95bff7adfef3d363",
+            "id": "component-GridComponent-bf87866b23b77d56d3a39fb9c89cec1157cce6ba001989d5eeb00c4254e61c41a64c87b75a5c3b480a4b04465b43bca1f3e64fbbc83dcc4cc530032be3781024",
             "file": "projects/common-module-lib/src/lib/grid/grid.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1164,7 +1401,7 @@
             "providers": [],
             "selector": "common-lib-grid",
             "styleUrls": [
-                "./grid.component.css"
+                "./grid.component.scss"
             ],
             "styles": [],
             "templateUrl": [
@@ -1179,7 +1416,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nfitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.\n",
                     "description": "<p>fitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.</p>\n",
-                    "line": 32,
+                    "line": 40,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -1189,7 +1426,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridColumn default [].\ngridColumn will help to configure the column on grid.\n",
                     "description": "<p>gridColumn default [].\ngridColumn will help to configure the column on grid.</p>\n",
-                    "line": 44,
+                    "line": 52,
                     "type": "any[]",
                     "decorators": []
                 },
@@ -1199,7 +1436,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridData default [].\ngridData will assign the data to the grid.\n",
                     "description": "<p>gridData default [].\ngridData will assign the data to the grid.</p>\n",
-                    "line": 50,
+                    "line": 58,
                     "type": "any[]",
                     "decorators": []
                 },
@@ -1207,9 +1444,9 @@
                     "name": "gridDefaultColDef",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\ngridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn..\n",
-                    "description": "<p>gridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn..</p>\n",
-                    "line": 55,
+                    "rawdescription": "\n\ngridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.\n",
+                    "description": "<p>gridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.</p>\n",
+                    "line": 63,
                     "type": "any",
                     "decorators": []
                 },
@@ -1220,13 +1457,41 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.\n",
                     "description": "<p>gridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.</p>\n",
-                    "line": 38,
+                    "line": 46,
                     "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "gridOptions",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\ngridOptions default {}.\nAny configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\ngridOptions properties and callbacks used to configure the grid.\n",
+                    "description": "<p>gridOptions default {}.\nAny configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\ngridOptions properties and callbacks used to configure the grid.</p>\n",
+                    "line": 69,
+                    "type": "any",
                     "decorators": []
                 }
             ],
             "outputsClass": [],
             "propertiesClass": [
+                {
+                    "name": "gridApi",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "gridColumnApi",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
                 {
                     "name": "gridContainerRefEl",
                     "deprecated": false,
@@ -1234,7 +1499,7 @@
                     "type": "ElementRef",
                     "optional": false,
                     "description": "<p>gridContainerRefEl will help to get element reference of grid container</p>\n",
-                    "line": 25,
+                    "line": 32,
                     "rawdescription": "\n\ngridContainerRefEl will help to get element reference of grid container\n",
                     "decorators": [
                         {
@@ -1245,13 +1510,13 @@
                 },
                 {
                     "name": "gridHeaderHeight",
-                    "defaultValue": "34",
+                    "defaultValue": "35",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "number",
                     "optional": false,
                     "description": "<p>List of public Variables</p>\n",
-                    "line": 18,
+                    "line": 20,
                     "rawdescription": "\nList of public Variables"
                 },
                 {
@@ -1262,7 +1527,36 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 21
+                },
+                {
+                    "name": "gridSelectedRow",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "loadingOverlay",
+                    "defaultValue": "GridLoadingMaskComponent",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 26
+                },
+                {
+                    "name": "loadingOverlayComponent",
+                    "defaultValue": "GridLoadingMaskComponent",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 25
                 }
             ],
             "methodsClass": [
@@ -1272,7 +1566,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 61,
+                    "line": 78,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1282,9 +1576,99 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 59,
+                    "line": 76,
                     "deprecated": false,
                     "deprecationMessage": ""
+                },
+                {
+                    "name": "onGridReady",
+                    "args": [
+                        {
+                            "name": "params",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 95,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nWhen the grid is initialised, the gridReady event will fire.\nHere we stored some of the grid API value into the variables\n",
+                    "description": "<p>When the grid is initialised, the gridReady event will fire.\nHere we stored some of the grid API value into the variables</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "params",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onRowClicked",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 116,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nWhen the grid Row is clicked. The event will be trigger\nHere we deselecting the row if row is clicked 2nd time\nIt will call onRowSelected function automatically and update the gridSelectedRow array\n",
+                    "description": "<p>When the grid Row is clicked. The event will be trigger\nHere we deselecting the row if row is clicked 2nd time\nIt will call onRowSelected function automatically and update the gridSelectedRow array</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onRowSelected",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 107,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nWhen the grid Row is selected or deselected. The event will be trigger\nAlso update the gridSelectedRow variable\n",
+                    "description": "<p>When the grid Row is selected or deselected. The event will be trigger\nAlso update the gridSelectedRow variable</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "deprecated": false,
@@ -1294,12 +1678,12 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\r\n  AfterViewInit,\r\n  Component,\r\n  ElementRef,\r\n  Input,\r\n  OnInit,\r\n  ViewChild,\r\n} from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid',\r\n  templateUrl: './grid.component.html',\r\n  styleUrls: ['./grid.component.css'],\r\n})\r\nexport class GridComponent implements OnInit, AfterViewInit {\r\n  /****************************************************************/\r\n  /******************************** List of public Variables ********************************/\r\n  gridHeaderHeight: number = 34; // To set the specific height of header\r\n  gridRowHeight: number = 34; // To set the specific height of header\r\n  /****************************************************************/\r\n  /******************************** List of ViewChild Variables ********************************/\r\n  /**\r\n   * gridContainerRefEl will help to get element reference of grid container\r\n   */\r\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\r\n  /****************************************************************/\r\n  /******************************** List of Input Variables ********************************/\r\n  /**\r\n   * fitToWindow default is true.\r\n   * fitToWindow is used to set grid height as 100% of container height.\r\n   */\r\n  @Input() fitToWindow: boolean = true;\r\n\r\n  /**\r\n   * gridHeight default 500px.\r\n   * gridHeight allowed us to set grid height in px as required.\r\n   */\r\n  @Input() gridHeight: string = '500px';\r\n\r\n  /**\r\n   * gridColumn default [].\r\n   * gridColumn will help to configure the column on grid.\r\n   */\r\n  @Input() gridColumn: any[];\r\n\r\n  /**\r\n   * gridData default [].\r\n   * gridData will assign the data to the grid.\r\n   */\r\n  @Input() gridData: any[];\r\n  /**\r\n   * gridDefaultColDef default {}.\r\n   * Any configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn..\r\n   */\r\n  @Input() gridDefaultColDef: any;\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit() {}\r\n\r\n  ngAfterViewInit() {\r\n    /**\r\n     * Below code help to set the grid height conditionally.\r\n     * If grid is fitToWindow, it fits the grid according to the browser window.\r\n     * Else it sets the fix grid height default is 500px.\r\n     */\r\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\r\n      ? `calc(100vh - ${\r\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\r\n        }px)`\r\n      : this.gridHeight;\r\n  }\r\n}\r\n",
+            "sourceCode": "import {\r\n  AfterViewInit,\r\n  Component,\r\n  ElementRef,\r\n  Input,\r\n  OnInit,\r\n  ViewChild,\r\n} from '@angular/core';\r\n\r\nimport { GridLoadingMaskComponent } from './grid-featured-component/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid',\r\n  templateUrl: './grid.component.html',\r\n  styleUrls: ['./grid.component.scss'],\r\n})\r\nexport class GridComponent implements OnInit, AfterViewInit {\r\n  /****************************************************************/\r\n  /******************************** List of public Variables ********************************/\r\n  gridHeaderHeight: number = 35; // To set the specific height of header.\r\n  gridRowHeight: number = 34; // To set the specific height of header.\r\n  gridApi: any; // After the initialization of the grid, stored params.api into the gridApi.\r\n  gridColumnApi: any; // After the initialization of the grid, stored params.columnApi into the gridColumnApi.\r\n  gridSelectedRow: any; // Containes the selected row data in array form\r\n  loadingOverlayComponent: any = GridLoadingMaskComponent;\r\n  loadingOverlay: any = GridLoadingMaskComponent;\r\n  /****************************************************************/\r\n  /******************************** List of ViewChild Variables ********************************/\r\n  /**\r\n   * gridContainerRefEl will help to get element reference of grid container\r\n   */\r\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\r\n\r\n  /****************************************************************/\r\n  /******************************** List of Input Variables ********************************/\r\n  /**\r\n   * fitToWindow default is true.\r\n   * fitToWindow is used to set grid height as 100% of container height.\r\n   */\r\n  @Input() fitToWindow: boolean = true;\r\n\r\n  /**\r\n   * gridHeight default 500px.\r\n   * gridHeight allowed us to set grid height in px as required.\r\n   */\r\n  @Input() gridHeight: string = '500px';\r\n\r\n  /**\r\n   * gridColumn default [].\r\n   * gridColumn will help to configure the column on grid.\r\n   */\r\n  @Input() gridColumn: any[];\r\n\r\n  /**\r\n   * gridData default [].\r\n   * gridData will assign the data to the grid.\r\n   */\r\n  @Input() gridData: any[];\r\n  /**\r\n   * gridDefaultColDef default {}.\r\n   * Any configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.\r\n   */\r\n  @Input() gridDefaultColDef: any;\r\n  /**\r\n   * gridOptions default {}.\r\n   * Any configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\r\n   * gridOptions properties and callbacks used to configure the grid.\r\n   */\r\n  @Input() gridOptions: any;\r\n\r\n  constructor() {\r\n    this.loadingOverlay = this.loadingOverlayComponent =\r\n      GridLoadingMaskComponent;\r\n  }\r\n\r\n  ngOnInit() {}\r\n\r\n  ngAfterViewInit() {\r\n    /**\r\n     * Below code help to set the grid height conditionally.\r\n     * If grid is fitToWindow, it fits the grid according to the browser window.\r\n     * Else it sets the fix grid height default is 500px.\r\n     */\r\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\r\n      ? `calc(100vh - ${\r\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\r\n        }px)`\r\n      : this.gridHeight;\r\n  }\r\n\r\n  /**\r\n   * When the grid is initialised, the gridReady event will fire.\r\n   * Here we stored some of the grid API value into the variables\r\n   */\r\n  onGridReady(params) {\r\n    debugger;\r\n    console.log('on grid ready');\r\n    this.gridApi = params.api; // stored params.api into the gridApi. It will be use After the initialization of the grid.\r\n    this.gridColumnApi = params.columnApi; // stored params.columnApi into the gridColumnApi. It will be use After the initialization of the grid\r\n    this.gridApi.showLoadingOverlay();\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is selected or deselected. The event will be trigger\r\n   * Also update the gridSelectedRow variable\r\n   */\r\n  onRowSelected(event) {\r\n    this.gridSelectedRow = this.gridApi.getSelectedNodes();\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is clicked. The event will be trigger\r\n   * Here we deselecting the row if row is clicked 2nd time\r\n   * It will call onRowSelected function automatically and update the gridSelectedRow array\r\n   */\r\n  onRowClicked(event) {\r\n    // Checking the gridSelectedRow and its length\r\n    if (this.gridSelectedRow && this.gridSelectedRow.length > 0) {\r\n      // Using every method to iterate gridSelectedRow array and break when condition meet\r\n      this.gridSelectedRow.every((rowData, index) => {\r\n        // Finding the row by comparing the rowIndex value\r\n        if (rowData.rowIndex === event.rowIndex) {\r\n          this.gridSelectedRow[index].setSelected(false); // deselecting the selected rowusing setSelected method of Ag-grid.\r\n          return false; // break the loop\r\n        }\r\n        return true; // continue the loop\r\n      });\r\n    }\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "",
-                    "styleUrl": "./grid.component.css"
+                    "data": "@import url(\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap\");\r\n\r\n@mixin cell-style {\r\n  border: none;\r\n  border-right: 1px solid #dde2eb;\r\n}\r\n\r\n::ng-deep {\r\n  ag-grid-angular.ag-theme-alpine {\r\n    font-family: \"Roboto\", sans-serif;\r\n    .ag-header {\r\n      .ag-header-cell {\r\n        .ag-header-cell-resize {\r\n          &:after {\r\n            height: 100%;\r\n            top: 0;\r\n          }\r\n        }\r\n      }\r\n    }\r\n    .ag-body-viewport {\r\n      .ag-row {\r\n        &.ag-row-hover,\r\n        &.ag-row-selected {\r\n          background-color: rgba(207, 207, 207, 0.3);\r\n        }\r\n        .ag-cell {\r\n          @include cell-style;\r\n          font-size: 13px;\r\n          &.ag-cell-focus {\r\n            @include cell-style;\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+                    "styleUrl": "./grid.component.scss"
                 }
             ],
             "stylesData": "",
@@ -1309,13 +1693,85 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 55
+                "line": 69
             },
             "implements": [
                 "OnInit",
                 "AfterViewInit"
             ],
-            "templateData": "<!-- Ag Grid Container Wrapper -->\n<div class=\"grid-container\" #gridContainerRef>\n  <!-- ag-grid-angular is a selector to drow a grid in UI side -->\n  <ag-grid-angular\n    #customGrid\n    style=\"width: 100%; height: 100%\"\n    class=\"ag-theme-alpine\"\n    [rowData]=\"gridData\"\n    [columnDefs]=\"gridColumn\"\n    [headerHeight]=\"gridHeaderHeight\"\n    [rowHeight]=\"gridRowHeight\"\n    [defaultColDef]=\"gridDefaultColDef\"\n  >\n  </ag-grid-angular>\n</div>\n"
+            "templateData": "<!-- Ag Grid Container Wrapper -->\n<div class=\"grid-container\" #gridContainerRef>\n  <!-- ag-grid-angular is a selector to drow a grid in UI side -->\n  <ag-grid-angular\n    #customGrid\n    style=\"width: 100%; height: 100%\"\n    class=\"ag-theme-alpine\"\n    [rowData]=\"gridData\"\n    [columnDefs]=\"gridColumn\"\n    [headerHeight]=\"gridHeaderHeight\"\n    [rowHeight]=\"gridRowHeight\"\n    [defaultColDef]=\"gridDefaultColDef\"\n    [gridOptions]=\"gridOptions\"\n    (gridReady)=\"onGridReady($event)\"\n    (rowSelected)=\"onRowSelected($event)\"\n    (rowClicked)=\"onRowClicked($event)\"\n    [loadingOverlay]=\"loadingOverlay\"\n  >\n  </ag-grid-angular>\n</div>\n"
+        },
+        {
+            "name": "GridLoadingMaskComponent",
+            "id": "component-GridLoadingMaskComponent-dceee3e936271f82465850e21acb82ce51bbda0efcd0583137d516bb98fc22a2af58a58e5d3b5fd88a8f2110c291454e552b08fb0c5e4015191e37ab83bce85f",
+            "file": "projects/common-module-lib/src/lib/grid/grid-featured-component/grid-loading-mask/grid-loading-mask.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "common-lib-grid-loading-mask",
+            "styleUrls": [
+                "./grid-loading-mask.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./grid-loading-mask.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "agInit",
+                    "args": [
+                        {
+                            "name": "params",
+                            "type": "ILoadingOverlayParams",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 11,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "params",
+                            "type": "ILoadingOverlayParams",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { ILoadingOverlayAngularComp } from 'ag-grid-angular';\nimport { ILoadingOverlayParams } from 'ag-grid-community';\n\n@Component({\n  selector: 'common-lib-grid-loading-mask',\n  templateUrl: './grid-loading-mask.component.html',\n  styleUrls: ['./grid-loading-mask.component.scss'],\n})\nexport class GridLoadingMaskComponent implements ILoadingOverlayAngularComp {\n  agInit(params: ILoadingOverlayParams): void {\n    console.log('Check loading mask component agInIt Params', params);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./grid-loading-mask.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "implements": [
+                "ILoadingOverlayAngularComp"
+            ],
+            "templateData": "<p>grid-loading-mask works!</p>\n"
         },
         {
             "name": "HeaderComponent",
@@ -1564,13 +2020,13 @@
         },
         {
             "name": "CommonModuleLibModule",
-            "id": "module-CommonModuleLibModule-a08e814d0e8ecfa39ec841adfd1f088f42183bd656beb5c2e98267ede4ca45e3e271e27979d9491f095570b38c671c474ca2faa4d3f174b38d859eaa2e68b3e5",
+            "id": "module-CommonModuleLibModule-98a90f6e4ed6780d44730a11ef04632d463dbd41d2e82d52664eca2fcc1198f410dc4cbc61f3f80a557f7a643a8e9a827930f171fcf168e95d016b56e0dfbdfc",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/common-module-lib.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\r\n\r\nimport { GridModule } from './grid/grid.module';\r\nimport { CustomInputModule } from './custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './custom-select/custom-select.module';\r\n\r\nimport { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n  exports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n})\r\nexport class CommonModuleLibModule {}\r\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\n\r\nimport { GridModule } from './grid/grid.module';\r\nimport { CustomInputModule } from './custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './custom-select/custom-select.module';\r\nimport { CustomTimePickerModule } from './custom-time-picker/custom-time-picker.module';\r\n\r\nimport { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    CustomTimePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n  exports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    CustomTimePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n})\r\nexport class CommonModuleLibModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1596,6 +2052,9 @@
                             "name": "CustomSelectModule"
                         },
                         {
+                            "name": "CustomTimePickerModule"
+                        },
+                        {
                             "name": "GridModule"
                         }
                     ]
@@ -1616,6 +2075,9 @@
                             "name": "CustomSelectModule"
                         },
                         {
+                            "name": "CustomTimePickerModule"
+                        },
+                        {
                             "name": "GridModule"
                         }
                     ]
@@ -1632,13 +2094,13 @@
         },
         {
             "name": "ControlValueAccessorFormModule",
-            "id": "module-ControlValueAccessorFormModule-91f413e4d2752302c29eb981fa75d454ac544b7695750015692bd36d035af6e67047335b7d7247d048e2206fd37d376c3e192155d4baf8c673adf4ffad5ccd91",
+            "id": "module-ControlValueAccessorFormModule-0b7d5e4ab4dd3c11bd08f1ea7304ddc2843c433f7f3e2fc64fe2593fbef8156ff5d3ca9e8663f5362460a27fd59e276b00bed8d100921ff93fb06f1e64f5b05a",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n\r\nimport { CustomInputModule } from './../custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './../custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './../custom-select/custom-select.module';\r\n\r\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form.component';\r\n\r\n@NgModule({\r\n  declarations: [ControlValueAccessorFormComponent],\r\n  imports: [\r\n    CommonModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n  ],\r\n  exports: [ControlValueAccessorFormComponent],\r\n})\r\nexport class ControlValueAccessorFormModule {}\r\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n\r\nimport { CustomInputModule } from './../custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './../custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './../custom-select/custom-select.module';\r\nimport { CustomTimePickerModule } from './../custom-time-picker/custom-time-picker.module';\r\n\r\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form.component';\r\n\r\n@NgModule({\r\n  declarations: [ControlValueAccessorFormComponent],\r\n  imports: [\r\n    CommonModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    CustomTimePickerModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n  ],\r\n  exports: [ControlValueAccessorFormComponent],\r\n})\r\nexport class ControlValueAccessorFormModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1663,6 +2125,9 @@
                         },
                         {
                             "name": "CustomSelectModule"
+                        },
+                        {
+                            "name": "CustomTimePickerModule"
                         }
                     ]
                 },
@@ -1817,14 +2282,58 @@
             ]
         },
         {
+            "name": "CustomTimePickerModule",
+            "id": "module-CustomTimePickerModule-0b318d2c6866af8730e96ebe5b0f60a66af0640b40b059a7bc761216b47a85345d6f4724dcd9412f058bb236868c9fbfb09af2d68489a52a1ba8d3baff7f6cc8",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CustomTimePickerComponent } from './custom-time-picker.component';\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatIconModule } from '@angular/material/icon';\n\n@NgModule({\n  declarations: [CustomTimePickerComponent],\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatFormFieldModule,\n    MatInputModule,\n    MatIconModule,\n  ],\n  exports: [CustomTimePickerComponent],\n})\nexport class CustomTimePickerModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "CustomTimePickerComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "CustomTimePickerComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "GridModule",
-            "id": "module-GridModule-25e251733954c664794efe62ecf73f42432158a21f2f74deba0cfd6a568728ff6fe4ab49d425c35aa0607bbd7bbf5925cb9597ed52d4d585d0f2fea0df363eae",
+            "id": "module-GridModule-69ca1f7439829f57748406c10fa6ae1b8befcef34b91d2d31d86cd78d14941967f4a99ff9681ae8e2e08fbf996531b240e01c91f677c3eddaf4970917e972086",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/grid/grid.module.ts",
             "methods": [],
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n\r\nimport { AgGridModule } from 'ag-grid-angular';\r\nimport { FormsModule } from '@angular/forms';\r\n\r\nimport { GridComponent } from './grid.component';\r\n\r\n@NgModule({\r\n  declarations: [GridComponent],\r\n  imports: [\r\n    CommonModule,\r\n    HttpClientModule,\r\n    AgGridModule.withComponents([]),\r\n    FormsModule,\r\n  ],\r\n  exports: [GridComponent],\r\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n  providers: [],\r\n})\r\nexport class GridModule {}\r\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n\r\nimport { AgGridModule } from 'ag-grid-angular';\r\nimport { FormsModule } from '@angular/forms';\r\n\r\nimport { GridComponent } from './grid.component';\r\nimport { GridLoadingMaskComponent } from './grid-featured-component/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@NgModule({\r\n  declarations: [GridComponent, GridLoadingMaskComponent],\r\n  imports: [\r\n    CommonModule,\r\n    HttpClientModule,\r\n    AgGridModule.withComponents([GridLoadingMaskComponent]),\r\n    FormsModule,\r\n  ],\r\n  exports: [GridComponent, GridLoadingMaskComponent],\r\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n  providers: [],\r\n})\r\nexport class GridModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1835,6 +2344,9 @@
                     "elements": [
                         {
                             "name": "GridComponent"
+                        },
+                        {
+                            "name": "GridLoadingMaskComponent"
                         }
                     ]
                 },
@@ -1847,6 +2359,9 @@
                     "elements": [
                         {
                             "name": "GridComponent"
+                        },
+                        {
+                            "name": "GridLoadingMaskComponent"
                         }
                     ]
                 },
@@ -1927,6 +2442,16 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1937,21 +2462,21 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\n  production: false\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/environments/environment.prod.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\n  production: true\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  production: false\n}"
             },
             {
                 "name": "gridColumn",
@@ -1971,7 +2496,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{\r\n  minWidth: 100,\r\n  maxWidth: 250,\r\n  sortable: true,\r\n  resizable: true,\r\n}"
+                "defaultValue": "{\r\n  minWidth: 100,\r\n  maxWidth: 250,\r\n  sortable: true,\r\n  resizable: true, // Need to move on component to make generic\r\n  unSortIcon: false, // Need to move on component to make generic\r\n}"
+            },
+            {
+                "name": "gridOptions",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\r\n  rowSelection: 'single',\r\n}"
             },
             {
                 "name": "Large",
@@ -2145,11 +2680,21 @@
                 "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n        [gridOptions]=\"gridOptions\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
             }
         ],
         "functions": [],
@@ -2286,6 +2831,28 @@
                     "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-select></common-lib-custom-select>\r\n  `,\r\n})"
                 }
             ],
+            "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
+                }
+            ],
             "projects/common-module-lib/src/lib/grid/grid.stories.ts": [
                 {
                     "name": "defaultUses",
@@ -2315,7 +2882,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{\r\n  minWidth: 100,\r\n  maxWidth: 250,\r\n  sortable: true,\r\n  resizable: true,\r\n}"
+                    "defaultValue": "{\r\n  minWidth: 100,\r\n  maxWidth: 250,\r\n  sortable: true,\r\n  resizable: true, // Need to move on component to make generic\r\n  unSortIcon: false, // Need to move on component to make generic\r\n}"
+                },
+                {
+                    "name": "gridOptions",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\r\n  rowSelection: 'single',\r\n}"
                 },
                 {
                     "name": "TemplateDefault",
@@ -2325,19 +2902,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
-                }
-            ],
-            "src/environments/environment.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false\n}"
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n        [gridOptions]=\"gridOptions\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -2350,6 +2915,18 @@
                     "deprecationMessage": "",
                     "type": "object",
                     "defaultValue": "{\n  production: true\n}"
+                }
+            ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false\n}"
                 }
             ],
             "src/stories/Button.stories.ts": [
@@ -2526,7 +3103,7 @@
                 "linktype": "component",
                 "name": "CustomDatePickerComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/11",
+                "coverageCount": "0/10",
                 "status": "low"
             },
             {
@@ -2608,12 +3185,50 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CustomTimePickerComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultUses",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TemplateDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/grid/grid-featured-component/grid-loading-mask/grid-loading-mask.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GridLoadingMaskComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/common-module-lib/src/lib/grid/grid.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "GridComponent",
-                "coveragePercent": 58,
-                "coverageCount": "7/12",
+                "coveragePercent": 52,
+                "coverageCount": "11/21",
                 "status": "good"
             },
             {
@@ -2642,6 +3257,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "gridDefaultColDef",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "gridOptions",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

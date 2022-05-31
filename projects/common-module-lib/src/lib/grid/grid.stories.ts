@@ -66,7 +66,12 @@ const gridDefaultColDef = {
   minWidth: 100,
   maxWidth: 250,
   sortable: true,
-  resizable: true,
+  resizable: true, // Need to move on component to make generic
+  unSortIcon: false, // Need to move on component to make generic
+};
+
+const gridOptions = {
+  rowSelection: 'single',
 };
 
 export default {
@@ -91,6 +96,7 @@ const TemplateDefault: Story = (args) => ({
         [gridData]="gridData" 
         [gridColumn]="gridColumn"
         [gridDefaultColDef]="gridDefaultColDef"
+        [gridOptions]="gridOptions"
       >
       </common-lib-grid>
       `,
@@ -103,4 +109,5 @@ defaultUses.args = {
   gridData: gridData, // visual data into the grid.
   gridColumn: gridColumn, // the column configuration of grid.
   gridDefaultColDef: gridDefaultColDef, // Any configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.
+  gridOptions: gridOptions, // The gridOptions object is a 'one stop shop' for the entire interface into the grid and can be used instead of or in addition to the normal framework bindings.
 };

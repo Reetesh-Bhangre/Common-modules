@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-    "storybook": "npm run docs:json && start-storybook -p 5555",
+    "storybook": "npm run docs:json && start-storybook -p 8590",
     "build-storybook": "npm run docs:json && build-storybook",
     "package": "npm run build-lib && npm run package-lib",
     "build-lib": "ng build common-module-lib",
