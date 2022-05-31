@@ -7,6 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 
+import { GridLoadingMaskComponent } from './grid-featured-components/grid-loading-mask/grid-loading-mask.component';
+
 @Component({
   selector: 'common-lib-grid',
   templateUrl: './grid.component.html',
@@ -20,6 +22,7 @@ export class GridComponent implements OnInit, AfterViewInit {
   gridApi: any; // After the initialization of the grid, stored params.api into the gridApi.
   gridColumnApi: any; // After the initialization of the grid, stored params.columnApi into the gridColumnApi.
   gridSelectedRow: any; // Containes the selected row data in array form
+  loadingOverlayComponent: any;
   /****************************************************************/
   /******************************** List of ViewChild Variables ********************************/
   /**
@@ -63,7 +66,9 @@ export class GridComponent implements OnInit, AfterViewInit {
    */
   @Input() gridOptions: any;
 
-  constructor() {}
+  constructor() {
+    this.loadingOverlayComponent = GridLoadingMaskComponent;
+  }
 
   ngOnInit() {}
 
@@ -87,6 +92,7 @@ export class GridComponent implements OnInit, AfterViewInit {
   onGridReady(params) {
     this.gridApi = params.api; // stored params.api into the gridApi. It will be use After the initialization of the grid.
     this.gridColumnApi = params.columnApi; // stored params.columnApi into the gridColumnApi. It will be use After the initialization of the grid
+    this.gridApi.showLoadingOverlay();
   }
 
   /**
