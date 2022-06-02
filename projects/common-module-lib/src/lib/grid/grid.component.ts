@@ -22,7 +22,7 @@ export class GridComponent implements OnInit, AfterViewInit {
   gridApi: any; // After the initialization of the grid, stored params.api into the gridApi.
   gridColumnApi: any; // After the initialization of the grid, stored params.columnApi into the gridColumnApi.
   gridSelectedRow: any; // Containes the selected row data in array form
-  loadingOverlayComponent: any;
+  loadingOverlayComponent: any; // loadingOverlayComponent is a overlay that contains loading skeleton of rows
   /****************************************************************/
   /******************************** List of ViewChild Variables ********************************/
   /**
@@ -67,6 +67,7 @@ export class GridComponent implements OnInit, AfterViewInit {
   @Input() gridOptions: any;
 
   constructor() {
+    // assign grid Loading skeleton component to overlay component
     this.loadingOverlayComponent = GridLoadingMaskComponent;
   }
 
@@ -92,7 +93,11 @@ export class GridComponent implements OnInit, AfterViewInit {
   onGridReady(params) {
     this.gridApi = params.api; // stored params.api into the gridApi. It will be use After the initialization of the grid.
     this.gridColumnApi = params.columnApi; // stored params.columnApi into the gridColumnApi. It will be use After the initialization of the grid
-    this.gridApi.showLoadingOverlay();
+    this.gridApi.showLoadingOverlay(); // Used to show overlay loading skeleton component
+    /** Added Settimeout to see overlay loading skeleton component for 5 sec */
+    setTimeout(() => {
+      this.gridApi.hideOverlay(); // Used to hide overlay loading skeleton component
+    }, 5000);
   }
 
   /**
