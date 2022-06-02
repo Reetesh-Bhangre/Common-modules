@@ -8,6 +8,7 @@
 ::ng-deep {
   ag-grid-angular.ag-theme-alpine {
     font-family: "Roboto", sans-serif;
+    // Grid Header Part CSS
     .ag-header {
       .ag-header-cell {
         .ag-header-cell-resize {
@@ -18,6 +19,7 @@
         }
       }
     }
+    // Grid Body part CSS
     .ag-body-viewport {
       .ag-row {
         &.ag-row-hover,
@@ -31,6 +33,17 @@
             @include cell-style;
           }
         }
+      }
+    }
+    // Grid Loading mask CSS
+    .ag-overlay {
+      .ag-overlay-wrapper {
+        align-items: baseline;
+        padding-top: 35px;
+        background: transparent;
+      }
+      common-lib-grid-loading-mask {
+        width: 100%;
       }
     }
   }

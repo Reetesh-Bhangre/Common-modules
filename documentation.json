@@ -1392,7 +1392,7 @@
         },
         {
             "name": "GridComponent",
-            "id": "component-GridComponent-bf87866b23b77d56d3a39fb9c89cec1157cce6ba001989d5eeb00c4254e61c41a64c87b75a5c3b480a4b04465b43bca1f3e64fbbc83dcc4cc530032be3781024",
+            "id": "component-GridComponent-02f61ef9f63d003bb398be83f18c2c3dc1174b9202d6f56433689ddd880ace010600b60ebc0edab8cd9c78253572bb1ac1861d1ef7816cdbec8f14a84fca0fef",
             "file": "projects/common-module-lib/src/lib/grid/grid.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1416,7 +1416,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nfitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.\n",
                     "description": "<p>fitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.</p>\n",
-                    "line": 40,
+                    "line": 39,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -1426,7 +1426,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridColumn default [].\ngridColumn will help to configure the column on grid.\n",
                     "description": "<p>gridColumn default [].\ngridColumn will help to configure the column on grid.</p>\n",
-                    "line": 52,
+                    "line": 51,
                     "type": "any[]",
                     "decorators": []
                 },
@@ -1436,7 +1436,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridData default [].\ngridData will assign the data to the grid.\n",
                     "description": "<p>gridData default [].\ngridData will assign the data to the grid.</p>\n",
-                    "line": 58,
+                    "line": 57,
                     "type": "any[]",
                     "decorators": []
                 },
@@ -1446,7 +1446,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.\n",
                     "description": "<p>gridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.</p>\n",
-                    "line": 63,
+                    "line": 62,
                     "type": "any",
                     "decorators": []
                 },
@@ -1457,7 +1457,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.\n",
                     "description": "<p>gridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.</p>\n",
-                    "line": 46,
+                    "line": 45,
                     "type": "string",
                     "decorators": []
                 },
@@ -1467,7 +1467,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridOptions default {}.\nAny configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\ngridOptions properties and callbacks used to configure the grid.\n",
                     "description": "<p>gridOptions default {}.\nAny configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\ngridOptions properties and callbacks used to configure the grid.</p>\n",
-                    "line": 69,
+                    "line": 68,
                     "type": "any",
                     "decorators": []
                 }
@@ -1499,7 +1499,7 @@
                     "type": "ElementRef",
                     "optional": false,
                     "description": "<p>gridContainerRefEl will help to get element reference of grid container</p>\n",
-                    "line": 32,
+                    "line": 31,
                     "rawdescription": "\n\ngridContainerRefEl will help to get element reference of grid container\n",
                     "decorators": [
                         {
@@ -1510,7 +1510,7 @@
                 },
                 {
                     "name": "gridHeaderHeight",
-                    "defaultValue": "35",
+                    "defaultValue": "34",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "number",
@@ -1539,18 +1539,7 @@
                     "line": 24
                 },
                 {
-                    "name": "loadingOverlay",
-                    "defaultValue": "GridLoadingMaskComponent",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "any",
-                    "optional": false,
-                    "description": "",
-                    "line": 26
-                },
-                {
                     "name": "loadingOverlayComponent",
-                    "defaultValue": "GridLoadingMaskComponent",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "any",
@@ -1566,7 +1555,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 78,
+                    "line": 77,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1576,7 +1565,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 76,
+                    "line": 75,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1593,7 +1582,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 95,
+                    "line": 94,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nWhen the grid is initialised, the gridReady event will fire.\nHere we stored some of the grid API value into the variables\n",
@@ -1623,7 +1612,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 116,
+                    "line": 117,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nWhen the grid Row is clicked. The event will be trigger\nHere we deselecting the row if row is clicked 2nd time\nIt will call onRowSelected function automatically and update the gridSelectedRow array\n",
@@ -1653,7 +1642,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 107,
+                    "line": 108,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nWhen the grid Row is selected or deselected. The event will be trigger\nAlso update the gridSelectedRow variable\n",
@@ -1678,11 +1667,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\r\n  AfterViewInit,\r\n  Component,\r\n  ElementRef,\r\n  Input,\r\n  OnInit,\r\n  ViewChild,\r\n} from '@angular/core';\r\n\r\nimport { GridLoadingMaskComponent } from './grid-featured-component/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid',\r\n  templateUrl: './grid.component.html',\r\n  styleUrls: ['./grid.component.scss'],\r\n})\r\nexport class GridComponent implements OnInit, AfterViewInit {\r\n  /****************************************************************/\r\n  /******************************** List of public Variables ********************************/\r\n  gridHeaderHeight: number = 35; // To set the specific height of header.\r\n  gridRowHeight: number = 34; // To set the specific height of header.\r\n  gridApi: any; // After the initialization of the grid, stored params.api into the gridApi.\r\n  gridColumnApi: any; // After the initialization of the grid, stored params.columnApi into the gridColumnApi.\r\n  gridSelectedRow: any; // Containes the selected row data in array form\r\n  loadingOverlayComponent: any = GridLoadingMaskComponent;\r\n  loadingOverlay: any = GridLoadingMaskComponent;\r\n  /****************************************************************/\r\n  /******************************** List of ViewChild Variables ********************************/\r\n  /**\r\n   * gridContainerRefEl will help to get element reference of grid container\r\n   */\r\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\r\n\r\n  /****************************************************************/\r\n  /******************************** List of Input Variables ********************************/\r\n  /**\r\n   * fitToWindow default is true.\r\n   * fitToWindow is used to set grid height as 100% of container height.\r\n   */\r\n  @Input() fitToWindow: boolean = true;\r\n\r\n  /**\r\n   * gridHeight default 500px.\r\n   * gridHeight allowed us to set grid height in px as required.\r\n   */\r\n  @Input() gridHeight: string = '500px';\r\n\r\n  /**\r\n   * gridColumn default [].\r\n   * gridColumn will help to configure the column on grid.\r\n   */\r\n  @Input() gridColumn: any[];\r\n\r\n  /**\r\n   * gridData default [].\r\n   * gridData will assign the data to the grid.\r\n   */\r\n  @Input() gridData: any[];\r\n  /**\r\n   * gridDefaultColDef default {}.\r\n   * Any configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.\r\n   */\r\n  @Input() gridDefaultColDef: any;\r\n  /**\r\n   * gridOptions default {}.\r\n   * Any configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\r\n   * gridOptions properties and callbacks used to configure the grid.\r\n   */\r\n  @Input() gridOptions: any;\r\n\r\n  constructor() {\r\n    this.loadingOverlay = this.loadingOverlayComponent =\r\n      GridLoadingMaskComponent;\r\n  }\r\n\r\n  ngOnInit() {}\r\n\r\n  ngAfterViewInit() {\r\n    /**\r\n     * Below code help to set the grid height conditionally.\r\n     * If grid is fitToWindow, it fits the grid according to the browser window.\r\n     * Else it sets the fix grid height default is 500px.\r\n     */\r\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\r\n      ? `calc(100vh - ${\r\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\r\n        }px)`\r\n      : this.gridHeight;\r\n  }\r\n\r\n  /**\r\n   * When the grid is initialised, the gridReady event will fire.\r\n   * Here we stored some of the grid API value into the variables\r\n   */\r\n  onGridReady(params) {\r\n    debugger;\r\n    console.log('on grid ready');\r\n    this.gridApi = params.api; // stored params.api into the gridApi. It will be use After the initialization of the grid.\r\n    this.gridColumnApi = params.columnApi; // stored params.columnApi into the gridColumnApi. It will be use After the initialization of the grid\r\n    this.gridApi.showLoadingOverlay();\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is selected or deselected. The event will be trigger\r\n   * Also update the gridSelectedRow variable\r\n   */\r\n  onRowSelected(event) {\r\n    this.gridSelectedRow = this.gridApi.getSelectedNodes();\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is clicked. The event will be trigger\r\n   * Here we deselecting the row if row is clicked 2nd time\r\n   * It will call onRowSelected function automatically and update the gridSelectedRow array\r\n   */\r\n  onRowClicked(event) {\r\n    // Checking the gridSelectedRow and its length\r\n    if (this.gridSelectedRow && this.gridSelectedRow.length > 0) {\r\n      // Using every method to iterate gridSelectedRow array and break when condition meet\r\n      this.gridSelectedRow.every((rowData, index) => {\r\n        // Finding the row by comparing the rowIndex value\r\n        if (rowData.rowIndex === event.rowIndex) {\r\n          this.gridSelectedRow[index].setSelected(false); // deselecting the selected rowusing setSelected method of Ag-grid.\r\n          return false; // break the loop\r\n        }\r\n        return true; // continue the loop\r\n      });\r\n    }\r\n  }\r\n}\r\n",
+            "sourceCode": "import {\r\n  AfterViewInit,\r\n  Component,\r\n  ElementRef,\r\n  Input,\r\n  OnInit,\r\n  ViewChild,\r\n} from '@angular/core';\r\n\r\nimport { GridLoadingMaskComponent } from './grid-featured-components/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid',\r\n  templateUrl: './grid.component.html',\r\n  styleUrls: ['./grid.component.scss'],\r\n})\r\nexport class GridComponent implements OnInit, AfterViewInit {\r\n  /****************************************************************/\r\n  /******************************** List of public Variables ********************************/\r\n  gridHeaderHeight: number = 34; // To set the specific height of header\r\n  gridRowHeight: number = 34; // To set the specific height of header\r\n  gridApi: any; // After the initialization of the grid, stored params.api into the gridApi.\r\n  gridColumnApi: any; // After the initialization of the grid, stored params.columnApi into the gridColumnApi.\r\n  gridSelectedRow: any; // Containes the selected row data in array form\r\n  loadingOverlayComponent: any; // loadingOverlayComponent is a overlay that contains loading skeleton of rows\r\n  /****************************************************************/\r\n  /******************************** List of ViewChild Variables ********************************/\r\n  /**\r\n   * gridContainerRefEl will help to get element reference of grid container\r\n   */\r\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\r\n\r\n  /****************************************************************/\r\n  /******************************** List of Input Variables ********************************/\r\n  /**\r\n   * fitToWindow default is true.\r\n   * fitToWindow is used to set grid height as 100% of container height.\r\n   */\r\n  @Input() fitToWindow: boolean = true;\r\n\r\n  /**\r\n   * gridHeight default 500px.\r\n   * gridHeight allowed us to set grid height in px as required.\r\n   */\r\n  @Input() gridHeight: string = '500px';\r\n\r\n  /**\r\n   * gridColumn default [].\r\n   * gridColumn will help to configure the column on grid.\r\n   */\r\n  @Input() gridColumn: any[];\r\n\r\n  /**\r\n   * gridData default [].\r\n   * gridData will assign the data to the grid.\r\n   */\r\n  @Input() gridData: any[];\r\n  /**\r\n   * gridDefaultColDef default {}.\r\n   * Any configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn.\r\n   */\r\n  @Input() gridDefaultColDef: any;\r\n  /**\r\n   * gridOptions default {}.\r\n   * Any configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\r\n   * gridOptions properties and callbacks used to configure the grid.\r\n   */\r\n  @Input() gridOptions: any;\r\n\r\n  constructor() {\r\n    // assign grid Loading skeleton component to overlay component\r\n    this.loadingOverlayComponent = GridLoadingMaskComponent;\r\n  }\r\n\r\n  ngOnInit() {}\r\n\r\n  ngAfterViewInit() {\r\n    /**\r\n     * Below code help to set the grid height conditionally.\r\n     * If grid is fitToWindow, it fits the grid according to the browser window.\r\n     * Else it sets the fix grid height default is 500px.\r\n     */\r\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\r\n      ? `calc(100vh - ${\r\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\r\n        }px)`\r\n      : this.gridHeight;\r\n  }\r\n\r\n  /**\r\n   * When the grid is initialised, the gridReady event will fire.\r\n   * Here we stored some of the grid API value into the variables\r\n   */\r\n  onGridReady(params) {\r\n    this.gridApi = params.api; // stored params.api into the gridApi. It will be use After the initialization of the grid.\r\n    this.gridColumnApi = params.columnApi; // stored params.columnApi into the gridColumnApi. It will be use After the initialization of the grid\r\n    this.gridApi.showLoadingOverlay(); // Used to show overlay loading skeleton component\r\n    /** Added Settimeout to see overlay loading skeleton component for 5 sec */\r\n    setTimeout(() => {\r\n      this.gridApi.hideOverlay(); // Used to hide overlay loading skeleton component\r\n    }, 5000);\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is selected or deselected. The event will be trigger\r\n   * Also update the gridSelectedRow variable\r\n   */\r\n  onRowSelected(event) {\r\n    this.gridSelectedRow = this.gridApi.getSelectedNodes();\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is clicked. The event will be trigger\r\n   * Here we deselecting the row if row is clicked 2nd time\r\n   * It will call onRowSelected function automatically and update the gridSelectedRow array\r\n   */\r\n  onRowClicked(event) {\r\n    // Checking the gridSelectedRow and its length\r\n    if (this.gridSelectedRow && this.gridSelectedRow.length > 0) {\r\n      // Using every method to iterate gridSelectedRow array and break when condition meet\r\n      this.gridSelectedRow.every((rowData, index) => {\r\n        // Finding the row by comparing the rowIndex value\r\n        if (rowData.rowIndex === event.rowIndex) {\r\n          this.gridSelectedRow[index].setSelected(false); // deselecting the selected rowusing setSelected method of Ag-grid.\r\n          return false; // break the loop\r\n        }\r\n        return true; // continue the loop\r\n      });\r\n    }\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import url(\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap\");\r\n\r\n@mixin cell-style {\r\n  border: none;\r\n  border-right: 1px solid #dde2eb;\r\n}\r\n\r\n::ng-deep {\r\n  ag-grid-angular.ag-theme-alpine {\r\n    font-family: \"Roboto\", sans-serif;\r\n    .ag-header {\r\n      .ag-header-cell {\r\n        .ag-header-cell-resize {\r\n          &:after {\r\n            height: 100%;\r\n            top: 0;\r\n          }\r\n        }\r\n      }\r\n    }\r\n    .ag-body-viewport {\r\n      .ag-row {\r\n        &.ag-row-hover,\r\n        &.ag-row-selected {\r\n          background-color: rgba(207, 207, 207, 0.3);\r\n        }\r\n        .ag-cell {\r\n          @include cell-style;\r\n          font-size: 13px;\r\n          &.ag-cell-focus {\r\n            @include cell-style;\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+                    "data": "@import url(\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap\");\r\n\r\n@mixin cell-style {\r\n  border: none;\r\n  border-right: 1px solid #dde2eb;\r\n}\r\n\r\n::ng-deep {\r\n  ag-grid-angular.ag-theme-alpine {\r\n    font-family: \"Roboto\", sans-serif;\r\n    // Grid Header Part CSS\r\n    .ag-header {\r\n      .ag-header-cell {\r\n        .ag-header-cell-resize {\r\n          &:after {\r\n            height: 100%;\r\n            top: 0;\r\n          }\r\n        }\r\n      }\r\n    }\r\n    // Grid Body part CSS\r\n    .ag-body-viewport {\r\n      .ag-row {\r\n        &.ag-row-hover,\r\n        &.ag-row-selected {\r\n          background-color: rgba(207, 207, 207, 0.3);\r\n        }\r\n        .ag-cell {\r\n          @include cell-style;\r\n          font-size: 13px;\r\n          &.ag-cell-focus {\r\n            @include cell-style;\r\n          }\r\n        }\r\n      }\r\n    }\r\n    // Grid Loading mask CSS\r\n    .ag-overlay {\r\n      .ag-overlay-wrapper {\r\n        align-items: baseline;\r\n        padding-top: 35px;\r\n        background: transparent;\r\n      }\r\n      common-lib-grid-loading-mask {\r\n        width: 100%;\r\n      }\r\n    }\r\n  }\r\n}\r\n",
                     "styleUrl": "./grid.component.scss"
                 }
             ],
@@ -1693,17 +1682,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 69
+                "line": 68
             },
             "implements": [
                 "OnInit",
                 "AfterViewInit"
             ],
-            "templateData": "<!-- Ag Grid Container Wrapper -->\n<div class=\"grid-container\" #gridContainerRef>\n  <!-- ag-grid-angular is a selector to drow a grid in UI side -->\n  <ag-grid-angular\n    #customGrid\n    style=\"width: 100%; height: 100%\"\n    class=\"ag-theme-alpine\"\n    [rowData]=\"gridData\"\n    [columnDefs]=\"gridColumn\"\n    [headerHeight]=\"gridHeaderHeight\"\n    [rowHeight]=\"gridRowHeight\"\n    [defaultColDef]=\"gridDefaultColDef\"\n    [gridOptions]=\"gridOptions\"\n    (gridReady)=\"onGridReady($event)\"\n    (rowSelected)=\"onRowSelected($event)\"\n    (rowClicked)=\"onRowClicked($event)\"\n    [loadingOverlay]=\"loadingOverlay\"\n  >\n  </ag-grid-angular>\n</div>\n"
+            "templateData": "<!-- Ag Grid Container Wrapper -->\r\n<div class=\"grid-container\" #gridContainerRef>\r\n  <!-- ag-grid-angular is a selector to drow a grid in UI side -->\r\n  <ag-grid-angular\r\n    #customGrid\r\n    style=\"width: 100%; height: 100%\"\r\n    class=\"ag-theme-alpine\"\r\n    [rowData]=\"gridData\"\r\n    [columnDefs]=\"gridColumn\"\r\n    [headerHeight]=\"gridHeaderHeight\"\r\n    [rowHeight]=\"gridRowHeight\"\r\n    [defaultColDef]=\"gridDefaultColDef\"\r\n    [gridOptions]=\"gridOptions\"\r\n    (gridReady)=\"onGridReady($event)\"\r\n    (rowSelected)=\"onRowSelected($event)\"\r\n    (rowClicked)=\"onRowClicked($event)\"\r\n    [loadingOverlayComponent]=\"loadingOverlayComponent\"\r\n  >\r\n  </ag-grid-angular>\r\n</div>\r\n"
         },
         {
             "name": "GridLoadingMaskComponent",
-            "id": "component-GridLoadingMaskComponent-dceee3e936271f82465850e21acb82ce51bbda0efcd0583137d516bb98fc22a2af58a58e5d3b5fd88a8f2110c291454e552b08fb0c5e4015191e37ab83bce85f",
+            "id": "component-GridLoadingMaskComponent-253c46be9285604e20a900bb3f6f4d4c39824786bda828cd1fb606c198c7d07ac53f43d191d66456d4530471ecc48beddaca1f1dcac905baf493f09d4156eca9",
             "file": "projects/common-module-lib/src/lib/grid/grid-featured-component/grid-loading-mask/grid-loading-mask.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1759,7 +1748,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { ILoadingOverlayAngularComp } from 'ag-grid-angular';\nimport { ILoadingOverlayParams } from 'ag-grid-community';\n\n@Component({\n  selector: 'common-lib-grid-loading-mask',\n  templateUrl: './grid-loading-mask.component.html',\n  styleUrls: ['./grid-loading-mask.component.scss'],\n})\nexport class GridLoadingMaskComponent implements ILoadingOverlayAngularComp {\n  agInit(params: ILoadingOverlayParams): void {\n    console.log('Check loading mask component agInIt Params', params);\n  }\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { ILoadingOverlayAngularComp } from 'ag-grid-angular';\r\nimport { ILoadingOverlayParams } from 'ag-grid-community';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid-loading-mask',\r\n  templateUrl: './grid-loading-mask.component.html',\r\n  styleUrls: ['./grid-loading-mask.component.scss'],\r\n})\r\nexport class GridLoadingMaskComponent implements ILoadingOverlayAngularComp {\r\n  agInit(params: ILoadingOverlayParams): void {\r\n    console.log('Check loading mask component agInIt Params', params);\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1771,7 +1760,137 @@
             "implements": [
                 "ILoadingOverlayAngularComp"
             ],
-            "templateData": "<p>grid-loading-mask works!</p>\n"
+            "templateData": "<p>grid-loading-mask works!</p>\r\n"
+        },
+        {
+            "name": "GridLoadingMaskComponent",
+            "id": "component-GridLoadingMaskComponent-4301c9eb10ca61c36f92947043a54ec6c1aebd93c50e87cc7ebefed89fe84851411a062fd00da84f361c4c6b3c3ac504596143d6e0b3afe3ed94af4c50e5f3fb-1",
+            "file": "projects/common-module-lib/src/lib/grid/grid-featured-components/grid-loading-mask/grid-loading-mask.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "common-lib-grid-loading-mask",
+            "styleUrls": [
+                "./grid-loading-mask.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./grid-loading-mask.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "Arr",
+                    "defaultValue": "Array",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "loadingSkeletonEl",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'loadingSkeleton'"
+                        }
+                    ]
+                },
+                {
+                    "name": "numberOfSkeletonRow",
+                    "defaultValue": "1",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "agInit",
+                    "args": [
+                        {
+                            "name": "params",
+                            "type": "ILoadingCellRendererParams",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "params",
+                            "type": "ILoadingCellRendererParams",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';\r\nimport { ILoadingCellRendererAngularComp } from 'ag-grid-angular';\r\nimport { ILoadingCellRendererParams } from 'ag-grid-community';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid-loading-mask',\r\n  templateUrl: './grid-loading-mask.component.html',\r\n  styleUrls: ['./grid-loading-mask.component.scss'],\r\n})\r\nexport class GridLoadingMaskComponent\r\n  implements ILoadingCellRendererAngularComp, AfterViewInit\r\n{\r\n  @ViewChild('loadingSkeleton') loadingSkeletonEl: ElementRef;\r\n  numberOfSkeletonRow: number = 1; // number of Skeleton row\r\n  Arr = Array; // Array type captured in a variable\r\n  constructor() {}\r\n  agInit(params: ILoadingCellRendererParams): void {}\r\n\r\n  ngAfterViewInit() {\r\n    // Get the height of grid container\r\n    const gridHeighttest =\r\n      this.loadingSkeletonEl.nativeElement.getBoundingClientRect().top;\r\n\r\n    // Get the height of loading Skeleton row\r\n    const loadingSkeletonHeight =\r\n      this.loadingSkeletonEl.nativeElement.offsetHeight;\r\n\r\n    // Calculate how much row needed in grid viewport\r\n    this.numberOfSkeletonRow = Math.trunc(\r\n      gridHeighttest / loadingSkeletonHeight\r\n    );\r\n  }\r\n}\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "/* Loading Bar Skeleton */\r\n::ng-deep {\r\n  .loading-skeleton-wrapper {\r\n    .loading-skeleton {\r\n      width: calc(100% - 32px);\r\n      padding: 12px 16px 13px 16px;\r\n      border-bottom: 1px solid #dde2eb;\r\n      background: #fcfcfc;\r\n      &:empty::after {\r\n        content: \"\";\r\n        display: block;\r\n        height: 8px;\r\n        background-image: linear-gradient(\r\n            90deg,\r\n            rgba(175, 175, 175, 0.05) 0,\r\n            rgba(175, 175, 175, 0.4) 75%,\r\n            rgba(175, 175, 175, 0.5) 100%\r\n          ),\r\n          linear-gradient(\r\n            90deg,\r\n            rgba(207, 207, 207, 0.5),\r\n            rgba(207, 207, 207, 0.5),\r\n            rgba(207, 207, 207, 0.5)\r\n          );\r\n        animation: loading 7.5s infinite;\r\n        background-size: 25px 8px, 100% 100%;\r\n        background-repeat: no-repeat;\r\n      }\r\n    }\r\n  }\r\n  @keyframes loading {\r\n    from {\r\n      background-position: 0% 0%;\r\n    }\r\n    to {\r\n      background-position: 100% 0%;\r\n    }\r\n  }\r\n}\r\n",
+                    "styleUrl": "./grid-loading-mask.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 15
+            },
+            "implements": [
+                "ILoadingCellRendererAngularComp",
+                "AfterViewInit"
+            ],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "GridLoadingMaskComponent-1",
+            "templateData": "<div class=\"loading-skeleton-wrapper\" #loadingSkeleton>\r\n  <div\r\n    class=\"loading-skeleton\"\r\n    *ngFor=\"let i of Arr(numberOfSkeletonRow).fill(1)\"\r\n  ></div>\r\n</div>\r\n"
         },
         {
             "name": "HeaderComponent",
@@ -2327,13 +2446,13 @@
         },
         {
             "name": "GridModule",
-            "id": "module-GridModule-69ca1f7439829f57748406c10fa6ae1b8befcef34b91d2d31d86cd78d14941967f4a99ff9681ae8e2e08fbf996531b240e01c91f677c3eddaf4970917e972086",
+            "id": "module-GridModule-a7943341eaa43bab224826354c68b4e3affe1f4cb935ea271c6a977840f72d3f5e07a3cc59c6616cf386d98a859f0aa97434ff6e37f6605f3bfaacc17111ad5b",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/grid/grid.module.ts",
             "methods": [],
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n\r\nimport { AgGridModule } from 'ag-grid-angular';\r\nimport { FormsModule } from '@angular/forms';\r\n\r\nimport { GridComponent } from './grid.component';\r\nimport { GridLoadingMaskComponent } from './grid-featured-component/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@NgModule({\r\n  declarations: [GridComponent, GridLoadingMaskComponent],\r\n  imports: [\r\n    CommonModule,\r\n    HttpClientModule,\r\n    AgGridModule.withComponents([GridLoadingMaskComponent]),\r\n    FormsModule,\r\n  ],\r\n  exports: [GridComponent, GridLoadingMaskComponent],\r\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n  providers: [],\r\n})\r\nexport class GridModule {}\r\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n\r\nimport { AgGridModule } from 'ag-grid-angular';\r\nimport { FormsModule } from '@angular/forms';\r\n\r\nimport { GridComponent } from './grid.component';\r\nimport { GridLoadingMaskComponent } from './grid-featured-components/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@NgModule({\r\n  declarations: [GridComponent, GridLoadingMaskComponent],\r\n  imports: [\r\n    CommonModule,\r\n    HttpClientModule,\r\n    AgGridModule.withComponents([GridLoadingMaskComponent]),\r\n    FormsModule,\r\n  ],\r\n  exports: [GridComponent, GridLoadingMaskComponent],\r\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n  providers: [],\r\n})\r\nexport class GridModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -2344,9 +2463,6 @@
                     "elements": [
                         {
                             "name": "GridComponent"
-                        },
-                        {
-                            "name": "GridLoadingMaskComponent"
                         }
                     ]
                 },
@@ -2359,9 +2475,6 @@
                     "elements": [
                         {
                             "name": "GridComponent"
-                        },
-                        {
-                            "name": "GridLoadingMaskComponent"
                         }
                     ]
                 },
@@ -2402,7 +2515,7 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2412,7 +2525,7 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
+                "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2442,7 +2555,7 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2452,7 +2565,7 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2640,21 +2753,21 @@
                 "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "(args) => ({\r\n  props: {},\r\n  template: `\r\n    <common-lib-control-value-accessor-form></common-lib-control-value-accessor-form>`,\r\n})"
-            },
-            {
-                "name": "TemplateDefault",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: {},\r\n  template: `\r\n    <common-lib-control-value-accessor-form></common-lib-control-value-accessor-form>`,\r\n})"
             },
             {
                 "name": "TemplateDefault",
@@ -2680,21 +2793,21 @@
                 "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
-            },
-            {
-                "name": "TemplateDefault",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n        [gridOptions]=\"gridOptions\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
             }
         ],
         "functions": [],
@@ -2743,28 +2856,6 @@
                     "type": "literal type"
                 }
             ],
-            "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts": [
-                {
-                    "name": "defaultUses",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "TemplateDefault.bind({})"
-                },
-                {
-                    "name": "TemplateDefault",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "(args) => ({\r\n  props: {},\r\n  template: `\r\n    <common-lib-control-value-accessor-form></common-lib-control-value-accessor-form>`,\r\n})"
-                }
-            ],
             "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.stories.ts": [
                 {
                     "name": "defaultUses",
@@ -2785,6 +2876,28 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-date-picker></common-lib-custom-date-picker>\r\n  `,\r\n})"
+                }
+            ],
+            "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: {},\r\n  template: `\r\n    <common-lib-control-value-accessor-form></common-lib-control-value-accessor-form>`,\r\n})"
                 }
             ],
             "projects/common-module-lib/src/lib/custom-input/custom-input.stories.ts": [
@@ -2829,28 +2942,6 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-select></common-lib-custom-select>\r\n  `,\r\n})"
-                }
-            ],
-            "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts": [
-                {
-                    "name": "defaultUses",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "TemplateDefault.bind({})"
-                },
-                {
-                    "name": "TemplateDefault",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
                 }
             ],
             "projects/common-module-lib/src/lib/grid/grid.stories.ts": [
@@ -2903,6 +2994,28 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n        [gridOptions]=\"gridOptions\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
+                }
+            ],
+            "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -3223,12 +3336,21 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/common-module-lib/src/lib/grid/grid-featured-components/grid-loading-mask/grid-loading-mask.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GridLoadingMaskComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/common-module-lib/src/lib/grid/grid.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "GridComponent",
-                "coveragePercent": 52,
-                "coverageCount": "11/21",
+                "coveragePercent": 55,
+                "coverageCount": "11/20",
                 "status": "good"
             },
             {

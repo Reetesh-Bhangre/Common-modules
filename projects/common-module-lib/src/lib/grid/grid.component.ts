@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { GridLoadingMaskComponent } from './grid-featured-component/grid-loading-mask/grid-loading-mask.component';
+import { GridLoadingMaskComponent } from './grid-featured-components/grid-loading-mask/grid-loading-mask.component';
 
 @Component({
   selector: 'common-lib-grid',
@@ -17,13 +17,12 @@ import { GridLoadingMaskComponent } from './grid-featured-component/grid-loading
 export class GridComponent implements OnInit, AfterViewInit {
   /****************************************************************/
   /******************************** List of public Variables ********************************/
-  gridHeaderHeight: number = 35; // To set the specific height of header.
-  gridRowHeight: number = 34; // To set the specific height of header.
+  gridHeaderHeight: number = 34; // To set the specific height of header
+  gridRowHeight: number = 34; // To set the specific height of header
   gridApi: any; // After the initialization of the grid, stored params.api into the gridApi.
   gridColumnApi: any; // After the initialization of the grid, stored params.columnApi into the gridColumnApi.
   gridSelectedRow: any; // Containes the selected row data in array form
-  loadingOverlayComponent: any = GridLoadingMaskComponent;
-  loadingOverlay: any = GridLoadingMaskComponent;
+  loadingOverlayComponent: any; // loadingOverlayComponent is a overlay that contains loading skeleton of rows
   /****************************************************************/
   /******************************** List of ViewChild Variables ********************************/
   /**
@@ -69,8 +68,8 @@ export class GridComponent implements OnInit, AfterViewInit {
   @Input() gridOptions: any;
 
   constructor() {
-    this.loadingOverlay = this.loadingOverlayComponent =
-      GridLoadingMaskComponent;
+    // assign grid Loading skeleton component to overlay component
+    this.loadingOverlayComponent = GridLoadingMaskComponent;
   }
 
   ngOnInit() {}
@@ -93,11 +92,13 @@ export class GridComponent implements OnInit, AfterViewInit {
    * Here we stored some of the grid API value into the variables
    */
   onGridReady(params) {
-    debugger;
-    console.log('on grid ready');
     this.gridApi = params.api; // stored params.api into the gridApi. It will be use After the initialization of the grid.
     this.gridColumnApi = params.columnApi; // stored params.columnApi into the gridColumnApi. It will be use After the initialization of the grid
-    this.gridApi.showLoadingOverlay();
+    this.gridApi.showLoadingOverlay(); // Used to show overlay loading skeleton component
+    /** Added Settimeout to see overlay loading skeleton component for 5 sec */
+    setTimeout(() => {
+      this.gridApi.hideOverlay(); // Used to hide overlay loading skeleton component
+    }, 5000);
   }
 
   /**
