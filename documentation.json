@@ -2,6 +2,47 @@
     "pipes": [],
     "interfaces": [
         {
+            "name": "ConfigResponse",
+            "id": "interface-ConfigResponse-73bdc552d5cc5392f7286be0c72484c9cd2ee5117a3b4bfe8a4025524c8fecaf7084d83edeee8be4ff988fa921da864f4402f41dbe28e1b59a5a3f25bd74b306",
+            "file": "projects/common-module-lib/src/lib/power-bi/power-bi.component.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';\nimport { PowerBIReportEmbedComponent } from 'powerbi-client-angular';\nimport { IReportEmbedConfiguration, models, Page, Report, service, VisualDescriptor } from 'powerbi-client';\nimport { HttpService } from '../services/http.service';\n\n// Handles the embed config response for embedding\nexport interface ConfigResponse {\n    Id: string;\n    EmbedUrl: string;\n    EmbedToken: {\n      Token: string;\n    };\n  }\n\n@Component({\n  selector: 'common-lib-power-bi',\n  templateUrl: './power-bi.component.html',\n  styleUrls: ['./power-bi.component.css']\n})\nexport class PowerBiComponent  {\n// Wrapper object to access report properties\n@ViewChild(PowerBIReportEmbedComponent) reportObj!: PowerBIReportEmbedComponent;\n\n// Div object to show status of the demo app\n@ViewChild('status') private statusRef!: ElementRef<HTMLDivElement>;\n\n// Embed Report button element of the demo app\n@ViewChild('embedReportBtn') private embedBtnRef!: ElementRef<HTMLButtonElement>;\n\n// Track Report embedding status\nisEmbedded = false;\n\n// Overall status message of embedding\ndisplayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';\n\n// CSS Class to be passed to the wrapper\n// Hide the report container initially\nreportClass = 'report-container hidden';\n\n// Flag which specify the type of embedding\nphasedEmbeddingFlag = false;\n\n// Pass the basic embed configurations to the wrapper to bootstrap the report on first load\n// Values for properties like embedUrl, accessToken and settings will be set on click of button\nreportConfig: IReportEmbedConfiguration = {\n  type: 'report',\n  embedUrl: undefined,\n  tokenType: models.TokenType.Embed,\n  accessToken: undefined,\n  settings: undefined,\n};\n\n// Endpoint to get report config\nreportUrl = 'https://aka.ms/CaptureViewsReportEmbedConfig';\n\n// Success Image element\nsuccessElement = document.createElement('img');\n// Error Image element\nerrorElement = document.createElement('img');\n\n/**\n * Map of event handlers to be applied to the embedded report\n */\n// Update event handlers for the report by redefining the map using this.eventHandlersMap\n// Set event handler to null if event needs to be removed\n// More events can be provided from here\n// https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events\neventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([\n  ['loaded', () => console.log('Report has loaded')],\n  [\n    'rendered',\n    () => {\n      console.log('Report has rendered');\n\n      // Set displayMessage to empty when rendered for the first time\n      if (!this.isEmbedded) {\n        this.displayMessage = 'Use the buttons above to interact with the report using Power BI Client APIs.';\n      }\n\n      // Update embed status\n      this.isEmbedded = true;\n    },\n  ],\n  [\n    'error',\n    (event?: service.ICustomEvent<any>) => {\n      if (event) {\n        console.error(event.detail);\n      }\n    },\n  ],\n  ['visualClicked', () => console.log('visual clicked')],\n  ['pageChanged', (event) => console.log(event)],\n]);\n\nconstructor(public httpService: HttpService, private element: ElementRef<HTMLDivElement>) {\n    this.successElement.className = 'status-img';\n    this.successElement.src = '/assets/success.svg';\n\n    // Error Image element\n    this.errorElement = document.createElement('img');\n    this.errorElement.className = 'status-img';\n    this. errorElement.src = '/assets/error.svg';\n}\n\n/**\n * Embeds report\n *\n * @returns Promise<void>\n */\nasync embedReport(): Promise<void> {\n  let reportConfigResponse: ConfigResponse;\n\n  // Get the embed config from the service and set the reportConfigResponse\n  try {\n    reportConfigResponse = await this.httpService.getEmbedConfig(this.reportUrl).toPromise();\n  } catch (error: any) {\n    // Prepare status message for Embed failure\n   // await this.prepareDisplayMessageForEmbed(errorElement, errorClass);\n   // this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;\n    console.error(this.displayMessage);\n    return;\n  }\n\n  // Update the reportConfig to embed the PowerBI report\n  this.reportConfig = {\n    ...this.reportConfig,\n    id: reportConfigResponse.Id,\n    embedUrl: reportConfigResponse.EmbedUrl,\n    accessToken: reportConfigResponse.EmbedToken.Token,\n  };\n\n  // Get the reference of the report-container div\n  const reportDiv = this.element.nativeElement.querySelector('.report-container');\n  if (reportDiv) {\n    // When Embed report is clicked, show the report container div\n    reportDiv.classList.remove('hidden');\n  }\n\n  // Get the reference of the display-message div\n  const displayMessage = this.element.nativeElement.querySelector('.display-message');\n  if (displayMessage) {\n    // When Embed report is clicked, change the position of the display-message\n    displayMessage.classList.remove('position');\n  }\n\n  // Prepare status message for Embed success\n  await this.prepareDisplayMessageForEmbed(this.successElement, 'success');\n\n  // Update the display message\n  this.displayMessage = 'Access token is successfully set. Loading Power BI report.';\n}\n\n/**\n * Handle Report embedding flow\n * @param img Image to show with the display message\n * @param type Type of the message\n *\n * @returns Promise<void>\n */\nasync prepareDisplayMessageForEmbed(img: HTMLImageElement, type: string): Promise<void> {\n  // Remove the Embed Report button from UI\n  this.embedBtnRef.nativeElement.remove();\n\n  // Prepend the Image element to the display message\n  this.statusRef.nativeElement.prepend(img);\n\n  // Set type of the message\n  this.statusRef.nativeElement.classList.add(type);\n}\n\n/**\n * Delete visual\n *\n * @returns Promise<void>\n */\nasync deleteVisual(): Promise<void> {\n  // Get report from the wrapper component\n  const report: Report = this.reportObj.getReport();\n\n  if (!report) {\n    // Prepare status message for Error\n    this.prepareStatusMessage(this.errorElement, 'error');\n    this.displayMessage = 'Report not available.';\n    console.log(this.displayMessage);\n    return;\n  }\n\n  // Get all the pages of the report\n  const pages: Page[] = await report.getPages();\n\n  // Check if all the pages of the report deleted\n  if (pages.length === 0) {\n    // Prepare status message for Error\n    this.prepareStatusMessage(this.errorElement, 'error');\n    this.displayMessage = 'No pages found.';\n    console.log(this.displayMessage);\n    return;\n  }\n\n  // Get active page of the report\n  const activePage: Page | undefined = pages.find((page) => page.isActive);\n\n  if (activePage) {\n    // Get all visuals in the active page of the report\n    const visuals: VisualDescriptor[] = await activePage.getVisuals();\n\n    if (visuals.length === 0) {\n      // Prepare status message for Error\n      this.prepareStatusMessage(this.errorElement, 'error');\n      this.displayMessage = 'No visuals found.';\n      console.log(this.displayMessage);\n      return;\n    }\n\n    // Get first visible visual\n    const visual: VisualDescriptor | undefined = visuals.find((v) => v.layout.displayState?.mode === models.VisualContainerDisplayMode.Visible);\n\n    // No visible visual found\n    if (!visual) {\n      // Prepare status message for Error\n      this.prepareStatusMessage(this.errorElement, 'error');\n      this.displayMessage = 'No visible visual available to delete.';\n      console.log(this.displayMessage);\n      return;\n    }\n\n    try {\n      // Delete the visual using powerbi-report-authoring\n      // For more information: https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/report-authoring-overview\n    //   const response = await activePage.deleteVisual(visual.name);\n\n    //   // Prepare status message for success\n    //   this.prepareStatusMessage(this.successElement, 'success');\n    //   this.displayMessage = `${visual.type} visual was deleted.`;\n      console.log(this.displayMessage);\n\n      return ;\n    } catch (error) {\n      console.error(error);\n    }\n  }\n}\n\n/**\n * Hide Filter Pane\n *\n * @returns Promise<IHttpPostMessageResponse<void> | undefined>\n */\nasync hideFilterPane(): Promise<any> {\n  // Get report from the wrapper component\n  const report: Report = this.reportObj.getReport();\n\n  if (!report) {\n    // Prepare status message for Error\n    this.prepareStatusMessage(this.errorElement, 'error');\n    this.displayMessage = 'Report not available.';\n    console.log(this.displayMessage);\n    return;\n  }\n\n  // New settings to hide filter pane\n  const settings = {\n    panes: {\n      filters: {\n        expanded: false,\n        visible: false,\n      },\n    },\n  };\n\n  try {\n    const response = await report.updateSettings(settings);\n\n    // Prepare status message for success\n    this.prepareStatusMessage(this.successElement, 'success');\n    this.displayMessage = 'Filter pane is hidden.';\n    console.log(this.displayMessage);\n\n    return response;\n  } catch (error) {\n    console.error(error);\n    return;\n  }\n}\n\n/**\n * Set data selected event\n *\n * @returns void\n */\nsetDataSelectedEvent(): void {\n  // Adding dataSelected event in eventHandlersMap\n  this.eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([\n    ...this.eventHandlersMap,\n    ['dataSelected', (event) => console.log(event)],\n  ]);\n\n  // Prepare status message for success\n  this.prepareStatusMessage(this.successElement, 'success');\n  this.displayMessage = 'Data Selected event set successfully. Select data to see event in console.';\n}\n\n/**\n * Prepare status message while using JS SDK APIs\n * @param img Image to show with the display message\n * @param type Type of the message\n *\n * @returns void\n */\nprepareStatusMessage(img: HTMLImageElement, type: string) {\n  // Prepend Image to the display message\n  this.statusRef.nativeElement.prepend(img);\n\n  // Add class to the display message\n  this.statusRef.nativeElement.classList.add(type);\n}\n\n}\n\n\n\n\n",
+            "properties": [
+                {
+                    "name": "EmbedToken",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "literal type",
+                    "optional": false,
+                    "description": "",
+                    "line": 10
+                },
+                {
+                    "name": "EmbedUrl",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "Id",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 165,
+            "methods": []
+        },
+        {
             "name": "User",
             "id": "interface-User-9c7e5f1bbbab702cb032307d130876cb68969b0cd4eedef32a0c8cad8081a54e5f8f577ed6ad4539c1b99a1d246cb34031d198c2ea8eba440e64e91b14f01fdc",
             "file": "src/stories/User.ts",
@@ -14,7 +55,90 @@
             "methods": []
         }
     ],
-    "injectables": [],
+    "injectables": [
+        {
+            "name": "HttpService",
+            "id": "injectable-HttpService-c16391e3c00b0448ee09eb8b59c23e689fd367ad2674e3b418dd53d0f8af92f25af6864eda2286059ee35e8dde59a990897ee35e21d7b4b0457dde27f9ff1241",
+            "file": "projects/common-module-lib/src/lib/services/http.service.ts",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "getEmbedConfig",
+                    "args": [
+                        {
+                            "name": "endpoint",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<ConfigResponse>",
+                    "typeParameters": [],
+                    "line": 22,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n",
+                    "description": "",
+                    "jsdoctags": [
+                        {
+                            "name": "endpoint",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "tagName": {
+                                "pos": 439,
+                                "end": 446,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>embed configuration</p>\n"
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { HttpClient } from '@angular/common/http';\nimport { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { ConfigResponse } from '../power-bi/power-bi.component';\n\n@Injectable({\n  providedIn: 'root',\n})\n\n/**\n * Service to make HTTP calls\n */\nexport class HttpService {\n  constructor(private httpClient: HttpClient) {}\n\n  /**\n   * @returns embed configuration\n   */\n  getEmbedConfig(endpoint: string): Observable<ConfigResponse> {\n    return this.httpClient.get<ConfigResponse>(endpoint);\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "httpClient",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 16,
+                "jsdoctags": [
+                    {
+                        "name": "httpClient",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        }
+    ],
     "guards": [],
     "interceptors": [],
     "classes": [],
@@ -223,7 +347,7 @@
         },
         {
             "name": "ControlValueAccessorFormComponent",
-            "id": "component-ControlValueAccessorFormComponent-f6ba140c82dfad1f8d3dfeecfdfe39607cbd7f3a52aa0ab5d4f4b5c7859c4ef24bb5df87fc1b19728d27aad4686a7c5fc4b3465b757092273781f88775110e7c",
+            "id": "component-ControlValueAccessorFormComponent-366975350904c503d3bbcea6944b67b6ad737798a96fe8afafc365b6c7d96162b23f5ccae239b9e8f0c5507c2c1b5e485c9defe4dbe934cae154b175bfa9adc2",
             "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -343,7 +467,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormGroup, FormControl } from '@angular/forms';\r\n\r\n@Component({\r\n  selector: 'common-lib-control-value-accessor-form',\r\n  templateUrl: './control-value-accessor-form.component.html',\r\n  styleUrls: ['./control-value-accessor-form.component.css'],\r\n})\r\nexport class ControlValueAccessorFormComponent implements OnInit {\r\n  public firstName: string = 'First Name';\r\n  public lastName: string = 'Lirst Name';\r\n  public emailId: string = 'Email Id';\r\n  public mobileNumber: string = 'Mobile Number';\r\n\r\n  form: FormGroup;\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit(): void {\r\n    this.form = this.createForm();\r\n  }\r\n\r\n  onSubmit() {\r\n    console.log('form here', this.form.value);\r\n  }\r\n\r\n  createForm() {\r\n    return new FormGroup({\r\n      fName: new FormControl('first'),\r\n      lName: new FormControl('Last'),\r\n      emailId: new FormControl('fl@email.com'),\r\n      mobileNumber: new FormControl('9876543210'),\r\n      cDate: new FormControl('2020-05-17'),\r\n      cSelect: new FormControl([\r\n        { id: 2, name: 'Node Js' },\r\n        { id: 8, name: 'ReactJs' },\r\n      ]),\r\n    });\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormGroup, FormControl } from '@angular/forms';\r\n\r\n@Component({\r\n  selector: 'common-lib-control-value-accessor-form',\r\n  templateUrl: './control-value-accessor-form.component.html',\r\n  styleUrls: ['./control-value-accessor-form.component.css'],\r\n})\r\nexport class ControlValueAccessorFormComponent implements OnInit {\r\n  public firstName: string = 'First Name';\r\n  public lastName: string = 'Lirst Name';\r\n  public emailId: string = 'Email Id';\r\n  public mobileNumber: string = 'Mobile Number';\r\n\r\n  form: FormGroup;\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit(): void {\r\n    this.form = this.createForm();\r\n  }\r\n\r\n  onSubmit() {\r\n    console.log('form here', this.form.value);\r\n  }\r\n\r\n  createForm() {\r\n    return new FormGroup({\r\n      fName: new FormControl('first'),\r\n      lName: new FormControl('Last'),\r\n      emailId: new FormControl('fl@email.com'),\r\n      mobileNumber: new FormControl('9876543210'),\r\n      cDate: new FormControl('2020-05-17'),\r\n      cSelect: new FormControl([\r\n        { id: 2, name: 'Node Js' },\r\n        { id: 8, name: 'ReactJs' },\r\n      ]),\r\n      cTime: new FormControl('20:00'),\r\n    });\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -363,11 +487,11 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<h2>Control Value Accessor Form</h2>\r\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"firstName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"fName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"lastName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"lName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"emailId\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"emailId\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"mobileNumber\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"mobileNumber\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-date-picker\r\n      formControlName=\"cDate\"\r\n    ></common-lib-custom-date-picker>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-select\r\n      formControlName=\"cSelect\"\r\n    ></common-lib-custom-select>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <button type=\"submit\">submit</button>\r\n  </div>\r\n\r\n  <pre>\r\n      {{ form.value | json }}\r\n  </pre>\r\n</form>\r\n"
+            "templateData": "<h2>Control Value Accessor Form</h2>\r\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"firstName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"fName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"lastName\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"lName\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"emailId\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"emailId\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-input\r\n      [title]=\"mobileNumber\"\r\n      [isMaterial]=\"true\"\r\n      formControlName=\"mobileNumber\"\r\n    ></common-lib-custom-input>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-date-picker\r\n      formControlName=\"cDate\"\r\n    ></common-lib-custom-date-picker>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-time-picker\r\n      formControlName=\"cTime\"\r\n    ></common-lib-custom-time-picker>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <common-lib-custom-select\r\n      formControlName=\"cSelect\"\r\n    ></common-lib-custom-select>\r\n  </div>\r\n  <div class=\"form-control\">\r\n    <button type=\"submit\">submit</button>\r\n  </div>\r\n\r\n  <pre>\r\n      {{ form.value | json }}\r\n  </pre>\r\n</form>\r\n"
         },
         {
             "name": "CustomDatePickerComponent",
-            "id": "component-CustomDatePickerComponent-44d764f988ff085ae1bd90d96f99d01441ca7dcc5289a8b9a82396aaa7a63a5fd5ad17b0f0ef5c5c94b7e31637706f96bbbed2030e77c22d3b36412ca0f1ae59",
+            "id": "component-CustomDatePickerComponent-2e61a6c2c9aeff79b954a29ec011e0188399f7132f7bc74e4e62ee2c71f1779b548ff1b96a96dbd27ee7790109064e36747619fd2d970e86c174ddf8e09fdf8c",
             "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -392,36 +516,43 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
-                    "name": "date1",
+                    "name": "mask",
+                    "defaultValue": "{\r\n    guide: true,\r\n    showMask: true,\r\n    // keepCharPositions : true,\r\n    mask: [/\\d/, /\\d/, '/', /\\d/, /\\d/, '/', /\\d/, /\\d/, /\\d/, /\\d/],\r\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "any",
+                    "type": "object",
                     "optional": false,
                     "description": "",
-                    "line": 17,
+                    "line": 18,
                     "modifierKind": [
                         123
                     ]
                 },
                 {
-                    "name": "onChange",
-                    "defaultValue": "() => {...}",
+                    "name": "onChangeCallback",
+                    "defaultValue": "noop",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "any",
+                    "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 35
+                    "line": 40,
+                    "modifierKind": [
+                        121
+                    ]
                 },
                 {
-                    "name": "onTouched",
-                    "defaultValue": "() => {...}",
+                    "name": "onTouchedCallback",
+                    "defaultValue": "noop",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "any",
+                    "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 39,
+                    "modifierKind": [
+                        121
+                    ]
                 },
                 {
                     "name": "val",
@@ -431,7 +562,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 25
                 }
             ],
             "methodsClass": [
@@ -441,40 +572,12 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 55,
+                    "line": 59,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
                 {
                     "name": "registerOnChange",
-                    "args": [
-                        {
-                            "name": "fn",
-                            "type": "any",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 42,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "jsdoctags": [
-                        {
-                            "name": "fn",
-                            "type": "any",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "registerOnTouched",
                     "args": [
                         {
                             "name": "fn",
@@ -502,6 +605,34 @@
                     ]
                 },
                 {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "setDisabledState",
                     "args": [
                         {
@@ -514,7 +645,7 @@
                     "optional": true,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 50,
+                    "line": 54,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -542,7 +673,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 38,
+                    "line": 42,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -565,7 +696,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-date-picker',\n  templateUrl: './custom-date-picker.component.html',\n  styleUrls: ['./custom-date-picker.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomDatePickerComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomDatePickerComponent implements OnInit, ControlValueAccessor {\n  public date1: any;\n\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n    // throw new Error('Method not implemented.');\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n    // throw new Error('Method not implemented.');\n  }\n\n  ngOnInit(): void {\n    this.date1 = new Date();\n    debugger;\n  }\n}\n",
+            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\r\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\r\n\r\nconst noop = () => {};\r\n@Component({\r\n  selector: 'common-lib-custom-date-picker',\r\n  templateUrl: './custom-date-picker.component.html',\r\n  styleUrls: ['./custom-date-picker.component.css'],\r\n  providers: [\r\n    {\r\n      provide: NG_VALUE_ACCESSOR,\r\n      useExisting: forwardRef(() => CustomDatePickerComponent),\r\n      multi: true,\r\n    },\r\n  ],\r\n})\r\nexport class CustomDatePickerComponent implements OnInit, ControlValueAccessor {\r\n  public mask = {\r\n    guide: true,\r\n    showMask: true,\r\n    // keepCharPositions : true,\r\n    mask: [/\\d/, /\\d/, '/', /\\d/, /\\d/, '/', /\\d/, /\\d/, /\\d/, /\\d/],\r\n  };\r\n\r\n  val = '';\r\n\r\n  get value(): any {\r\n    return this.val;\r\n  }\r\n  set value(val) {\r\n    // this value is updated by programmatic changes\r\n    if (val !== undefined && this.val !== val) {\r\n      this.val = val;\r\n    }\r\n  }\r\n\r\n  constructor() {}\r\n\r\n  private onTouchedCallback: () => void = noop;\r\n  private onChangeCallback: (_: any) => void = noop;\r\n\r\n  writeValue(value: any): void {\r\n    this.value = value;\r\n    // throw new Error('Method not implemented.');\r\n  }\r\n  registerOnChange(fn: any): void {\r\n    this.onChangeCallback = fn;\r\n    // throw new Error('Method not implemented.');\r\n  }\r\n  registerOnTouched(fn: any): void {\r\n    this.onTouchedCallback = fn;\r\n    // throw new Error('Method not implemented.');\r\n  }\r\n  setDisabledState?(isDisabled: boolean): void {\r\n    console.log('setDisabledState isDisabled', isDisabled);\r\n    // throw new Error('Method not implemented.');\r\n  }\r\n\r\n  ngOnInit(): void {}\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -580,7 +711,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 31
+                "line": 35
             },
             "implements": [
                 "OnInit",
@@ -603,7 +734,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 24,
+                        "line": 30,
                         "jsdoctags": [
                             {
                                 "name": "val",
@@ -620,11 +751,11 @@
                         "name": "value",
                         "type": "any",
                         "returnType": "any",
-                        "line": 21
+                        "line": 27
                     }
                 }
             },
-            "templateData": "<mat-form-field appearance=\"outline\">\n  <mat-label>Choose a date</mat-label>\n  <input\n    matInput\n    [matDatepicker]=\"releasedAtPicker\"\n    (click)=\"releasedAtPicker.open()\"\n    [(ngModel)]=\"value\"\n  />\n  <mat-datepicker-toggle\n    matSuffix\n    [for]=\"releasedAtPicker\"\n  ></mat-datepicker-toggle>\n  <mat-datepicker #releasedAtPicker></mat-datepicker>\n</mat-form-field>\n"
+            "templateData": "<mat-form-field appearance=\"outline\">\r\n  <mat-label>Choose a date</mat-label>\r\n  <input type=\"hidden\" [matDatepicker]=\"releasedAtPicker\" [(ngModel)]=\"value\" />\r\n  <input\r\n    matInput\r\n    [matDatepicker]=\"releasedAtPicker\"\r\n    (click)=\"releasedAtPicker.open()\"\r\n    [ngModel]=\"value | date: 'MM/dd/yyyy'\"\r\n    [textMask]=\"mask\"\r\n  />\r\n  <mat-datepicker-toggle\r\n    matSuffix\r\n    [for]=\"releasedAtPicker\"\r\n  ></mat-datepicker-toggle>\r\n  <mat-datepicker #releasedAtPicker></mat-datepicker>\r\n</mat-form-field>\r\n"
         },
         {
             "name": "CustomInputComponent",
@@ -896,7 +1027,7 @@
         },
         {
             "name": "CustomSelectComponent",
-            "id": "component-CustomSelectComponent-ae5cac261f171f2e042098cca6da122893059b52c7849a735c6b58bb557210f5ed46dbd1b2fc8a6f8a575bb96bd17a0c0bed185320516611e7ac4dd5b0b3e816",
+            "id": "component-CustomSelectComponent-7d6778fce9386f211ddf83187214cd27267d7ba425d1281fa780207f7194573aa2a4b60f9e440c608e72d1f84f545661bd3e26307abd1750acc50e081c8de2f0",
             "file": "projects/common-module-lib/src/lib/custom-select/custom-select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -938,7 +1069,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 58
+                    "line": 46
                 },
                 {
                     "name": "onTouched",
@@ -948,7 +1079,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 59
+                    "line": 47
                 },
                 {
                     "name": "val",
@@ -958,7 +1089,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 32
+                    "line": 28
                 }
             ],
             "methodsClass": [
@@ -968,7 +1099,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 44,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -985,7 +1116,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 64,
+                    "line": 52,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1013,7 +1144,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 67,
+                    "line": 55,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1041,7 +1172,7 @@
                     "optional": true,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 70,
+                    "line": 58,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1069,7 +1200,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 61,
+                    "line": 49,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1092,7 +1223,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-select',\n  templateUrl: './custom-select.component.html',\n  styleUrls: ['./custom-select.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      multi: true,\n      useExisting: forwardRef(() => CustomSelectComponent),\n    },\n  ],\n})\nexport class CustomSelectComponent implements OnInit, ControlValueAccessor {\n  listItems = [\n    { id: 1, name: 'Python' },\n    { id: 2, name: 'Node Js' },\n    { id: 3, name: 'Java' },\n    { id: 4, name: 'PHP', disabled: true },\n    { id: 5, name: 'Django' },\n    { id: 6, name: 'Angular' },\n    { id: 7, name: 'Vue' },\n    { id: 8, name: 'ReactJs' },\n  ];\n  //   value = [\n  //     { id: 2, name: 'Node Js' },\n  //     { id: 8, name: 'ReactJs' },\n  //   ];\n\n  val = [];\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  ngOnInit(): void {\n    // debugger;\n    // if (this.value === '') {\n    //   this.value = [\n    //     { id: 2, name: 'Node Js' },\n    //     { id: 8, name: 'ReactJs' },\n    //   ];\n    // }\n  }\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn; //;(this.value);\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n  }\n}\n",
+            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-select',\n  templateUrl: './custom-select.component.html',\n  styleUrls: ['./custom-select.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      multi: true,\n      useExisting: forwardRef(() => CustomSelectComponent),\n    },\n  ],\n})\nexport class CustomSelectComponent implements OnInit, ControlValueAccessor {\n  listItems = [\n    { id: 1, name: 'Python' },\n    { id: 2, name: 'Node Js' },\n    { id: 3, name: 'Java' },\n    { id: 4, name: 'PHP', disabled: true },\n    { id: 5, name: 'Django' },\n    { id: 6, name: 'Angular' },\n    { id: 7, name: 'Vue' },\n    { id: 8, name: 'ReactJs' },\n  ];\n\n  val = [];\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn; //;(this.value);\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1107,7 +1238,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 44
+                "line": 40
             },
             "implements": [
                 "OnInit",
@@ -1130,7 +1261,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 37,
+                        "line": 33,
                         "jsdoctags": [
                             {
                                 "name": "val",
@@ -1147,15 +1278,264 @@
                         "name": "value",
                         "type": "any",
                         "returnType": "any",
-                        "line": 34
+                        "line": 30
                     }
                 }
             },
             "templateData": "<ng-select\n  [items]=\"listItems\"\n  bindLabel=\"name\"\n  placeholder=\"Select item\"\n  appendTo=\"body\"\n  multiple=\"true\"\n  [(ngModel)]=\"value\"\n>\n</ng-select>\n"
         },
         {
+            "name": "CustomTimePickerComponent",
+            "id": "component-CustomTimePickerComponent-14182968857e1e6f4c4cde338b4dd7bc0144764241daf73aa0542835d1f7a1153c6c77400781b07820804d3bda45c0fa9c83ee7dab0b3109f21038623e0ba6a3",
+            "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "{\n    provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CustomTimePickerComponent), multi: true,\n}",
+                    "type": "component"
+                }
+            ],
+            "selector": "common-lib-custom-time-picker",
+            "styleUrls": [
+                "./custom-time-picker.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./custom-time-picker.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 31
+                },
+                {
+                    "name": "onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 32
+                },
+                {
+                    "name": "val",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 42,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 46,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": true,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 38,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, forwardRef, OnInit } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'common-lib-custom-time-picker',\n  templateUrl: './custom-time-picker.component.html',\n  styleUrls: ['./custom-time-picker.component.css'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => CustomTimePickerComponent),\n      multi: true,\n    },\n  ],\n})\nexport class CustomTimePickerComponent implements OnInit, ControlValueAccessor {\n  val = '';\n\n  get value(): any {\n    return this.val;\n  }\n  set value(val) {\n    // this value is updated by programmatic changes\n    if (val !== undefined && this.val !== val) {\n      this.val = val;\n      this.onChange(val);\n      this.onTouched(val);\n    }\n  }\n\n  onChange: any = () => {};\n  onTouched: any = () => {};\n\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  writeValue(value: any): void {\n    this.value = value;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n    // throw new Error('Method not implemented.');\n  }\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n    // throw new Error('Method not implemented.');\n  }\n  setDisabledState?(isDisabled: boolean): void {\n    console.log('setDisabledState isDisabled', isDisabled);\n    // throw new Error('Method not implemented.');\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./custom-time-picker.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 32
+            },
+            "implements": [
+                "OnInit",
+                "ControlValueAccessor"
+            ],
+            "accessors": {
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 22,
+                        "jsdoctags": [
+                            {
+                                "name": "val",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    },
+                    "getSignature": {
+                        "name": "value",
+                        "type": "any",
+                        "returnType": "any",
+                        "line": 19
+                    }
+                }
+            },
+            "templateData": "<p>custom-time-picker works!</p>\r\n<mat-form-field appearance=\"outline\">\r\n  <mat-label>Input type time</mat-label>\r\n  <input\r\n    type=\"time\"\r\n    matInput\r\n    name=\"week\"\r\n    min=\"09:00\"\r\n    max=\"18:00\"\r\n    [(ngModel)]=\"value\"\r\n  />\r\n</mat-form-field>\r\n"
+        },
+        {
             "name": "GridComponent",
-            "id": "component-GridComponent-c6f7a78c70fd754a391d1701b7b0b9a394e98872f20ce47c471e7d0e1f88de8e8d5fa170592ef9d55ffb8c7028a0490a2afe1e476b2a388c95bff7adfef3d363",
+            "id": "component-GridComponent-3eb45dc3652b33ec2a5d6bced0785d7591c22cfce4068eb19717829c8efc3411656d6e35a5c720b51efd9cf8187ad4589de5b1502fe93bec8deb5a21ea1d16ab",
             "file": "projects/common-module-lib/src/lib/grid/grid.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1164,7 +1544,7 @@
             "providers": [],
             "selector": "common-lib-grid",
             "styleUrls": [
-                "./grid.component.css"
+                "./grid.component.scss"
             ],
             "styles": [],
             "templateUrl": [
@@ -1179,7 +1559,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nfitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.\n",
                     "description": "<p>fitToWindow default is true.\nfitToWindow is used to set grid height as 100% of container height.</p>\n",
-                    "line": 32,
+                    "line": 38,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -1189,7 +1569,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridColumn default [].\ngridColumn will help to configure the column on grid.\n",
                     "description": "<p>gridColumn default [].\ngridColumn will help to configure the column on grid.</p>\n",
-                    "line": 44,
+                    "line": 50,
                     "type": "any[]",
                     "decorators": []
                 },
@@ -1199,7 +1579,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridData default [].\ngridData will assign the data to the grid.\n",
                     "description": "<p>gridData default [].\ngridData will assign the data to the grid.</p>\n",
-                    "line": 50,
+                    "line": 56,
                     "type": "any[]",
                     "decorators": []
                 },
@@ -1209,7 +1589,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn..\n",
                     "description": "<p>gridDefaultColDef default {}.\nAny configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn..</p>\n",
-                    "line": 55,
+                    "line": 61,
                     "type": "any",
                     "decorators": []
                 },
@@ -1220,13 +1600,41 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\ngridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.\n",
                     "description": "<p>gridHeight default 500px.\ngridHeight allowed us to set grid height in px as required.</p>\n",
-                    "line": 38,
+                    "line": 44,
                     "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "gridOptions",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\ngridOptions default {}.\nAny configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\ngridOptions properties and callbacks used to configure the grid.\n",
+                    "description": "<p>gridOptions default {}.\nAny configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\ngridOptions properties and callbacks used to configure the grid.</p>\n",
+                    "line": 67,
+                    "type": "any",
                     "decorators": []
                 }
             ],
             "outputsClass": [],
             "propertiesClass": [
+                {
+                    "name": "gridApi",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "gridColumnApi",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
                 {
                     "name": "gridContainerRefEl",
                     "deprecated": false,
@@ -1234,7 +1642,7 @@
                     "type": "ElementRef",
                     "optional": false,
                     "description": "<p>gridContainerRefEl will help to get element reference of grid container</p>\n",
-                    "line": 25,
+                    "line": 31,
                     "rawdescription": "\n\ngridContainerRefEl will help to get element reference of grid container\n",
                     "decorators": [
                         {
@@ -1251,7 +1659,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "<p>List of public Variables</p>\n",
-                    "line": 18,
+                    "line": 20,
                     "rawdescription": "\nList of public Variables"
                 },
                 {
@@ -1262,7 +1670,25 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 21
+                },
+                {
+                    "name": "gridSelectedRow",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "loadingOverlayComponent",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 25
                 }
             ],
             "methodsClass": [
@@ -1272,7 +1698,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 61,
+                    "line": 76,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1282,7 +1708,224 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 59,
+                    "line": 74,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onGridReady",
+                    "args": [
+                        {
+                            "name": "params",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 93,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nWhen the grid is initialised, the gridReady event will fire.\nHere we stored some of the grid API value into the variables\n",
+                    "description": "<p>When the grid is initialised, the gridReady event will fire.\nHere we stored some of the grid API value into the variables</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "params",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onRowClicked",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 116,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nWhen the grid Row is clicked. The event will be trigger\nHere we deselecting the row if row is clicked 2nd time\nIt will call onRowSelected function automatically and update the gridSelectedRow array\n",
+                    "description": "<p>When the grid Row is clicked. The event will be trigger\nHere we deselecting the row if row is clicked 2nd time\nIt will call onRowSelected function automatically and update the gridSelectedRow array</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onRowSelected",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 107,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nWhen the grid Row is selected or deselected. The event will be trigger\nAlso update the gridSelectedRow variable\n",
+                    "description": "<p>When the grid Row is selected or deselected. The event will be trigger\nAlso update the gridSelectedRow variable</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {\r\n  AfterViewInit,\r\n  Component,\r\n  ElementRef,\r\n  Input,\r\n  OnInit,\r\n  ViewChild,\r\n} from '@angular/core';\r\n\r\nimport { GridLoadingMaskComponent } from './grid-featured-components/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid',\r\n  templateUrl: './grid.component.html',\r\n  styleUrls: ['./grid.component.scss'],\r\n})\r\nexport class GridComponent implements OnInit, AfterViewInit {\r\n  /****************************************************************/\r\n  /******************************** List of public Variables ********************************/\r\n  gridHeaderHeight: number = 34; // To set the specific height of header\r\n  gridRowHeight: number = 34; // To set the specific height of header\r\n  gridApi: any; // After the initialization of the grid, stored params.api into the gridApi.\r\n  gridColumnApi: any; // After the initialization of the grid, stored params.columnApi into the gridColumnApi.\r\n  gridSelectedRow: any; // Containes the selected row data in array form\r\n  loadingOverlayComponent: any; // loadingOverlayComponent is a overlay that contains loading skeleton of rows\r\n  /****************************************************************/\r\n  /******************************** List of ViewChild Variables ********************************/\r\n  /**\r\n   * gridContainerRefEl will help to get element reference of grid container\r\n   */\r\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\r\n  /****************************************************************/\r\n  /******************************** List of Input Variables ********************************/\r\n  /**\r\n   * fitToWindow default is true.\r\n   * fitToWindow is used to set grid height as 100% of container height.\r\n   */\r\n  @Input() fitToWindow: boolean = true;\r\n\r\n  /**\r\n   * gridHeight default 500px.\r\n   * gridHeight allowed us to set grid height in px as required.\r\n   */\r\n  @Input() gridHeight: string = '500px';\r\n\r\n  /**\r\n   * gridColumn default [].\r\n   * gridColumn will help to configure the column on grid.\r\n   */\r\n  @Input() gridColumn: any[];\r\n\r\n  /**\r\n   * gridData default [].\r\n   * gridData will assign the data to the grid.\r\n   */\r\n  @Input() gridData: any[];\r\n  /**\r\n   * gridDefaultColDef default {}.\r\n   * Any configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn..\r\n   */\r\n  @Input() gridDefaultColDef: any;\r\n  /**\r\n   * gridOptions default {}.\r\n   * Any configuration set inside gridOptions is apply on all the grid that can be used instead of or in addition to the normal framework bindings.\r\n   * gridOptions properties and callbacks used to configure the grid.\r\n   */\r\n  @Input() gridOptions: any;\r\n\r\n  constructor() {\r\n    // assign grid Loading skeleton component to overlay component\r\n    this.loadingOverlayComponent = GridLoadingMaskComponent;\r\n  }\r\n\r\n  ngOnInit() {}\r\n\r\n  ngAfterViewInit() {\r\n    /**\r\n     * Below code help to set the grid height conditionally.\r\n     * If grid is fitToWindow, it fits the grid according to the browser window.\r\n     * Else it sets the fix grid height default is 500px.\r\n     */\r\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\r\n      ? `calc(100vh - ${\r\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\r\n        }px)`\r\n      : this.gridHeight;\r\n  }\r\n\r\n  /**\r\n   * When the grid is initialised, the gridReady event will fire.\r\n   * Here we stored some of the grid API value into the variables\r\n   */\r\n  onGridReady(params) {\r\n    this.gridApi = params.api; // stored params.api into the gridApi. It will be use After the initialization of the grid.\r\n    this.gridColumnApi = params.columnApi; // stored params.columnApi into the gridColumnApi. It will be use After the initialization of the grid\r\n    this.gridApi.showLoadingOverlay(); // Used to show overlay loading skeleton component\r\n    /** Added Settimeout to see overlay loading skeleton component for 5 sec */\r\n    setTimeout(() => {\r\n      this.gridApi.hideOverlay(); // Used to hide overlay loading skeleton component\r\n    }, 5000);\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is selected or deselected. The event will be trigger\r\n   * Also update the gridSelectedRow variable\r\n   */\r\n  onRowSelected(event) {\r\n    this.gridSelectedRow = this.gridApi.getSelectedNodes();\r\n  }\r\n\r\n  /**\r\n   * When the grid Row is clicked. The event will be trigger\r\n   * Here we deselecting the row if row is clicked 2nd time\r\n   * It will call onRowSelected function automatically and update the gridSelectedRow array\r\n   */\r\n  onRowClicked(event) {\r\n    // Checking the gridSelectedRow and its length\r\n    if (this.gridSelectedRow && this.gridSelectedRow.length > 0) {\r\n      // Using every method to iterate gridSelectedRow array and break when condition meet\r\n      this.gridSelectedRow.every((rowData, index) => {\r\n        // Finding the row by comparing the rowIndex value\r\n        if (rowData.rowIndex === event.rowIndex) {\r\n          this.gridSelectedRow[index].setSelected(false); // deselecting the selected rowusing setSelected method of Ag-grid.\r\n          return false; // break the loop\r\n        }\r\n        return true; // continue the loop\r\n      });\r\n    }\r\n  }\r\n}\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@import url(\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap\");\r\n\r\n@mixin cell-style {\r\n  border: none;\r\n  border-right: 1px solid #dde2eb;\r\n}\r\n\r\n::ng-deep {\r\n  ag-grid-angular.ag-theme-alpine {\r\n    font-family: \"Roboto\", sans-serif;\r\n    // Grid Header Part CSS\r\n    .ag-header {\r\n      .ag-header-cell {\r\n        .ag-header-cell-resize {\r\n          &:after {\r\n            height: 100%;\r\n            top: 0;\r\n          }\r\n        }\r\n      }\r\n    }\r\n    // Grid Body part CSS\r\n    .ag-body-viewport {\r\n      .ag-row {\r\n        &.ag-row-hover,\r\n        &.ag-row-selected {\r\n          background-color: rgba(207, 207, 207, 0.3);\r\n        }\r\n        .ag-cell {\r\n          @include cell-style;\r\n          font-size: 13px;\r\n          &.ag-cell-focus {\r\n            @include cell-style;\r\n          }\r\n        }\r\n      }\r\n    }\r\n    // Grid Loading mask CSS\r\n    .ag-overlay {\r\n      .ag-overlay-wrapper {\r\n        align-items: baseline;\r\n        padding-top: 35px;\r\n        background: transparent;\r\n      }\r\n      common-lib-grid-loading-mask {\r\n        width: 100%;\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+                    "styleUrl": "./grid.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 67
+            },
+            "implements": [
+                "OnInit",
+                "AfterViewInit"
+            ],
+            "templateData": "<!-- Ag Grid Container Wrapper -->\r\n<div class=\"grid-container\" #gridContainerRef>\r\n  <!-- ag-grid-angular is a selector to drow a grid in UI side -->\r\n  <ag-grid-angular\r\n    #customGrid\r\n    style=\"width: 100%; height: 100%\"\r\n    class=\"ag-theme-alpine\"\r\n    [rowData]=\"gridData\"\r\n    [columnDefs]=\"gridColumn\"\r\n    [headerHeight]=\"gridHeaderHeight\"\r\n    [rowHeight]=\"gridRowHeight\"\r\n    [defaultColDef]=\"gridDefaultColDef\"\r\n    [gridOptions]=\"gridOptions\"\r\n    (gridReady)=\"onGridReady($event)\"\r\n    (rowSelected)=\"onRowSelected($event)\"\r\n    (rowClicked)=\"onRowClicked($event)\"\r\n    [loadingOverlayComponent]=\"loadingOverlayComponent\"\r\n  >\r\n  </ag-grid-angular>\r\n</div>\r\n"
+        },
+        {
+            "name": "GridLoadingMaskComponent",
+            "id": "component-GridLoadingMaskComponent-4301c9eb10ca61c36f92947043a54ec6c1aebd93c50e87cc7ebefed89fe84851411a062fd00da84f361c4c6b3c3ac504596143d6e0b3afe3ed94af4c50e5f3fb",
+            "file": "projects/common-module-lib/src/lib/grid/grid-featured-components/grid-loading-mask/grid-loading-mask.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "common-lib-grid-loading-mask",
+            "styleUrls": [
+                "./grid-loading-mask.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./grid-loading-mask.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "Arr",
+                    "defaultValue": "Array",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "loadingSkeletonEl",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'loadingSkeleton'"
+                        }
+                    ]
+                },
+                {
+                    "name": "numberOfSkeletonRow",
+                    "defaultValue": "1",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "agInit",
+                    "args": [
+                        {
+                            "name": "params",
+                            "type": "ILoadingCellRendererParams",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "params",
+                            "type": "ILoadingCellRendererParams",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -1294,12 +1937,12 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\r\n  AfterViewInit,\r\n  Component,\r\n  ElementRef,\r\n  Input,\r\n  OnInit,\r\n  ViewChild,\r\n} from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid',\r\n  templateUrl: './grid.component.html',\r\n  styleUrls: ['./grid.component.css'],\r\n})\r\nexport class GridComponent implements OnInit, AfterViewInit {\r\n  /****************************************************************/\r\n  /******************************** List of public Variables ********************************/\r\n  gridHeaderHeight: number = 34; // To set the specific height of header\r\n  gridRowHeight: number = 34; // To set the specific height of header\r\n  /****************************************************************/\r\n  /******************************** List of ViewChild Variables ********************************/\r\n  /**\r\n   * gridContainerRefEl will help to get element reference of grid container\r\n   */\r\n  @ViewChild('gridContainerRef') gridContainerRefEl: ElementRef;\r\n  /****************************************************************/\r\n  /******************************** List of Input Variables ********************************/\r\n  /**\r\n   * fitToWindow default is true.\r\n   * fitToWindow is used to set grid height as 100% of container height.\r\n   */\r\n  @Input() fitToWindow: boolean = true;\r\n\r\n  /**\r\n   * gridHeight default 500px.\r\n   * gridHeight allowed us to set grid height in px as required.\r\n   */\r\n  @Input() gridHeight: string = '500px';\r\n\r\n  /**\r\n   * gridColumn default [].\r\n   * gridColumn will help to configure the column on grid.\r\n   */\r\n  @Input() gridColumn: any[];\r\n\r\n  /**\r\n   * gridData default [].\r\n   * gridData will assign the data to the grid.\r\n   */\r\n  @Input() gridData: any[];\r\n  /**\r\n   * gridDefaultColDef default {}.\r\n   * Any configuration set inside gridDefaultColDef is apply on all the columns defined under gridColumn..\r\n   */\r\n  @Input() gridDefaultColDef: any;\r\n\r\n  constructor() {}\r\n\r\n  ngOnInit() {}\r\n\r\n  ngAfterViewInit() {\r\n    /**\r\n     * Below code help to set the grid height conditionally.\r\n     * If grid is fitToWindow, it fits the grid according to the browser window.\r\n     * Else it sets the fix grid height default is 500px.\r\n     */\r\n    this.gridContainerRefEl.nativeElement.style.height = this.fitToWindow\r\n      ? `calc(100vh - ${\r\n          this.gridContainerRefEl.nativeElement.getBoundingClientRect().top + 17\r\n        }px)`\r\n      : this.gridHeight;\r\n  }\r\n}\r\n",
+            "sourceCode": "import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';\r\nimport { ILoadingCellRendererAngularComp } from 'ag-grid-angular';\r\nimport { ILoadingCellRendererParams } from 'ag-grid-community';\r\n\r\n@Component({\r\n  selector: 'common-lib-grid-loading-mask',\r\n  templateUrl: './grid-loading-mask.component.html',\r\n  styleUrls: ['./grid-loading-mask.component.scss'],\r\n})\r\nexport class GridLoadingMaskComponent\r\n  implements ILoadingCellRendererAngularComp, AfterViewInit\r\n{\r\n  @ViewChild('loadingSkeleton') loadingSkeletonEl: ElementRef;\r\n  numberOfSkeletonRow: number = 1; // number of Skeleton row\r\n  Arr = Array; // Array type captured in a variable\r\n  constructor() {}\r\n  agInit(params: ILoadingCellRendererParams): void {}\r\n\r\n  ngAfterViewInit() {\r\n    // Get the height of grid container\r\n    const gridHeighttest =\r\n      this.loadingSkeletonEl.nativeElement.getBoundingClientRect().top;\r\n\r\n    // Get the height of loading Skeleton row\r\n    const loadingSkeletonHeight =\r\n      this.loadingSkeletonEl.nativeElement.offsetHeight;\r\n\r\n    // Calculate how much row needed in grid viewport\r\n    this.numberOfSkeletonRow = Math.trunc(\r\n      gridHeighttest / loadingSkeletonHeight\r\n    );\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "",
-                    "styleUrl": "./grid.component.css"
+                    "data": "/* Loading Bar Skeleton */\r\n::ng-deep {\r\n  .loading-skeleton-wrapper {\r\n    .loading-skeleton {\r\n      width: calc(100% - 32px);\r\n      padding: 12px 16px 13px 16px;\r\n      border-bottom: 1px solid #dde2eb;\r\n      background: #fff;\r\n      &:empty::after {\r\n        content: \"\";\r\n        display: block;\r\n        height: 8px;\r\n        background-image: linear-gradient(\r\n            90deg,\r\n            rgba(175, 175, 175, 0.05) 0,\r\n            rgba(175, 175, 175, 0.4) 75%,\r\n            rgba(175, 175, 175, 0.5) 100%\r\n          ),\r\n          linear-gradient(\r\n            90deg,\r\n            rgba(207, 207, 207, 0.5),\r\n            rgba(207, 207, 207, 0.5),\r\n            rgba(207, 207, 207, 0.5)\r\n          );\r\n        animation: loading 7.5s infinite;\r\n        background-size: 25px 8px, 100% 100%;\r\n        background-repeat: no-repeat;\r\n      }\r\n    }\r\n  }\r\n  @keyframes loading {\r\n    from {\r\n      background-position: 0% 0%;\r\n    }\r\n    to {\r\n      background-position: 100% 0%;\r\n    }\r\n  }\r\n}\r\n",
+                    "styleUrl": "./grid-loading-mask.component.scss"
                 }
             ],
             "stylesData": "",
@@ -1309,13 +1952,13 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 55
+                "line": 15
             },
             "implements": [
-                "OnInit",
+                "ILoadingCellRendererAngularComp",
                 "AfterViewInit"
             ],
-            "templateData": "<!-- Ag Grid Container Wrapper -->\n<div class=\"grid-container\" #gridContainerRef>\n  <!-- ag-grid-angular is a selector to drow a grid in UI side -->\n  <ag-grid-angular\n    #customGrid\n    style=\"width: 100%; height: 100%\"\n    class=\"ag-theme-alpine\"\n    [rowData]=\"gridData\"\n    [columnDefs]=\"gridColumn\"\n    [headerHeight]=\"gridHeaderHeight\"\n    [rowHeight]=\"gridRowHeight\"\n    [defaultColDef]=\"gridDefaultColDef\"\n  >\n  </ag-grid-angular>\n</div>\n"
+            "templateData": "<div class=\"loading-skeleton-wrapper\" #loadingSkeleton>\r\n  <div\r\n    class=\"loading-skeleton\"\r\n    *ngFor=\"let i of Arr(numberOfSkeletonRow).fill(1)\"\r\n  ></div>\r\n</div>\r\n"
         },
         {
             "name": "HeaderComponent",
@@ -1469,6 +2112,535 @@
                 }
             ],
             "stylesData": ""
+        },
+        {
+            "name": "PowerBiComponent",
+            "id": "component-PowerBiComponent-73bdc552d5cc5392f7286be0c72484c9cd2ee5117a3b4bfe8a4025524c8fecaf7084d83edeee8be4ff988fa921da864f4402f41dbe28e1b59a5a3f25bd74b306",
+            "file": "projects/common-module-lib/src/lib/power-bi/power-bi.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "common-lib-power-bi",
+            "styleUrls": [
+                "./power-bi.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./power-bi.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "displayMessage",
+                    "defaultValue": "'The report is bootstrapped. Click Embed Report button to set the access token.'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 34
+                },
+                {
+                    "name": "embedBtnRef",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef<HTMLButtonElement>",
+                    "optional": false,
+                    "description": "",
+                    "line": 28,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'embedReportBtn'"
+                        }
+                    ],
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "errorElement",
+                    "defaultValue": "document.createElement('img')",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 59
+                },
+                {
+                    "name": "eventHandlersMap",
+                    "defaultValue": "new Map<string, (event?: service.ICustomEvent<any>) => void>([\n  ['loaded', () => console.log('Report has loaded')],\n  [\n    'rendered',\n    () => {\n      console.log('Report has rendered');\n\n      // Set displayMessage to empty when rendered for the first time\n      if (!this.isEmbedded) {\n        this.displayMessage = 'Use the buttons above to interact with the report using Power BI Client APIs.';\n      }\n\n      // Update embed status\n      this.isEmbedded = true;\n    },\n  ],\n  [\n    'error',\n    (event?: service.ICustomEvent<any>) => {\n      if (event) {\n        console.error(event.detail);\n      }\n    },\n  ],\n  ['visualClicked', () => console.log('visual clicked')],\n  ['pageChanged', (event) => console.log(event)],\n])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "<p>Map of event handlers to be applied to the embedded report</p>\n",
+                    "line": 68,
+                    "rawdescription": "\n\nMap of event handlers to be applied to the embedded report\n"
+                },
+                {
+                    "name": "httpService",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HttpService",
+                    "optional": false,
+                    "description": "",
+                    "line": 96,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "isEmbedded",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 31
+                },
+                {
+                    "name": "phasedEmbeddingFlag",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 41
+                },
+                {
+                    "name": "reportClass",
+                    "defaultValue": "'report-container hidden'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 38
+                },
+                {
+                    "name": "reportConfig",
+                    "defaultValue": "{\n  type: 'report',\n  embedUrl: undefined,\n  tokenType: models.TokenType.Embed,\n  accessToken: undefined,\n  settings: undefined,\n}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "IReportEmbedConfiguration",
+                    "optional": false,
+                    "description": "",
+                    "line": 45
+                },
+                {
+                    "name": "reportObj",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "PowerBIReportEmbedComponent",
+                    "optional": false,
+                    "description": "",
+                    "line": 22,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "PowerBIReportEmbedComponent"
+                        }
+                    ]
+                },
+                {
+                    "name": "reportUrl",
+                    "defaultValue": "'https://aka.ms/CaptureViewsReportEmbedConfig'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 54
+                },
+                {
+                    "name": "statusRef",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef<HTMLDivElement>",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'status'"
+                        }
+                    ],
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "successElement",
+                    "defaultValue": "document.createElement('img')",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 57
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "deleteVisual",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 177,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nDelete visual\n\n",
+                    "description": "<p>Delete visual</p>\n",
+                    "modifierKind": [
+                        131
+                    ],
+                    "jsdoctags": [
+                        {
+                            "tagName": {
+                                "pos": 5744,
+                                "end": 5751,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>Promise<void></p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "embedReport",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 111,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nEmbeds report\n\n",
+                    "description": "<p>Embeds report</p>\n",
+                    "modifierKind": [
+                        131
+                    ],
+                    "jsdoctags": [
+                        {
+                            "tagName": {
+                                "pos": 3531,
+                                "end": 3538,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>Promise<void></p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "hideFilterPane",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<any>",
+                    "typeParameters": [],
+                    "line": 250,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nHide Filter Pane\n\n",
+                    "description": "<p>Hide Filter Pane</p>\n",
+                    "modifierKind": [
+                        131
+                    ],
+                    "jsdoctags": [
+                        {
+                            "tagName": {
+                                "pos": 8053,
+                                "end": 8060,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>Promise&lt;IHttpPostMessageResponse<void> | undefined&gt;</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "prepareDisplayMessageForEmbed",
+                    "args": [
+                        {
+                            "name": "img",
+                            "type": "HTMLImageElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 161,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nHandle Report embedding flow\n\n",
+                    "description": "<p>Handle Report embedding flow</p>\n",
+                    "modifierKind": [
+                        131
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 5243,
+                                "end": 5246,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "img"
+                            },
+                            "type": "HTMLImageElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 5237,
+                                "end": 5242,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>Image to show with the display message</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 5296,
+                                "end": 5300,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "originalKeywordKind": 151,
+                                "escapedText": "type"
+                            },
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 5290,
+                                "end": 5295,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>Type of the message</p>\n"
+                        },
+                        {
+                            "tagName": {
+                                "pos": 5328,
+                                "end": 5335,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>Promise<void></p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "prepareStatusMessage",
+                    "args": [
+                        {
+                            "name": "img",
+                            "type": "HTMLImageElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 311,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nPrepare status message while using JS SDK APIs\n\n",
+                    "description": "<p>Prepare status message while using JS SDK APIs</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 9572,
+                                "end": 9575,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "img"
+                            },
+                            "type": "HTMLImageElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 9566,
+                                "end": 9571,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>Image to show with the display message</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 9625,
+                                "end": 9629,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "originalKeywordKind": 151,
+                                "escapedText": "type"
+                            },
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 9619,
+                                "end": 9624,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>Type of the message</p>\n"
+                        },
+                        {
+                            "tagName": {
+                                "pos": 9657,
+                                "end": 9664,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>void</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "setDataSelectedEvent",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 292,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nSet data selected event\n\n",
+                    "description": "<p>Set data selected event</p>\n",
+                    "jsdoctags": [
+                        {
+                            "tagName": {
+                                "pos": 9024,
+                                "end": 9031,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>void</p>\n"
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';\nimport { PowerBIReportEmbedComponent } from 'powerbi-client-angular';\nimport { IReportEmbedConfiguration, models, Page, Report, service, VisualDescriptor } from 'powerbi-client';\nimport { HttpService } from '../services/http.service';\n\n// Handles the embed config response for embedding\nexport interface ConfigResponse {\n    Id: string;\n    EmbedUrl: string;\n    EmbedToken: {\n      Token: string;\n    };\n  }\n\n@Component({\n  selector: 'common-lib-power-bi',\n  templateUrl: './power-bi.component.html',\n  styleUrls: ['./power-bi.component.css']\n})\nexport class PowerBiComponent  {\n// Wrapper object to access report properties\n@ViewChild(PowerBIReportEmbedComponent) reportObj!: PowerBIReportEmbedComponent;\n\n// Div object to show status of the demo app\n@ViewChild('status') private statusRef!: ElementRef<HTMLDivElement>;\n\n// Embed Report button element of the demo app\n@ViewChild('embedReportBtn') private embedBtnRef!: ElementRef<HTMLButtonElement>;\n\n// Track Report embedding status\nisEmbedded = false;\n\n// Overall status message of embedding\ndisplayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';\n\n// CSS Class to be passed to the wrapper\n// Hide the report container initially\nreportClass = 'report-container hidden';\n\n// Flag which specify the type of embedding\nphasedEmbeddingFlag = false;\n\n// Pass the basic embed configurations to the wrapper to bootstrap the report on first load\n// Values for properties like embedUrl, accessToken and settings will be set on click of button\nreportConfig: IReportEmbedConfiguration = {\n  type: 'report',\n  embedUrl: undefined,\n  tokenType: models.TokenType.Embed,\n  accessToken: undefined,\n  settings: undefined,\n};\n\n// Endpoint to get report config\nreportUrl = 'https://aka.ms/CaptureViewsReportEmbedConfig';\n\n// Success Image element\nsuccessElement = document.createElement('img');\n// Error Image element\nerrorElement = document.createElement('img');\n\n/**\n * Map of event handlers to be applied to the embedded report\n */\n// Update event handlers for the report by redefining the map using this.eventHandlersMap\n// Set event handler to null if event needs to be removed\n// More events can be provided from here\n// https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events\neventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([\n  ['loaded', () => console.log('Report has loaded')],\n  [\n    'rendered',\n    () => {\n      console.log('Report has rendered');\n\n      // Set displayMessage to empty when rendered for the first time\n      if (!this.isEmbedded) {\n        this.displayMessage = 'Use the buttons above to interact with the report using Power BI Client APIs.';\n      }\n\n      // Update embed status\n      this.isEmbedded = true;\n    },\n  ],\n  [\n    'error',\n    (event?: service.ICustomEvent<any>) => {\n      if (event) {\n        console.error(event.detail);\n      }\n    },\n  ],\n  ['visualClicked', () => console.log('visual clicked')],\n  ['pageChanged', (event) => console.log(event)],\n]);\n\nconstructor(public httpService: HttpService, private element: ElementRef<HTMLDivElement>) {\n    this.successElement.className = 'status-img';\n    this.successElement.src = '/assets/success.svg';\n\n    // Error Image element\n    this.errorElement = document.createElement('img');\n    this.errorElement.className = 'status-img';\n    this. errorElement.src = '/assets/error.svg';\n}\n\n/**\n * Embeds report\n *\n * @returns Promise<void>\n */\nasync embedReport(): Promise<void> {\n  let reportConfigResponse: ConfigResponse;\n\n  // Get the embed config from the service and set the reportConfigResponse\n  try {\n    reportConfigResponse = await this.httpService.getEmbedConfig(this.reportUrl).toPromise();\n  } catch (error: any) {\n    // Prepare status message for Embed failure\n   // await this.prepareDisplayMessageForEmbed(errorElement, errorClass);\n   // this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;\n    console.error(this.displayMessage);\n    return;\n  }\n\n  // Update the reportConfig to embed the PowerBI report\n  this.reportConfig = {\n    ...this.reportConfig,\n    id: reportConfigResponse.Id,\n    embedUrl: reportConfigResponse.EmbedUrl,\n    accessToken: reportConfigResponse.EmbedToken.Token,\n  };\n\n  // Get the reference of the report-container div\n  const reportDiv = this.element.nativeElement.querySelector('.report-container');\n  if (reportDiv) {\n    // When Embed report is clicked, show the report container div\n    reportDiv.classList.remove('hidden');\n  }\n\n  // Get the reference of the display-message div\n  const displayMessage = this.element.nativeElement.querySelector('.display-message');\n  if (displayMessage) {\n    // When Embed report is clicked, change the position of the display-message\n    displayMessage.classList.remove('position');\n  }\n\n  // Prepare status message for Embed success\n  await this.prepareDisplayMessageForEmbed(this.successElement, 'success');\n\n  // Update the display message\n  this.displayMessage = 'Access token is successfully set. Loading Power BI report.';\n}\n\n/**\n * Handle Report embedding flow\n * @param img Image to show with the display message\n * @param type Type of the message\n *\n * @returns Promise<void>\n */\nasync prepareDisplayMessageForEmbed(img: HTMLImageElement, type: string): Promise<void> {\n  // Remove the Embed Report button from UI\n  this.embedBtnRef.nativeElement.remove();\n\n  // Prepend the Image element to the display message\n  this.statusRef.nativeElement.prepend(img);\n\n  // Set type of the message\n  this.statusRef.nativeElement.classList.add(type);\n}\n\n/**\n * Delete visual\n *\n * @returns Promise<void>\n */\nasync deleteVisual(): Promise<void> {\n  // Get report from the wrapper component\n  const report: Report = this.reportObj.getReport();\n\n  if (!report) {\n    // Prepare status message for Error\n    this.prepareStatusMessage(this.errorElement, 'error');\n    this.displayMessage = 'Report not available.';\n    console.log(this.displayMessage);\n    return;\n  }\n\n  // Get all the pages of the report\n  const pages: Page[] = await report.getPages();\n\n  // Check if all the pages of the report deleted\n  if (pages.length === 0) {\n    // Prepare status message for Error\n    this.prepareStatusMessage(this.errorElement, 'error');\n    this.displayMessage = 'No pages found.';\n    console.log(this.displayMessage);\n    return;\n  }\n\n  // Get active page of the report\n  const activePage: Page | undefined = pages.find((page) => page.isActive);\n\n  if (activePage) {\n    // Get all visuals in the active page of the report\n    const visuals: VisualDescriptor[] = await activePage.getVisuals();\n\n    if (visuals.length === 0) {\n      // Prepare status message for Error\n      this.prepareStatusMessage(this.errorElement, 'error');\n      this.displayMessage = 'No visuals found.';\n      console.log(this.displayMessage);\n      return;\n    }\n\n    // Get first visible visual\n    const visual: VisualDescriptor | undefined = visuals.find((v) => v.layout.displayState?.mode === models.VisualContainerDisplayMode.Visible);\n\n    // No visible visual found\n    if (!visual) {\n      // Prepare status message for Error\n      this.prepareStatusMessage(this.errorElement, 'error');\n      this.displayMessage = 'No visible visual available to delete.';\n      console.log(this.displayMessage);\n      return;\n    }\n\n    try {\n      // Delete the visual using powerbi-report-authoring\n      // For more information: https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/report-authoring-overview\n    //   const response = await activePage.deleteVisual(visual.name);\n\n    //   // Prepare status message for success\n    //   this.prepareStatusMessage(this.successElement, 'success');\n    //   this.displayMessage = `${visual.type} visual was deleted.`;\n      console.log(this.displayMessage);\n\n      return ;\n    } catch (error) {\n      console.error(error);\n    }\n  }\n}\n\n/**\n * Hide Filter Pane\n *\n * @returns Promise<IHttpPostMessageResponse<void> | undefined>\n */\nasync hideFilterPane(): Promise<any> {\n  // Get report from the wrapper component\n  const report: Report = this.reportObj.getReport();\n\n  if (!report) {\n    // Prepare status message for Error\n    this.prepareStatusMessage(this.errorElement, 'error');\n    this.displayMessage = 'Report not available.';\n    console.log(this.displayMessage);\n    return;\n  }\n\n  // New settings to hide filter pane\n  const settings = {\n    panes: {\n      filters: {\n        expanded: false,\n        visible: false,\n      },\n    },\n  };\n\n  try {\n    const response = await report.updateSettings(settings);\n\n    // Prepare status message for success\n    this.prepareStatusMessage(this.successElement, 'success');\n    this.displayMessage = 'Filter pane is hidden.';\n    console.log(this.displayMessage);\n\n    return response;\n  } catch (error) {\n    console.error(error);\n    return;\n  }\n}\n\n/**\n * Set data selected event\n *\n * @returns void\n */\nsetDataSelectedEvent(): void {\n  // Adding dataSelected event in eventHandlersMap\n  this.eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([\n    ...this.eventHandlersMap,\n    ['dataSelected', (event) => console.log(event)],\n  ]);\n\n  // Prepare status message for success\n  this.prepareStatusMessage(this.successElement, 'success');\n  this.displayMessage = 'Data Selected event set successfully. Select data to see event in console.';\n}\n\n/**\n * Prepare status message while using JS SDK APIs\n * @param img Image to show with the display message\n * @param type Type of the message\n *\n * @returns void\n */\nprepareStatusMessage(img: HTMLImageElement, type: string) {\n  // Prepend Image to the display message\n  this.statusRef.nativeElement.prepend(img);\n\n  // Add class to the display message\n  this.statusRef.nativeElement.classList.add(type);\n}\n\n}\n\n\n\n\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "/* Copyright (c) Microsoft Corporation.\r\nLicensed under the MIT License. */\r\n\r\n.header {\r\n    background: #3476ae 0 0 no-repeat padding-box;\r\n    border: 1px solid #707070;\r\n    height: 55px;\r\n  }\r\n  \r\n  .title {\r\n    color: #fff;\r\n    font: 700 22px/27px 'Segoe UI';\r\n    margin: 13px 13px 13px 36px;\r\n    text-align: left;\r\n  }\r\n  \r\n  .horizontal-rule {\r\n    border: 1px solid #e0e0e0;\r\n  }\r\n  \r\n  .separator {\r\n    height: 45px;\r\n  }\r\n  \r\n  .success {\r\n    color: #107c41;\r\n  }\r\n  \r\n  .error {\r\n    color: #d13438;\r\n  }\r\n  \r\n  .position {\r\n    margin-top: 40vh !important;\r\n  }\r\n  \r\n  .embed-report {\r\n    margin-top: 18px;\r\n    text-align: center;\r\n  }\r\n  \r\n  #embed-action {\r\n    margin-right: 0;\r\n  }\r\n  \r\n  .display-message {\r\n    align-items: center;\r\n    display: flex;\r\n    font: 400 18px/27px 'Segoe UI';\r\n    height: 30px;\r\n    justify-content: center;\r\n    margin-top: 8px;\r\n    text-align: center;\r\n  }\r\n  \r\n  .controls {\r\n    margin-top: 1%;\r\n    text-align: center;\r\n  }\r\n  \r\n  button {\r\n    background: #337ab7;\r\n    border: 0;\r\n    border-radius: 5px;\r\n    color: #fff;\r\n    font-size: 16px;\r\n    height: 35px;\r\n    margin-right: 15px;\r\n    width: 160px;\r\n  }\r\n  \r\n  button:hover {\r\n    cursor: pointer;\r\n  }\r\n  \r\n  .footer {\r\n    background: #eef3f8 0 0 no-repeat padding-box;\r\n    bottom: 0;\r\n    height: 39px;\r\n    opacity: 1;\r\n    position: absolute;\r\n    width: 100%;\r\n  }\r\n  \r\n  .footer-text {\r\n    font: 400 16px/21px 'Segoe UI';\r\n    height: 21px;\r\n    letter-spacing: 0;\r\n    margin-top: 9px;\r\n    opacity: 1;\r\n    position: relative;\r\n    text-align: center;\r\n    width: 100%;\r\n  }\r\n  \r\n  .footer-text > a {\r\n    color: #606a74;\r\n    font: Regular 16px/21px 'Segoe UI';\r\n    letter-spacing: 0;\r\n    text-decoration: underline;\r\n  }\r\n  ",
+                    "styleUrl": "./power-bi.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "httpService",
+                        "type": "HttpService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "element",
+                        "type": "ElementRef<HTMLDivElement>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 94,
+                "jsdoctags": [
+                    {
+                        "name": "httpService",
+                        "type": "HttpService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "element",
+                        "type": "ElementRef<HTMLDivElement>",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "templateData": "<!-- Copyright (c) Microsoft Corporation.\nLicensed under the MIT License. -->\n\n<div class=\"header\">\n    <div class=\"title\">Power BI Embedded Angular Component demo</div>\n  </div>\n  \n  <div class=\"controls\" *ngIf=\"isEmbedded; else embedReportFlow\">\n    <button (click)=\"deleteVisual()\">Delete Visual</button>\n    <button (click)=\"hideFilterPane()\">Hide Filter Pane</button>\n    <button (click)=\"setDataSelectedEvent()\">Set Event</button>\n    <div class=\"display-message\" #status>{{ displayMessage }}</div>\n  </div>\n  <ng-template #embedReportFlow>\n    <div class=\"display-message position\" #status>\n      <label>{{ displayMessage }}</label>\n    </div>\n    <div class=\"embed-report\">\n      <button (click)=\"embedReport()\" id=\"embed-action\" #embedReportBtn>Embed Report</button>\n    </div>\n    <div class=\"separator\"></div>\n  </ng-template>\n  <!-- <div style=\"width: 100%; height: 100%\"></div>  -->\n\n  <powerbi-report [embedConfig]=\"reportConfig\" [cssClassName]=\"reportClass\" [phasedEmbedding]=\"phasedEmbeddingFlag\" [eventHandlers]=\"eventHandlersMap\">\n  </powerbi-report>\n  \n  <div class=\"footer\">\n    <div class=\"footer-text\">\n      GitHub:\n      <a href=\"https://github.com/microsoft/powerBI-client-angular\"> https://github.com/microsoft/PowerBI-client-angular </a>\n    </div>\n  </div>\n  "
         }
     ],
     "modules": [
@@ -1564,13 +2736,13 @@
         },
         {
             "name": "CommonModuleLibModule",
-            "id": "module-CommonModuleLibModule-a08e814d0e8ecfa39ec841adfd1f088f42183bd656beb5c2e98267ede4ca45e3e271e27979d9491f095570b38c671c474ca2faa4d3f174b38d859eaa2e68b3e5",
+            "id": "module-CommonModuleLibModule-98a90f6e4ed6780d44730a11ef04632d463dbd41d2e82d52664eca2fcc1198f410dc4cbc61f3f80a557f7a643a8e9a827930f171fcf168e95d016b56e0dfbdfc",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/common-module-lib.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\r\n\r\nimport { GridModule } from './grid/grid.module';\r\nimport { CustomInputModule } from './custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './custom-select/custom-select.module';\r\n\r\nimport { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n  exports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n})\r\nexport class CommonModuleLibModule {}\r\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\n\r\nimport { GridModule } from './grid/grid.module';\r\nimport { CustomInputModule } from './custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './custom-select/custom-select.module';\r\nimport { CustomTimePickerModule } from './custom-time-picker/custom-time-picker.module';\r\n\r\nimport { ControlValueAccessorFormModule } from './control-value-accessor-form/control-value-accessor-form.module';\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    CustomTimePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n  exports: [\r\n    GridModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    CustomTimePickerModule,\r\n    ControlValueAccessorFormModule,\r\n  ],\r\n})\r\nexport class CommonModuleLibModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1596,6 +2768,9 @@
                             "name": "CustomSelectModule"
                         },
                         {
+                            "name": "CustomTimePickerModule"
+                        },
+                        {
                             "name": "GridModule"
                         }
                     ]
@@ -1616,6 +2791,9 @@
                             "name": "CustomSelectModule"
                         },
                         {
+                            "name": "CustomTimePickerModule"
+                        },
+                        {
                             "name": "GridModule"
                         }
                     ]
@@ -1632,13 +2810,13 @@
         },
         {
             "name": "ControlValueAccessorFormModule",
-            "id": "module-ControlValueAccessorFormModule-91f413e4d2752302c29eb981fa75d454ac544b7695750015692bd36d035af6e67047335b7d7247d048e2206fd37d376c3e192155d4baf8c673adf4ffad5ccd91",
+            "id": "module-ControlValueAccessorFormModule-0b7d5e4ab4dd3c11bd08f1ea7304ddc2843c433f7f3e2fc64fe2593fbef8156ff5d3ca9e8663f5362460a27fd59e276b00bed8d100921ff93fb06f1e64f5b05a",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/control-value-accessor-form/control-value-accessor-form.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n\r\nimport { CustomInputModule } from './../custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './../custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './../custom-select/custom-select.module';\r\n\r\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form.component';\r\n\r\n@NgModule({\r\n  declarations: [ControlValueAccessorFormComponent],\r\n  imports: [\r\n    CommonModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n  ],\r\n  exports: [ControlValueAccessorFormComponent],\r\n})\r\nexport class ControlValueAccessorFormModule {}\r\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n\r\nimport { CustomInputModule } from './../custom-input/custom-input.module';\r\nimport { CustomDatePickerModule } from './../custom-date-picker/custom-date-picker.module';\r\nimport { CustomSelectModule } from './../custom-select/custom-select.module';\r\nimport { CustomTimePickerModule } from './../custom-time-picker/custom-time-picker.module';\r\n\r\nimport { ControlValueAccessorFormComponent } from './control-value-accessor-form.component';\r\n\r\n@NgModule({\r\n  declarations: [ControlValueAccessorFormComponent],\r\n  imports: [\r\n    CommonModule,\r\n    CustomInputModule,\r\n    CustomDatePickerModule,\r\n    CustomSelectModule,\r\n    CustomTimePickerModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n  ],\r\n  exports: [ControlValueAccessorFormComponent],\r\n})\r\nexport class ControlValueAccessorFormModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1663,6 +2841,9 @@
                         },
                         {
                             "name": "CustomSelectModule"
+                        },
+                        {
+                            "name": "CustomTimePickerModule"
                         }
                     ]
                 },
@@ -1686,13 +2867,13 @@
         },
         {
             "name": "CustomDatePickerModule",
-            "id": "module-CustomDatePickerModule-d6af8873131534df35c5e9a3748eb1013832039511bb86e563a5c3f12238fe69ea4bc31ee913d0c0fd9dd745745b6206c93db16460c9344b56c228c5c6fa08cf",
+            "id": "module-CustomDatePickerModule-c565806d595596a5b9a435781ca1646cb34921f00f513fe192d552fde62ec536acf4a8777991768afaf9ba3ef7e03b2bace452341b70ce63c2ee48fa87ee4729",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\n\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatDatepickerModule } from '@angular/material/datepicker';\nimport { MatNativeDateModule } from '@angular/material/core';\nimport { MatIconModule } from '@angular/material/icon';\n\nimport { CustomDatePickerComponent } from './custom-date-picker.component';\n\n@NgModule({\n  declarations: [CustomDatePickerComponent],\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatFormFieldModule,\n    MatInputModule,\n    MatDatepickerModule,\n    MatNativeDateModule,\n    MatIconModule,\n  ],\n  exports: [CustomDatePickerComponent],\n})\nexport class CustomDatePickerModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n\r\nimport { MatFormFieldModule } from '@angular/material/form-field';\r\nimport { MatInputModule } from '@angular/material/input';\r\nimport { MatDatepickerModule } from '@angular/material/datepicker';\r\nimport { MatNativeDateModule } from '@angular/material/core';\r\nimport { MatIconModule } from '@angular/material/icon';\r\n\r\nimport { TextMaskModule } from 'angular2-text-mask';\r\n\r\nimport { CustomDatePickerComponent } from './custom-date-picker.component';\r\n\r\n@NgModule({\r\n  declarations: [CustomDatePickerComponent],\r\n  imports: [\r\n    CommonModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n    MatFormFieldModule,\r\n    MatInputModule,\r\n    MatDatepickerModule,\r\n    MatNativeDateModule,\r\n    MatIconModule,\r\n    TextMaskModule,\r\n  ],\r\n  exports: [CustomDatePickerComponent],\r\n})\r\nexport class CustomDatePickerModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1817,14 +2998,58 @@
             ]
         },
         {
+            "name": "CustomTimePickerModule",
+            "id": "module-CustomTimePickerModule-0b318d2c6866af8730e96ebe5b0f60a66af0640b40b059a7bc761216b47a85345d6f4724dcd9412f058bb236868c9fbfb09af2d68489a52a1ba8d3baff7f6cc8",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CustomTimePickerComponent } from './custom-time-picker.component';\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatIconModule } from '@angular/material/icon';\n\n@NgModule({\n  declarations: [CustomTimePickerComponent],\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatFormFieldModule,\n    MatInputModule,\n    MatIconModule,\n  ],\n  exports: [CustomTimePickerComponent],\n})\nexport class CustomTimePickerModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "CustomTimePickerComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "CustomTimePickerComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "GridModule",
-            "id": "module-GridModule-25e251733954c664794efe62ecf73f42432158a21f2f74deba0cfd6a568728ff6fe4ab49d425c35aa0607bbd7bbf5925cb9597ed52d4d585d0f2fea0df363eae",
+            "id": "module-GridModule-ce91f0666643adf0d3f37c844d7183f463bb2ddd15982cf073db065de824b6102c25d2e293c401ca57908ab81b71342713273359ef160148d0cf05c5dffd1d82",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/common-module-lib/src/lib/grid/grid.module.ts",
             "methods": [],
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n\r\nimport { AgGridModule } from 'ag-grid-angular';\r\nimport { FormsModule } from '@angular/forms';\r\n\r\nimport { GridComponent } from './grid.component';\r\n\r\n@NgModule({\r\n  declarations: [GridComponent],\r\n  imports: [\r\n    CommonModule,\r\n    HttpClientModule,\r\n    AgGridModule.withComponents([]),\r\n    FormsModule,\r\n  ],\r\n  exports: [GridComponent],\r\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n  providers: [],\r\n})\r\nexport class GridModule {}\r\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n\r\nimport { AgGridModule } from 'ag-grid-angular';\r\nimport { FormsModule } from '@angular/forms';\r\n\r\nimport { GridComponent } from './grid.component';\r\nimport { GridLoadingMaskComponent } from './grid-featured-components/grid-loading-mask/grid-loading-mask.component';\r\n\r\n@NgModule({\r\n  declarations: [GridComponent, GridLoadingMaskComponent],\r\n  imports: [\r\n    CommonModule,\r\n    HttpClientModule,\r\n    AgGridModule.withComponents([]),\r\n    FormsModule,\r\n  ],\r\n  exports: [GridComponent, GridLoadingMaskComponent],\r\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n  providers: [],\r\n})\r\nexport class GridModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -1835,6 +3060,9 @@
                     "elements": [
                         {
                             "name": "GridComponent"
+                        },
+                        {
+                            "name": "GridLoadingMaskComponent"
                         }
                     ]
                 },
@@ -1847,6 +3075,53 @@
                     "elements": [
                         {
                             "name": "GridComponent"
+                        },
+                        {
+                            "name": "GridLoadingMaskComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "PowerBIModule",
+            "id": "module-PowerBIModule-eb98abba80f3d43783b596630b900645eaeb4f323c62bb4c81eb341f0e2a394ab443decb160c1b616233d2065d1435f3757cfdda58caaef3841d7614eab8cff7",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/common-module-lib/src/lib/power-bi/power-bi.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { PowerBiComponent } from './power-bi.component';\nimport { PowerBIEmbedModule } from 'powerbi-client-angular';\nimport { HttpClientModule } from '@angular/common/http';\n\n\n\n@NgModule({\n  declarations: [\n    PowerBiComponent\n  ],\n  imports: [\n    CommonModule,\n    PowerBIEmbedModule,\n    HttpClientModule\n  ],\n  exports:[\n    PowerBiComponent\n  ]\n})\nexport class PowerBIModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "PowerBiComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "PowerBiComponent"
                         }
                     ]
                 },
@@ -1927,6 +3202,16 @@
                 "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
+            },
+            {
+                "name": "defaultUses",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1934,14 +3219,14 @@
                 "defaultValue": "TemplateDefault.bind({})"
             },
             {
-                "name": "environment",
+                "name": "defaultUses",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
+                "file": "projects/common-module-lib/src/lib/power-bi/power-bi.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\n  production: false\n}"
+                "type": "",
+                "defaultValue": "TemplateDefault.bind({})"
             },
             {
                 "name": "environment",
@@ -1952,6 +3237,16 @@
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\n  production: true\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  production: false\n}"
             },
             {
                 "name": "gridColumn",
@@ -1972,6 +3267,16 @@
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\r\n  minWidth: 100,\r\n  maxWidth: 250,\r\n  sortable: true,\r\n  resizable: true,\r\n}"
+            },
+            {
+                "name": "gridOptions",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\r\n  rowSelection: 'single',\r\n}"
             },
             {
                 "name": "Large",
@@ -2022,6 +3327,16 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "noop",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "() => {}"
             },
             {
                 "name": "Primary",
@@ -2145,11 +3460,31 @@
                 "name": "TemplateDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n        [gridOptions]=\"gridOptions\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
+            },
+            {
+                "name": "TemplateDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/common-module-lib/src/lib/power-bi/power-bi.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-power-bi></common-lib-power-bi>\r\n  `,\r\n})"
             }
         ],
         "functions": [],
@@ -2286,6 +3621,28 @@
                     "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-select></common-lib-custom-select>\r\n  `,\r\n})"
                 }
             ],
+            "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts": [
+                {
+                    "name": "defaultUses",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-custom-time-picker></common-lib-custom-time-picker>\r\n  `,\r\n})"
+                }
+            ],
             "projects/common-module-lib/src/lib/grid/grid.stories.ts": [
                 {
                     "name": "defaultUses",
@@ -2318,6 +3675,16 @@
                     "defaultValue": "{\r\n  minWidth: 100,\r\n  maxWidth: 250,\r\n  sortable: true,\r\n  resizable: true,\r\n}"
                 },
                 {
+                    "name": "gridOptions",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\r\n  rowSelection: 'single',\r\n}"
+                },
+                {
                     "name": "TemplateDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -2325,19 +3692,29 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n      <common-lib-grid \r\n        [fitToWindow]=\"fitToWindow\" \r\n        [gridHeight]=\"gridHeight\" \r\n        [gridData]=\"gridData\" \r\n        [gridColumn]=\"gridColumn\"\r\n        [gridDefaultColDef]=\"gridDefaultColDef\"\r\n        [gridOptions]=\"gridOptions\"\r\n      >\r\n      </common-lib-grid>\r\n      `,\r\n})"
                 }
             ],
-            "src/environments/environment.ts": [
+            "projects/common-module-lib/src/lib/power-bi/power-bi.stories.ts": [
                 {
-                    "name": "environment",
+                    "name": "defaultUses",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/environments/environment.ts",
+                    "file": "projects/common-module-lib/src/lib/power-bi/power-bi.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false\n}"
+                    "type": "",
+                    "defaultValue": "TemplateDefault.bind({})"
+                },
+                {
+                    "name": "TemplateDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/power-bi/power-bi.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <common-lib-power-bi></common-lib-power-bi>\r\n  `,\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -2350,6 +3727,18 @@
                     "deprecationMessage": "",
                     "type": "object",
                     "defaultValue": "{\n  production: true\n}"
+                }
+            ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false\n}"
                 }
             ],
             "src/stories/Button.stories.ts": [
@@ -2467,6 +3856,18 @@
                     "type": "Story<Page>",
                     "defaultValue": "(args: Page) => ({\n  props: args,\n})"
                 }
+            ],
+            "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts": [
+                {
+                    "name": "noop",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "() => {}"
+                }
             ]
         },
         "groupedFunctions": {},
@@ -2527,6 +3928,16 @@
                 "name": "CustomDatePickerComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-date-picker/custom-date-picker.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "noop",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -2608,12 +4019,50 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CustomTimePickerComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultUses",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/custom-time-picker/custom-time-picker.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TemplateDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/grid/grid-featured-components/grid-loading-mask/grid-loading-mask.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GridLoadingMaskComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/common-module-lib/src/lib/grid/grid.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "GridComponent",
-                "coveragePercent": 58,
-                "coverageCount": "7/12",
+                "coveragePercent": 55,
+                "coverageCount": "11/20",
                 "status": "good"
             },
             {
@@ -2651,9 +4100,66 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "gridOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/grid/grid.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "TemplateDefault",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/power-bi/power-bi.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "PowerBiComponent",
+                "coveragePercent": 33,
+                "coverageCount": "7/21",
+                "status": "medium"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/power-bi/power-bi.component.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ConfigResponse",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/power-bi/power-bi.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultUses",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/power-bi/power-bi.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TemplateDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/common-module-lib/src/lib/services/http.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "HttpService",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {

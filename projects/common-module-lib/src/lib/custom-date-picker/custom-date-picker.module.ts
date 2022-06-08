@@ -8,6 +8,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
+import { TextMaskModule } from 'angular2-text-mask';
+
 import { CustomDatePickerComponent } from './custom-date-picker.component';
 
 @NgModule({
@@ -21,6 +23,7 @@ import { CustomDatePickerComponent } from './custom-date-picker.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    TextMaskModule,
   ],
   exports: [CustomDatePickerComponent],
 })
